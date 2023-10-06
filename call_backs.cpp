@@ -12,6 +12,7 @@ void renderFunc()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	// rendering function
+	e.Render();
 
 	glutSwapBuffers();
 }
