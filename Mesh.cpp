@@ -8,7 +8,7 @@ Mesh::~Mesh() {
 	glDeleteBuffers(1, &m_vertexBuffer);
 }
 
-void Mesh::Init() {
+void Mesh::Init(unsigned int shaderProgramID) {
 	// VAO 객체 생성 및 바인드
 	glGenBuffers(1, &m_vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
@@ -20,6 +20,16 @@ void Mesh::Init() {
 	// EBO 객체 생성 및 바인드
 	glGenBuffers(1, &m_elementBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_elementBuffer); //--- GL_ELEMENT_ARRAY_BUFFER 버퍼 유형으로 바인딩
+
+	// 셰이더언어 파일에 있는 모델 변환 행렬 변수의 로케이션을 저장
+	m_modelTransformLocation = glGetUniformLocation(shaderProgramID, "model_transform");
+	if (m_modelTransformLocation == -1) {
+		assert(0);
+	}
+}
+
+void Mesh::SetTransformMat(glm::mat4& trans) {
+	glUniformMatrix4fv(m_modelTransformLocation, 1, GL_FALSE, glm::value_ptr(trans));
 }
 
 void Mesh::SetVerticis(const Vertex* verticies, unsigned int dataSize) {
@@ -47,6 +57,6 @@ void Mesh::SetDrawMode(unsigned int mode) {
 void Mesh::Render() {
 	// shaderProgram 에서 UseProgram을 활성화 했다는 가정하에 수행
 	glBindVertexArray(m_vertexArray);
-	glDrawElements(m_drawMode, m_vertexPositionSize, GL_UNSIGNED_INT, 0);
+	glDrawElements(m_drawMode, m_vertexDataSize, GL_UNSIGNED_INT, 0);
 	//glBindVertexArray(0); // Array 바인드 해제
 }
