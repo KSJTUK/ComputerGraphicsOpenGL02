@@ -9,7 +9,7 @@ public:
 
 private:
 	// Vertex Buffer Object ID
-	unsigned int m_vertexPositionBuffer{ };
+	unsigned int m_vertexBuffer{ };
 	unsigned int m_vertexColorBuffer{ };
 	// Vertex Array Object ID
 	unsigned int m_vertexArray{ };
@@ -23,13 +23,16 @@ private:
 	// default값은 삼각형(생성자에서 설정)
 	unsigned int m_drawMode{ };
 
+	// 변환 행렬들
+	glm::mat4 m_scaleMat{ glm::mat4{ 1.f } };
+	glm::mat4 m_rotateMat{ glm::mat4{ 1.f } };
+	glm::mat4 m_transMat{ glm::mat4{ 1.f } };
+
 public:
 	void Init();
 
 	void SetTransformMat();
-	void SetVertexs(float* vertexBuffer, size_t bufferSize, size_t vertexSize);
-	void SetColor(float* vertexBuffer, unsigned int bufferSize, unsigned int colorSize);
-	void SetVertexs()
+	void SetVerticis(const Vertex* verticies, unsigned int dataSize);
 	void SetIndexBuffer(unsigned int* indexBuffer, size_t bufferSize);
 	void SetDrawMode(unsigned int mode);
 	void Render();
