@@ -24,11 +24,14 @@ public:
 private:
 	WIN_INFO m_windowInfo;
 	char* m_windowTitle{ };
-	class Renderer* m_mesh{ nullptr };
+	class Renderer* m_renderer{ nullptr };
 	class Shader* m_shader{ nullptr };
 	class Timer* m_timer{ nullptr };
 
 	float m_deltaTime{ };
+
+	// test 용
+	class Mesh* testMesh{ };
 
 private:
 	// 멤버함수 내에서만 쓰일 함수들 정의

@@ -17,6 +17,7 @@ private:
 	unsigned int m_elementBuffer{ };
 
 	unsigned int m_vertexDataSize{ };
+	unsigned int m_indexDataSize{ };
 
 	// 그리기 모드 점, 선, 삼각형 등
 	// default값은 삼각형(생성자에서 설정)
@@ -29,6 +30,8 @@ public:
 	void Init(unsigned int shaderProgramID);
 
 	void SetTransformMat(glm::mat4& trans);
+
+	void SetTransformMat(glm::mat4&& trans);
 
 	void SetVerticis(const Vertex* verticies, unsigned int dataSize);
 	void SetIndexBuffer(unsigned int* indexBuffer, size_t bufferSize);

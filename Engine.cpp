@@ -4,6 +4,7 @@
 #include "Shader.h"
 #include "Renderer.h"
 #include "Timer.h"
+#include "Mesh.h"
 
 Engine::Engine() {
 	m_windowInfo.x = 100;
@@ -63,14 +64,8 @@ void Engine::Init(int* argc, char** argv) {
 
 	// glew 라이브러리 초기화
 	glewExperimental = GL_TRUE;
-	try {
-		if (glewInit() != GLEW_OK) {
-			throw "GLEW 라이브러리 초기화 실패";
-		}
-	}
-	catch (std::string expn) {
-		std::cerr << expn << std::endl;
-		exit(EXIT_FAILURE);
+	if (glewInit() != GLEW_OK) {
+		throw "GLEW 라이브러리 초기화 실패";
 	}
 
 	SubscribeCallbacks();
@@ -82,6 +77,11 @@ void Engine::Init(int* argc, char** argv) {
 	// 쉐이더 프로그램 초기화
 	m_shader = new Shader{ };
 	m_shader->CreateShaderProgram();
+
+	m_renderer = new Renderer{ };
+	m_renderer->Init(m_shader->GetShaderProgramID());
+
+	testMesh = new Mesh{ };
 }
 
 void Engine::ReSizeWindow(int w, int h) {
@@ -98,6 +98,7 @@ void Engine::Update() {
 
 void Engine::Render() {
 	m_shader->UseProgram();
+	testMesh->Render(m_renderer);
 }
 
 void Engine::SubscribeMouseMotionFunc(void(*func)(int, int)) {

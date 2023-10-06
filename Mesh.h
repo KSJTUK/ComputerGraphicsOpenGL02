@@ -1,5 +1,6 @@
 #pragma once
 #include "vertex_info.h"
+#include <vector>
 
 class Mesh {
 public:
@@ -8,13 +9,19 @@ public:
 
 private:
 	Vertex* m_verticies{ };
-	unsigned int m_indicies{ };
+	unsigned int m_verticiesDataSize{ };
+
+	unsigned int* m_vertexIndicies{ };
+	unsigned int m_vertexIndiciesSize{ };
+
+	unsigned int* m_vertexNormalIndicies{ };
+	unsigned int* m_textureIndicies{ };
 
 	void ReadObject(const char* filePath);
+	void MakeVertexAndIndicies(std::vector<glm::vec3>& verticies, std::vector<unsigned int>* indicies);
 
 public:
-	void Init();
 	void Update();
-	void Render();
+	void Render(class Renderer* renderer);
 };
 
