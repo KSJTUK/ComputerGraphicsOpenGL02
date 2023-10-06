@@ -1,14 +1,14 @@
-﻿#include "Mesh.h"
+﻿#include "Renderer.h"
 
-Mesh::Mesh() : m_drawMode{ GL_TRIANGLES } { }
+Renderer::Renderer() : m_drawMode{ GL_TRIANGLES } { }
 
-Mesh::~Mesh() {
+Renderer::~Renderer() {
 	glDeleteVertexArrays(1, &m_vertexArray);
 	glDeleteBuffers(1, &m_elementBuffer);
 	glDeleteBuffers(1, &m_vertexBuffer);
 }
 
-void Mesh::Init(unsigned int shaderProgramID) {
+void Renderer::Init(unsigned int shaderProgramID) {
 	// VAO 객체 생성 및 바인드
 	glGenBuffers(1, &m_vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
@@ -28,11 +28,11 @@ void Mesh::Init(unsigned int shaderProgramID) {
 	}
 }
 
-void Mesh::SetTransformMat(glm::mat4& trans) {
+void Renderer::SetTransformMat(glm::mat4& trans) {
 	glUniformMatrix4fv(m_modelTransformLocation, 1, GL_FALSE, glm::value_ptr(trans));
 }
 
-void Mesh::SetVerticis(const Vertex* verticies, unsigned int dataSize) {
+void Renderer::SetVerticis(const Vertex* verticies, unsigned int dataSize) {
 	// Vertex객체의 정보를 VBO에 넘겨줌
 	glBufferData(GL_ARRAY_BUFFER, dataSize * sizeof(Vertex), verticies, GL_DYNAMIC_DRAW);
 
@@ -45,16 +45,16 @@ void Mesh::SetVerticis(const Vertex* verticies, unsigned int dataSize) {
 	glEnableVertexAttribArray(1);
 }
 
-void Mesh::SetIndexBuffer(unsigned int* indexBuffer, size_t bufferSize) {
+void Renderer::SetIndexBuffer(unsigned int* indexBuffer, size_t bufferSize) {
 	// 인덱스 버퍼 내용 저장
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, bufferSize * sizeof(unsigned int), indexBuffer, GL_DYNAMIC_DRAW);
 }
 
-void Mesh::SetDrawMode(unsigned int mode) {
+void Renderer::SetDrawMode(unsigned int mode) {
 	m_drawMode = mode;
 }
 
-void Mesh::Render() {
+void Renderer::Render() {
 	// shaderProgram 에서 UseProgram을 활성화 했다는 가정하에 수행
 	glBindVertexArray(m_vertexArray);
 	glDrawElements(m_drawMode, m_vertexDataSize, GL_UNSIGNED_INT, 0);

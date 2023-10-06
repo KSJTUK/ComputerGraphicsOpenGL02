@@ -24,7 +24,7 @@ public:
 private:
 	WIN_INFO m_windowInfo;
 	char* m_windowTitle{ };
-	class Mesh* m_mesh{ nullptr };
+	class Renderer* m_mesh{ nullptr };
 	class Shader* m_shader{ nullptr };
 	class Timer* m_timer{ nullptr };
 

@@ -2,10 +2,10 @@
 #include "vertex_info.h"
 
 // VAO, VBO, EBO를 바인딩해서 삼각형을 그려줄 클래스
-class Mesh {
+class Renderer {
 public:
-	Mesh();
-	~Mesh();
+	Renderer();
+	~Renderer();
 
 private:
 	// Vertex Buffer Object ID
@@ -26,7 +26,7 @@ private:
 	unsigned int m_modelTransformLocation{ };
 
 public:
-	void Init();
+	void Init(unsigned int shaderProgramID);
 
 	void SetTransformMat(glm::mat4& trans);
 

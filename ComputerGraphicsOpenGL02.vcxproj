@@ -131,7 +131,7 @@
     <ClCompile Include="call_backs.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -139,11 +139,13 @@
   <ItemGroup>
     <ClInclude Include="call_backs.h" />
     <ClInclude Include="Engine.h" />
-    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="gl_headers.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="vertex_info.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment_shader.glsl" />
