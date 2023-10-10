@@ -8,7 +8,7 @@ extern class Engine e;
 // 그리기 콜백함수
 void renderFunc()
 {
-	glClearColor(1.f, 1.f, 1.f, 1.f);
+	glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	// rendering function
@@ -35,7 +35,6 @@ void idleFunc()
 
 void keyboardFunc(unsigned char key, int x, int y)
 {
-	
 }
 
 void keyboardUpFunc(unsigned char key, int x, int y)

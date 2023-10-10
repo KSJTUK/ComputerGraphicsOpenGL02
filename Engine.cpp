@@ -81,7 +81,8 @@ void Engine::Init(int* argc, char** argv) {
 	m_renderer = new Renderer{ };
 	m_renderer->Init(m_shader->GetShaderProgramID());
 
-	testMesh = new Mesh{ };
+	m_shader->UseProgram();
+	testMesh = new Mesh{ m_renderer };
 }
 
 void Engine::ReSizeWindow(int w, int h) {
@@ -94,6 +95,7 @@ void Engine::ReSizeWindow(int w, int h) {
 void Engine::Update() {
 	m_timer->Update();
 	m_deltaTime = m_timer->GetDeltaTime();
+	testMesh->Update();
 }
 
 void Engine::Render() {

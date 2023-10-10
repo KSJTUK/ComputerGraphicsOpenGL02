@@ -4,24 +4,29 @@
 
 class Mesh {
 public:
-	Mesh();
+	Mesh(class Renderer* renderer);
 	~Mesh();
 
 private:
-	Vertex* m_verticies{ };
-	unsigned int m_verticiesDataSize{ };
+	std::vector<Vertex> m_verticies{ };
 
-	unsigned int* m_vertexIndicies{ };
-	unsigned int m_vertexIndiciesSize{ };
-
-	unsigned int* m_vertexNormalIndicies{ };
-	unsigned int* m_textureIndicies{ };
+	std::vector<unsigned int> m_vertexIndicies{ };
+	std::vector<unsigned int> m_vertexNormalIndicies{ };
+	std::vector<unsigned int> m_textureIndicies{ };
 
 	void ReadObject(const char* filePath);
-	void MakeVertexAndIndicies(std::vector<glm::vec3>& verticies, std::vector<unsigned int>* indicies);
+	void TestPrint(std::vector<glm::vec3>& verticies, std::vector<unsigned int>& indicies);
+
+	// test
+	float m_xRad{ };
+	float m_yRad{ };
+	float m_zRad{ };
+
+	glm::mat4 m_scale{ 1.f };
+	glm::mat4 m_rotate{ 1.f };
+	glm::mat4 trans{ 1.f };
 
 public:
 	void Update();
 	void Render(class Renderer* renderer);
 };
-

@@ -51,10 +51,29 @@ void Renderer::SetVerticis(const Vertex* const verticies, unsigned int dataSize)
 	glEnableVertexAttribArray(1);
 }
 
+void Renderer::SetVerticis(const std::vector<Vertex>& verticies) {
+	m_vertexDataSize = verticies.size();
+	// Vertex객체의 정보를 VBO에 넘겨줌
+	glBufferData(GL_ARRAY_BUFFER, m_vertexDataSize * sizeof(Vertex), &verticies[0], GL_STATIC_DRAW);
+
+	// location 0번에 Vertex객체의 position정보를 넘겨줌
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
+	glEnableVertexAttribArray(0);
+
+	// location 1번에 Vertex객체의 color정보를 넘겨줌
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color));
+	glEnableVertexAttribArray(1);
+}
+
 void Renderer::SetIndexBuffer(unsigned int* indexBuffer, size_t bufferSize) {
 	// 인덱스 버퍼 내용 저장
 	m_indexDataSize = bufferSize;
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, bufferSize * sizeof(unsigned int), indexBuffer, GL_DYNAMIC_DRAW);
+}
+
+void Renderer::SetIndexBuffer(const std::vector<unsigned int>& indicies) {
+	m_indexDataSize = indicies.size();
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indexDataSize * sizeof(unsigned int), &indicies[0], GL_DYNAMIC_DRAW);
 }
 
 void Renderer::SetDrawMode(unsigned int mode) {
@@ -64,6 +83,6 @@ void Renderer::SetDrawMode(unsigned int mode) {
 void Renderer::Render() {
 	// shaderProgram 에서 UseProgram을 활성화 했다는 가정하에 수행
 	glBindVertexArray(m_vertexArray);
-	glDrawElements(m_drawMode, m_indexDataSize, GL_UNSIGNED_INT, 0);
+	glDrawElements(m_drawMode, (GLsizei)m_indexDataSize, GL_UNSIGNED_INT, 0);
 	//glBindVertexArray(0); // Array 바인드 해제
 }

@@ -68,14 +68,14 @@
     <ClInclude Include="Object.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="gl_headers.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="vertex_info.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="gl_headers.h">
+      <Filter>헤더 파일\Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

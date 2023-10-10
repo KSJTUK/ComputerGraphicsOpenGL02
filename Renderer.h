@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "vertex_info.h"
+#include <vector>
 
 // VAO, VBO, EBO를 바인딩해서 삼각형을 그려줄 클래스
 class Renderer {
@@ -16,8 +17,8 @@ private:
 	// Element Buffer OBject ID
 	unsigned int m_elementBuffer{ };
 
-	unsigned int m_vertexDataSize{ };
-	unsigned int m_indexDataSize{ };
+	size_t m_vertexDataSize{ };
+	size_t m_indexDataSize{ };
 
 	// 그리기 모드 점, 선, 삼각형 등
 	// default값은 삼각형(생성자에서 설정)
@@ -34,7 +35,9 @@ public:
 	void SetTransformMat(glm::mat4&& trans);
 
 	void SetVerticis(const Vertex* verticies, unsigned int dataSize);
+	void SetVerticis(const std::vector<Vertex>& verticies);
 	void SetIndexBuffer(unsigned int* indexBuffer, size_t bufferSize);
+	void SetIndexBuffer(const std::vector<unsigned int>& indicies);
 	void SetDrawMode(unsigned int mode);
 	void Render();
 };
