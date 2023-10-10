@@ -11,9 +11,10 @@ public:
 private:
 	// Vertex Buffer Object ID
 	unsigned int m_vertexBuffer{ };
-	unsigned int m_vertexColorBuffer{ };
+
 	// Vertex Array Object ID
 	unsigned int m_vertexArray{ };
+
 	// Element Buffer OBject ID
 	unsigned int m_elementBuffer{ };
 
@@ -36,8 +37,10 @@ public:
 
 	void SetVerticis(const Vertex* verticies, unsigned int dataSize);
 	void SetVerticis(const std::vector<Vertex>& verticies);
+
 	void SetIndexBuffer(unsigned int* indexBuffer, size_t bufferSize);
 	void SetIndexBuffer(const std::vector<unsigned int>& indicies);
+
 	void SetDrawMode(unsigned int mode);
 	void Render();
 };

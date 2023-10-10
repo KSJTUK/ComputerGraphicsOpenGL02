@@ -107,10 +107,7 @@ void Mesh::TestPrint(std::vector<glm::vec3>& verticies, std::vector<unsigned int
 }
 
 void Mesh::Update() {
-	//m_xRad += 1.f;
-	//m_yRad += 0.001f;
-	//m_rotate = glm::rotate(glm::mat4(1.f), glm::radians(m_xRad), glm::vec3{ 1.f, 1.f, 0.f });
-	//m_rotate = glm::rotate(m_rotate, glm::radians(m_yRad), glm::vec3{ 0.f, 1.f, 0.f });
+
 }
 
 void Mesh::Render(class Renderer* renderer) {

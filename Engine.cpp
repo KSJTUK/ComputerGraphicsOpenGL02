@@ -16,16 +16,13 @@ Engine::Engine() {
 
 	std::string title{ "OpenGL Project 02" };
 	std::string::size_type size = title.size();
-	m_windowTitle = new char[size + 1] {};
-	memcpy(m_windowTitle, title.c_str(), size + 1);
+	m_windowInfo.windowTitle = new char[size + 1] {};
+	memcpy(m_windowInfo.windowTitle, title.c_str(), size + 1);
 }
 
 Engine::~Engine() {
 	// 동적할당 객체들 메모리 할당 해제
-	//if (m_timer) delete m_timer;
-	//m_timer = nullptr;
-	SafeDeletePointer(m_shader);
-	SafeDeleteArrayPointer(m_windowTitle);
+	SafeDeleteArrayPointer(m_windowInfo.windowTitle);
 }
 
 // 콜백함수들 등록
@@ -60,7 +57,7 @@ void Engine::Init(int* argc, char** argv) {
 	glutInitWindowSize(m_windowInfo.width, m_windowInfo.height);
 
 	// 윈도우 생성
-	glutCreateWindow(m_windowTitle);
+	glutCreateWindow(m_windowInfo.windowTitle);
 
 	// glew 라이브러리 초기화
 	glewExperimental = GL_TRUE;
@@ -71,18 +68,18 @@ void Engine::Init(int* argc, char** argv) {
 	SubscribeCallbacks();
 
 	// 타이머 초기화
-	m_timer = new Timer{ };
+	m_timer = std::make_unique<Timer>();
 	m_timer->Init();
 
 	// 쉐이더 프로그램 초기화
-	m_shader = new Shader{ };
+	m_shader = std::make_unique<Shader>();
 	m_shader->CreateShaderProgram();
 
-	m_renderer = new Renderer{ };
+	m_renderer = std::make_unique<Renderer>();
 	m_renderer->Init(m_shader->GetShaderProgramID());
 
 	m_shader->UseProgram();
-	testMesh = new Mesh{ m_renderer };
+	testMesh = new Mesh{ m_renderer.get() };
 }
 
 void Engine::ReSizeWindow(int w, int h) {
@@ -100,9 +97,15 @@ void Engine::Update() {
 
 void Engine::Render() {
 	m_shader->UseProgram();
-	testMesh->Render(m_renderer);
+	testMesh->Render(m_renderer.get());
 }
 
+
+
+
+
+
+// --------------------------------------------------------------------
 void Engine::SubscribeMouseMotionFunc(void(*func)(int, int)) {
 	glutMotionFunc(func);
 }

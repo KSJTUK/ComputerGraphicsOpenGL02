@@ -1,11 +1,16 @@
 #pragma once
 #include "vertex_info.h"
 #include <vector>
+#include <memory>
 
 class Mesh {
 public:
+	Mesh();
 	Mesh(class Renderer* renderer);
 	~Mesh();
+
+	Mesh(const Mesh& other) = delete;
+	Mesh* operator=(const Mesh& other) = delete;
 
 private:
 	std::vector<Vertex> m_verticies{ };

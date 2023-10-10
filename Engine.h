@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include <memory>
+
 // 생성할 윈도우의ㅡ 정보를 담을 구조체 정의
 typedef struct WindowInfo {
 	int x;
@@ -23,10 +25,10 @@ public:
 
 private:
 	WIN_INFO m_windowInfo;
-	char* m_windowTitle{ };
-	class Renderer* m_renderer{ nullptr };
-	class Shader* m_shader{ nullptr };
-	class Timer* m_timer{ nullptr };
+
+	std::unique_ptr<class Shader> m_shader{ nullptr };
+	std::unique_ptr<class Renderer> m_renderer{ nullptr };
+	std::unique_ptr<class Timer> m_timer{ nullptr };
 
 	float m_deltaTime{ };
 
@@ -36,16 +38,6 @@ private:
 private:
 	// 멤버함수 내에서만 쓰일 함수들 정의
 	void SubscribeCallbacks();
-
-public:
-	void SubscribeDrawFunc(void(*func)(void));
-	void SubscribeIdleFUnc(void(*func)(void));
-	void SubscribeReshapeFunc(void(*func)(int, int));
-	void SubscribeMouseFunc(void(*func)(int, int, int, int));
-	void SubscribeMouseMotionFunc(void(*func)(int, int));
-	void SubscribePassiveMotionFunc(void(*func)(int, int));
-	void SubscribeKeyboardFunc(void(*func)(unsigned char, int, int));
-	void SubscribeKeyboardUpfunc(void(*func)(unsigned char, int, int));
 
 public:
 	size_t GetWindowWidth() const { return m_windowInfo.width; }
@@ -70,4 +62,23 @@ public:
 	void Loop();
 	// 게임 종료함수
 	void LoopEnd();
+
+
+
+
+
+// ---------------------------------------------------------------
+	// 실습 Solution용 콜백함수 등록
+
+
+
+public:
+	void SubscribeDrawFunc(void(*func)(void));
+	void SubscribeIdleFUnc(void(*func)(void));
+	void SubscribeReshapeFunc(void(*func)(int, int));
+	void SubscribeMouseFunc(void(*func)(int, int, int, int));
+	void SubscribeMouseMotionFunc(void(*func)(int, int));
+	void SubscribePassiveMotionFunc(void(*func)(int, int));
+	void SubscribeKeyboardFunc(void(*func)(unsigned char, int, int));
+	void SubscribeKeyboardUpfunc(void(*func)(unsigned char, int, int));
 };
