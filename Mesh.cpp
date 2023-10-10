@@ -8,12 +8,11 @@
 Mesh::Mesh(class Renderer* renderer) {
 	ReadObject("skull.obj");
 
-
 	glm::mat4 iMat{ 1.f };
 	glm::mat4 s = glm::scale(iMat, glm::vec3{ 0.05f, 0.05f, 0.05f });
 	glm::mat4 t = glm::translate(iMat, glm::vec3{ 0.f, 0.f, -10.f });
 	glm::mat4 r = glm::rotate(iMat, glm::radians(-90.f), glm::vec3(1.f, 0.f, 0.f));
-	//glm::mat4 r = iMat;
+
 	glm::mat4 tr = s * r * t;
 
 	// test line draw

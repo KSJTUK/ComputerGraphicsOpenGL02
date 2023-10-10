@@ -5,7 +5,6 @@
 
 class Mesh {
 public:
-	Mesh();
 	Mesh(class Renderer* renderer);
 	~Mesh();
 

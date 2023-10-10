@@ -84,5 +84,5 @@ void Renderer::Render() {
 	// shaderProgram 에서 UseProgram을 활성화 했다는 가정하에 수행
 	glBindVertexArray(m_vertexArray);
 	glDrawElements(m_drawMode, (GLsizei)m_indexDataSize, GL_UNSIGNED_INT, 0);
-	//glBindVertexArray(0); // Array 바인드 해제
+	glBindVertexArray(0); // Array 바인드 해제
 }
