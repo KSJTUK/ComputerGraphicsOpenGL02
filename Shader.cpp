@@ -2,6 +2,7 @@
 #include "pch.h"
 
 Shader::Shader() { }
+
 Shader::~Shader() {
 	SafeDeleteArrayPointer(m_vertexShaderFileContents);
 	SafeDeleteArrayPointer(m_fragmentShaderFileContents);
@@ -13,14 +14,10 @@ Shader::~Shader() {
 void Shader::RoadVertexShaderFile(const char* filePath) {
 	std::fstream vertexFile{ filePath, std::ios::in };
 
-	try {
-		if (!vertexFile.is_open()) {
-			throw "vertex shader file open error";
-		}
+	if (!vertexFile.is_open()) {
+		throw "vertex shader file open error";
 	}
-	catch (std::string expn) {
-		std::cerr << expn << std::endl;
-	}
+
 
 	std::string contents{ };
 	std::string line{ " " };

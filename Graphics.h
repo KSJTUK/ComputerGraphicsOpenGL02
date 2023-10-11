@@ -12,7 +12,7 @@ private:
 
 	std::unique_ptr<class Camera> m_camera{ };
 
-	std::unique_ptr<class Model> m_model{ };
+	std::unique_ptr<class ModelList> m_modelList{ };
 
 public:
 	void Render();
