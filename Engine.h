@@ -26,14 +26,9 @@ public:
 private:
 	WIN_INFO m_windowInfo;
 
-	std::unique_ptr<class Shader> m_shader{ nullptr };
-	std::unique_ptr<class Renderer> m_renderer{ nullptr };
 	std::unique_ptr<class Timer> m_timer{ nullptr };
 
 	float m_deltaTime{ };
-
-	// test 용
-	class Mesh* testMesh{ };
 
 private:
 	// 멤버함수 내에서만 쓰일 함수들 정의

@@ -3,10 +3,10 @@
 #include <vector>
 
 // VAO, VBO, EBO를 바인딩해서 삼각형을 그려줄 클래스
-class Renderer {
+class GraphicBuffers {
 public:
-	Renderer();
-	~Renderer();
+	GraphicBuffers();
+	~GraphicBuffers();
 
 private:
 	// Vertex Buffer Object ID
@@ -35,8 +35,8 @@ public:
 
 	void SetTransformMat(glm::mat4&& trans);
 
-	void SetVerticis(const Vertex* verticies, unsigned int dataSize);
-	void SetVerticis(const std::vector<Vertex>& verticies);
+	void SetVerticies(const Vertex* verticies, unsigned int dataSize);
+	void SetVerticies(const std::vector<Vertex>& verticies);
 
 	void SetIndexBuffer(unsigned int* indexBuffer, size_t bufferSize);
 	void SetIndexBuffer(const std::vector<unsigned int>& indicies);

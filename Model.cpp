@@ -5,27 +5,13 @@
 #include <sstream>
 #include <vector>
 
-Mesh::Mesh(class Renderer* renderer) {
-	ReadObject("skull.obj");
-
-	glm::mat4 iMat{ 1.f };
-	glm::mat4 s = glm::scale(iMat, glm::vec3{ 0.05f, 0.05f, 0.05f });
-	glm::mat4 t = glm::translate(iMat, glm::vec3{ 0.f, 0.f, -10.f });
-	glm::mat4 r = glm::rotate(iMat, glm::radians(-90.f), glm::vec3(1.f, 0.f, 0.f));
-
-	glm::mat4 tr = s * r * t;
-
-	// test line draw
-	renderer->SetDrawMode(GL_LINE_LOOP);
-
-	renderer->SetVerticis(m_verticies);
-	renderer->SetIndexBuffer(m_vertexIndicies);
-	renderer->SetTransformMat(tr);
+Model::Model(const std::string& objectFilePath) {
+	ReadObject(objectFilePath.c_str());
 }
 
-Mesh::~Mesh() { }
+Model::~Model() { }
 
-void Mesh::ReadObject(const char* filePath) {
+void Model::ReadObject(const char* filePath) {
 	std::ifstream objFile{ filePath, std::ios::in };
 
 	std::vector<unsigned int> indiciesVec[3]{ }; // cnt: 0 == vertex, 1 == texture, 2 == nomal
@@ -83,7 +69,7 @@ void Mesh::ReadObject(const char* filePath) {
 	m_textureIndicies = indiciesVec[2];
 }
 
-void Mesh::TestPrint(std::vector<glm::vec3>& verticies, std::vector<unsigned int>& indicies) {
+void Model::TestPrint(std::vector<glm::vec3>& verticies, std::vector<unsigned int>& indicies) {
 	size_t vertexSize = m_verticies.size();
 	for (size_t i = 0; i < vertexSize; ++i) {
 		std::cout << "vertex[" << i << "]: " << 
@@ -105,10 +91,21 @@ void Mesh::TestPrint(std::vector<glm::vec3>& verticies, std::vector<unsigned int
 	}
 }
 
-void Mesh::Update() {
-
+glm::mat4 Model::GetModelTransformMat() const {
+	return m_modelTransform;
 }
 
-void Mesh::Render(class Renderer* renderer) {
-	renderer->Render();
+void Model::Init(unsigned int shaderProgramID) {
+	m_renderer = std::make_unique<class Renderer>();
+	m_renderer->Init(shaderProgramID);
+
+	m_renderer->SetVerticies(m_verticies);
+	m_renderer->SetIndexBuffer(m_vertexIndicies);
+}
+
+void Model::Update() {
+}
+
+void Model::Render() {
+	m_renderer->SetTransformMat(m_modelTransform);
 }

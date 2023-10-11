@@ -14,6 +14,9 @@ private:
 	glm::vec3 m_AT{ 0.f, 0.f, -1.f };
 	glm::vec3 m_UP{ 0.f, 1.f, 0.f };
 
+	// ºäº¯È¯ Çà·Ä
+	glm::mat4 m_view{ 1.f };
+
 public:
 	void Init();
 	void Update();

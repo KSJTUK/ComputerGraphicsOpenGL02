@@ -2,16 +2,19 @@
 #include "vertex_info.h"
 #include <vector>
 #include <memory>
+#include <string>
 
 class Mesh {
 public:
-	Mesh(class Renderer* renderer);
+	Mesh(const std::string& objectFilePath);
 	~Mesh();
 
 	Mesh(const Mesh& other) = delete;
 	Mesh* operator=(const Mesh& other) = delete;
 
 private:
+	std::unique_ptr<class Renderer> m_renderer{ };
+
 	std::vector<Vertex> m_verticies{ };
 
 	std::vector<unsigned int> m_vertexIndicies{ };
@@ -21,16 +24,14 @@ private:
 	void ReadObject(const char* filePath);
 	void TestPrint(std::vector<glm::vec3>& verticies, std::vector<unsigned int>& indicies);
 
-	// test
-	float m_xRad{ };
-	float m_yRad{ };
-	float m_zRad{ };
-
-	glm::mat4 m_scale{ 1.f };
-	glm::mat4 m_rotate{ 1.f };
-	glm::mat4 trans{ 1.f };
+private:
+	glm::mat4 m_modelTransform{ 1.f };
 
 public:
+	glm::mat4 GetModelTransformMat() const;
+
+public:
+	void Init(unsigned int shaderProgramID);
 	void Update();
-	void Render(class Renderer* renderer);
+	void Render();
 };

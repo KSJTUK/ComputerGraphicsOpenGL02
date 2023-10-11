@@ -4,4 +4,5 @@ void Camera::Init() {
 }
 
 void Camera::Update() {
+
 }

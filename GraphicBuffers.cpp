@@ -1,14 +1,14 @@
-﻿#include "Renderer.h"
+﻿#include "GraphicBuffers.h"
 
-Renderer::Renderer() : m_drawMode{ GL_TRIANGLES } { }
+GraphicBuffers::GraphicBuffers() : m_drawMode{ GL_TRIANGLES } { }
 
-Renderer::~Renderer() {
+GraphicBuffers::~GraphicBuffers() {
 	glDeleteVertexArrays(1, &m_vertexArray);
 	glDeleteBuffers(1, &m_elementBuffer);
 	glDeleteBuffers(1, &m_vertexBuffer);
 }
 
-void Renderer::Init(unsigned int shaderProgramID) {
+void GraphicBuffers::Init(unsigned int shaderProgramID) {
 	// VAO 객체 생성 및 바인드
 	// VBO 객체 생성 및 바인드
 	glGenVertexArrays(1, &m_vertexArray);
@@ -29,15 +29,15 @@ void Renderer::Init(unsigned int shaderProgramID) {
 }
 
 
-void Renderer::SetTransformMat(glm::mat4& trans) {
+void GraphicBuffers::SetTransformMat(glm::mat4& trans) {
 	glUniformMatrix4fv(m_modelTransformLocation, 1, GL_FALSE, glm::value_ptr(trans));
 }
 
-void Renderer::SetTransformMat(glm::mat4&& trans) {
+void GraphicBuffers::SetTransformMat(glm::mat4&& trans) {
 	glUniformMatrix4fv(m_modelTransformLocation, 1, GL_FALSE, glm::value_ptr(trans));
 }
 
-void Renderer::SetVerticis(const Vertex* const verticies, unsigned int dataSize) {
+void GraphicBuffers::SetVerticies(const Vertex* const verticies, unsigned int dataSize) {
 	m_vertexDataSize = dataSize;
 	// Vertex객체의 정보를 VBO에 넘겨줌
 	glBufferData(GL_ARRAY_BUFFER, dataSize * sizeof(Vertex), verticies, GL_STATIC_DRAW);
@@ -51,7 +51,7 @@ void Renderer::SetVerticis(const Vertex* const verticies, unsigned int dataSize)
 	glEnableVertexAttribArray(1);
 }
 
-void Renderer::SetVerticis(const std::vector<Vertex>& verticies) {
+void GraphicBuffers::SetVerticies(const std::vector<Vertex>& verticies) {
 	m_vertexDataSize = verticies.size();
 	// Vertex객체의 정보를 VBO에 넘겨줌
 	glBufferData(GL_ARRAY_BUFFER, m_vertexDataSize * sizeof(Vertex), &verticies[0], GL_STATIC_DRAW);
@@ -65,22 +65,22 @@ void Renderer::SetVerticis(const std::vector<Vertex>& verticies) {
 	glEnableVertexAttribArray(1);
 }
 
-void Renderer::SetIndexBuffer(unsigned int* indexBuffer, size_t bufferSize) {
+void GraphicBuffers::SetIndexBuffer(unsigned int* indexBuffer, size_t bufferSize) {
 	// 인덱스 버퍼 내용 저장
 	m_indexDataSize = bufferSize;
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, bufferSize * sizeof(unsigned int), indexBuffer, GL_DYNAMIC_DRAW);
 }
 
-void Renderer::SetIndexBuffer(const std::vector<unsigned int>& indicies) {
+void GraphicBuffers::SetIndexBuffer(const std::vector<unsigned int>& indicies) {
 	m_indexDataSize = indicies.size();
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indexDataSize * sizeof(unsigned int), &indicies[0], GL_DYNAMIC_DRAW);
 }
 
-void Renderer::SetDrawMode(unsigned int mode) {
+void GraphicBuffers::SetDrawMode(unsigned int mode) {
 	m_drawMode = mode;
 }
 
-void Renderer::Render() {
+void GraphicBuffers::Render() {
 	// shaderProgram 에서 UseProgram을 활성화 했다는 가정하에 수행
 	glBindVertexArray(m_vertexArray);
 	glDrawElements(m_drawMode, (GLsizei)m_indexDataSize, GL_UNSIGNED_INT, 0);
