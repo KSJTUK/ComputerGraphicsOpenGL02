@@ -21,6 +21,10 @@ void Graphics::SetPerspectiveMat() {
 	m_shader->SetPerspectiveMat(glm::perspective(glm::radians(halfFovy), aspect, m_near, m_far));
 }
 
+void Graphics::CameraMove(const glm::vec3& moveVec) {
+	m_camera->Move(moveVec);
+}
+
 void Graphics::Init() {
 	// 쉐이더 프로그램 생성
 	m_shader = std::make_unique<Shader>();
@@ -45,7 +49,8 @@ void Graphics::Init() {
 }
 
 void Graphics::Update(float deltaTime) {
-	// m_camera->Update(deltaTime);
+	m_deltaTime = deltaTime;
+	m_camera->Update(deltaTime);
 }
 
 void Graphics::Render() {

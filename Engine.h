@@ -37,12 +37,19 @@ public:
 public:
 	// 기본 멤버 객체들 생성, 윈도우 생성, 콜백함수 설정등을 하는 함수
 	void Init(int*, char**);
+
 	// reshape콜백 함수가 불려올때 윈도우 크기를 변경할 함수
 	void ReSizeWindow(int, int);
+
 	// 게임 로직 업데이트 함수
 	void Update();
+
 	// 렌더링 명령 함수
 	void Render();
+
+	// 키 입력을 내부적으로 처리할 함수
+	void Input(unsigned char key);
+
 	// 게임 루프함수
 	void Loop();
 	// 게임 종료함수

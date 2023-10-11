@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include "gl_headers.h"
 #include <memory>
 
 class Graphics {
@@ -24,6 +25,9 @@ private:
 	float m_near{ 0.1f };           // 시야 절두체의 가까운 평면과의 거리
 	float m_far{ 100.f };           // 시야 절두체의 먼 평면과의 거리
 
+	// 업데이트를 위한 시간값 저장
+	float m_deltaTime{ };
+
 public:
 	// getter
 
@@ -33,6 +37,10 @@ public:
 	// setter
 	void SetWindowInfo(std::shared_ptr<struct WindowInfo>& winInfo);
 	void SetPerspectiveMat();
+
+public:
+	// 외부 키 입력 이벤트에 의해 수행될 카메라 업데이트 함수들
+	void CameraMove(const glm::vec3& moveVec);
 
 public:
 	void Init();

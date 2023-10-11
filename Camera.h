@@ -17,12 +17,21 @@ private:
 	// 뷰변환 행렬
 	glm::mat4 m_view{ 1.f };
 
+	// 카메라 업데이트를 위한 시간 값 저장
+	float m_deltaTime{ };
+
+	// 카메라 움직임을 위한 변수들
+	float m_moveSpeed{ 20.f };
+
 public:
 	glm::mat4 GetViewMat() const;
 
 public:
+	void Move(const glm::vec3& moveVec);
+
+public:
 	void Init();
-	void Update();
+	void Update(float deltaTime);
 	void Render();
 };
 

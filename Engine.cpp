@@ -115,6 +115,26 @@ void Engine::Render() {
 	m_grapics->Render();
 }
 
+void Engine::Input(unsigned char key) {
+	switch (key) {
+	case 'w':
+		m_grapics->CameraMove(glm::vec3{ 0.f, 0.f, 1.f });
+		break;
+
+	case 'a':
+		m_grapics->CameraMove(glm::vec3{ -1.f, 0.f, 0.f });
+		break;
+
+	case 's':
+		m_grapics->CameraMove(glm::vec3{ 0.f, 0.f, -1.f });
+		break;
+
+	case 'd':
+		m_grapics->CameraMove(glm::vec3{ 1.f, 0.f, 0.f });
+		break;
+	}
+}
+
 
 
 
