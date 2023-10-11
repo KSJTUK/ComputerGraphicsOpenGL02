@@ -35,6 +35,7 @@ void idleFunc()
 
 void keyboardFunc(unsigned char key, int x, int y)
 {
+	e.Input(key);
 }
 
 void keyboardUpFunc(unsigned char key, int x, int y)

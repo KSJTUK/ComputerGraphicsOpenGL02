@@ -5,7 +5,7 @@
 
 class Mesh {
 public:
-	Mesh(std::shared_ptr<class Renderer>& renderer);
+	Mesh(std::shared_ptr<class Renderer>& renderer, const char* objFilePath);
 	~Mesh();
 
 	Mesh(const Mesh& other) = delete;
@@ -17,6 +17,8 @@ private:
 	std::vector<Vertex> m_verticies{ };
 
 	std::vector<unsigned int> m_vertexIndicies{ };
+	std::vector<unsigned int> m_drawVertexIndicies{ };
+
 	std::vector<unsigned int> m_vertexNormalIndicies{ };
 	std::vector<unsigned int> m_textureIndicies{ };
 
@@ -39,6 +41,9 @@ public:
 
 public:
 	void RenderingFace(int faceIndex);
+	void RenderingFace(unsigned int faceIdx, unsigned int faceVertexSize);
 
-	void RenderSideFace(int faceIndex);
+	void RenderingTwoFace(int faceIndex1, int faceIndex2, unsigned int faceVertexSize);
+
+	void ResetRender();
 };

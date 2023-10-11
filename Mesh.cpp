@@ -5,24 +5,10 @@
 #include <sstream>
 #include <vector>
 
-Mesh::Mesh(std::shared_ptr<Renderer>& renderer) {
+Mesh::Mesh(std::shared_ptr<Renderer>& renderer, const char* objFilePath) {
 	m_renderer = renderer;
 
-	ReadObject("skull.obj");
-
-	glm::mat4 iMat{ 1.f };
-	glm::mat4 s = glm::scale(iMat, glm::vec3{ 0.05f, 0.05f, 0.05f });
-	glm::mat4 t = glm::translate(iMat, glm::vec3{ 0.f, 0.f, -10.f });
-	glm::mat4 r = glm::rotate(iMat, glm::radians(-90.f), glm::vec3(1.f, 0.f, 0.f));
-
-	glm::mat4 tr = s * r * t;
-
-	// test line draw
-	renderer->SetDrawMode(GL_LINE_LOOP);
-
-	renderer->SetVerticis(m_verticies);
-	renderer->SetIndexBuffer(m_vertexIndicies);
-	renderer->SetTransformMat(tr);
+	ReadObject(objFilePath);
 }
 
 Mesh::~Mesh() { }
@@ -80,8 +66,13 @@ void Mesh::ReadObject(const char* filePath) {
 		}
 	}
 
+	for (auto& v : m_verticies) {
+		v.color = glm::vec3{ glm::linearRand(0.f, 1.f), glm::linearRand(0.f, 1.f), glm::linearRand(0.f, 1.f) };
+	}
+
 	m_vertexIndicies = indiciesVec[0];
 	m_vertexNormalIndicies = indiciesVec[1];
+	m_drawVertexIndicies = indiciesVec[0];
 	m_textureIndicies = indiciesVec[2];
 }
 
@@ -107,18 +98,55 @@ void Mesh::TestPrint(std::vector<glm::vec3>& verticies, std::vector<unsigned int
 	}
 }
 
+void Mesh::RenderingFace(unsigned int faceIdx, unsigned int faceVertexSize) {
+	m_drawVertexIndicies.clear();
+	for (auto i = 0; i < faceVertexSize; ++i) {
+		m_drawVertexIndicies.push_back(m_vertexIndicies[faceIdx * faceVertexSize + i]);
+	}
+}
+
+void Mesh::RenderingTwoFace(int faceIndex1, int faceIndex2, unsigned int faceVertexSize) {
+	m_drawVertexIndicies.clear();
+	int f1{ faceIndex1 }, f2{ faceIndex2 };
+	if (f1 > f2) {
+		std::swap(f1, f2);
+	}
+	else if (f1 == f2) {
+		f2 = (f2 + 2) % faceVertexSize;
+	}
+
+	for (auto i = 0; i < faceVertexSize; ++i) {
+		m_drawVertexIndicies.push_back(m_vertexIndicies[f1 * faceVertexSize + i]);
+	}
+
+	for (auto i = 0; i < faceVertexSize; ++i) {
+		m_drawVertexIndicies.push_back(m_vertexIndicies[f2 * faceVertexSize + i]);
+	}
+}
+
+void Mesh::ResetRender() {
+	m_drawVertexIndicies = m_vertexIndicies;
+}
+
 void Mesh::Update() {
 
 }
 
 void Mesh::Render() {
+	glm::mat4 iMat{ 1.f };
+	glm::mat4 s = glm::scale(iMat, glm::vec3{ 0.5f, 0.5f, 0.5f });
+	glm::mat4 t = glm::translate(iMat, glm::vec3{ 0.f, 0.f, 0.f });
+	glm::mat4 r = glm::rotate(iMat, glm::radians(10.f), glm::vec3(1.f, 0.f, 0.f));
+	r = glm::rotate(r, glm::radians(-10.f), glm::vec3(0.f, 1.f, 0.f));
+
+	glm::mat4 tr = s * r * t;
+
+	// test line draw
+	m_renderer->SetDrawMode(GL_TRIANGLES);
+
+	m_renderer->SetVerticis(m_verticies);
+	m_renderer->SetIndexBuffer(m_drawVertexIndicies);
+	m_renderer->SetTransformMat(tr);
+
 	m_renderer->Render();
-}
-
-void Mesh::RenderingFace(int faceIndex) {
-	unsigned int* faceIndicies = new unsigned int[6];
-
-	memcpy(faceIndicies, &m_vertexIndicies[0] + (faceIndex * 6), 6 * sizeof(unsigned int));
-
-	m_renderer->SetIndexBuffer(faceIndicies, 6);
 }

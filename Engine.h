@@ -33,7 +33,11 @@ private:
 	float m_deltaTime{ };
 
 	// test 용
-	class Mesh* testMesh{ };
+	std::shared_ptr<class Mesh> m_cubeModel{ };
+	std::shared_ptr<class Mesh> m_coneModel{ };
+
+	class Cube* m_cube{ };
+	class Cone* m_cone{ };
 
 private:
 	// 멤버함수 내에서만 쓰일 함수들 정의
@@ -62,6 +66,8 @@ public:
 	void Loop();
 	// 게임 종료함수
 	void LoopEnd();
+
+	void Input(unsigned char key);
 
 
 

@@ -3,6 +3,8 @@
 #include "call_backs.h"
 #include "Camera.h"
 #include "Shader.h"
+#include "Cone.h"
+#include "Cube.h"
 #include "Renderer.h"
 #include "Timer.h"
 #include "Mesh.h"
@@ -79,10 +81,13 @@ void Engine::Init(int* argc, char** argv) {
 	m_renderer = std::make_shared<Renderer>();
 	m_renderer->Init(m_shader->GetShaderProgramID());
 
-	m_camera = std::make_unique<Camera>();
-
 	m_shader->UseProgram();
-	testMesh = new Mesh{ m_renderer };
+	m_cubeModel = std::make_shared<class Mesh>(m_renderer, "cube.obj");
+
+	//m_coneModel = std::make_shared<class Mesh>(m_renderer, "cone.obj");
+
+	m_cube = new Cube{ m_cubeModel };
+	//m_cone = new Cone{ m_coneModel };
 }
 
 void Engine::ReSizeWindow(int w, int h) {
@@ -95,12 +100,11 @@ void Engine::ReSizeWindow(int w, int h) {
 void Engine::Update() {
 	m_timer->Update();
 	m_deltaTime = m_timer->GetDeltaTime();
-	testMesh->Update();
 }
 
 void Engine::Render() {
 	m_shader->UseProgram();
-	testMesh->Render();
+	m_cube->Render();
 }
 
 
@@ -147,4 +151,44 @@ void Engine::Loop() {
 
 void Engine::LoopEnd() {
 	glutLeaveMainLoop();
+}
+
+void Engine::Input(unsigned char key) {
+	switch (key) {
+	case '1':
+		m_cube->RenderFace(1);
+		break;
+
+	case '2':
+		m_cube->RenderFace(2);
+		break;
+
+	case '3':
+		m_cube->RenderFace(3);
+		break;
+
+	case '4':
+		m_cube->RenderFace(4);
+		break;
+
+	case '5':
+		m_cube->RenderFace(5);
+		break;
+
+	case '6':
+		m_cube->RenderFace(6);
+		break;
+
+	case 'r':
+		m_cube->ResetRender();
+		break;
+
+	case 'c':
+		m_cube->RenderTwoFace(glm::linearRand(1, 6), glm::linearRand(1, 6));
+		break;
+
+	default:
+		break;
+
+	}
 }
