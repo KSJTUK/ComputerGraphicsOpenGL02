@@ -112,4 +112,5 @@ void Model::Update() {
 
 void Model::Render() {
 	m_graphicsBuffer->SetTransformMat(m_modelTransform);
+	m_graphicsBuffer->Render();
 }

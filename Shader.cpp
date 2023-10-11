@@ -36,13 +36,8 @@ void Shader::RoadVertexShaderFile(const char* filePath) {
 void Shader::RoadFragmentShaderFile(const char* filePath) {
 	std::fstream fragmentFile{ filePath, std::ios::in };
 
-	try {
-		if (!fragmentFile.is_open()) {
-			throw "fragment shader file open error";
-		}
-	}
-	catch (std::string expn) {
-		std::cerr << expn << std::endl;
+	if (!fragmentFile.is_open()) {
+		throw "fragment shader file open error";
 	}
 
 	std::string contents{ };

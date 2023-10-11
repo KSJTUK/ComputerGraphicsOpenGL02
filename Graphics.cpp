@@ -23,6 +23,8 @@ void Graphics::Init() {
 	m_modelList->Init(m_shader->GetShaderProgramID());
 
 	m_modelList->LoadModel("cube.obj");
+
+	testModel = m_modelList->GetModel("cube").get();
 }
 
 void Graphics::Update(float deltaTime) {
@@ -33,7 +35,7 @@ void Graphics::Render() {
 	m_shader->UseProgram();
 
 	// 변환 행렬들 계산
-
+	testModel->Render();
 	
 	// rendering code 
 }

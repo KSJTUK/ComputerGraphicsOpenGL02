@@ -2,6 +2,7 @@
 #include "Engine.h"
 #include "call_backs.h"
 #include "Timer.h"
+#include "Graphics.h"
 
 Engine::Engine() {
 	m_windowInfo.x = 100;
@@ -67,6 +68,9 @@ void Engine::Init(int* argc, char** argv) {
 	// 타이머 초기화
 	m_timer = std::make_unique<Timer>();
 	m_timer->Init();
+
+	m_grapics = std::make_unique<Graphics>();
+	m_grapics->Init();
 }
 
 void Engine::ReSizeWindow(int w, int h) {
@@ -79,9 +83,11 @@ void Engine::ReSizeWindow(int w, int h) {
 void Engine::Update() {
 	m_timer->Update();
 	m_deltaTime = m_timer->GetDeltaTime();
+	m_grapics->Update(m_deltaTime);
 }
 
 void Engine::Render() {
+	m_grapics->Render();
 }
 
 

@@ -33,9 +33,6 @@
     <ClCompile Include="Timer.cpp">
       <Filter>소스 파일\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicBuffers.cpp">
-      <Filter>소스 파일\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -60,21 +57,18 @@
     <ClCompile Include="Object.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="GraphicBuffers.cpp">
+      <Filter>소스 파일\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
-      <Filter>헤더 파일\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicBuffers.h">
       <Filter>헤더 파일\Engine</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>헤더 파일\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
-      <Filter>헤더 파일\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
       <Filter>헤더 파일\Engine</Filter>
     </ClInclude>
     <ClInclude Include="call_backs.h">
@@ -100,6 +94,12 @@
     </ClInclude>
     <ClInclude Include="vertex_info.h">
       <Filter>헤더 파일\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicBuffers.h">
+      <Filter>헤더 파일\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>헤더 파일\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

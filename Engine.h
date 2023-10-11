@@ -27,6 +27,7 @@ private:
 	WIN_INFO m_windowInfo;
 
 	std::unique_ptr<class Timer> m_timer{ nullptr };
+	std::unique_ptr<class Graphics> m_grapics{ nullptr };
 
 	float m_deltaTime{ };
 

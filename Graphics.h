@@ -17,6 +17,9 @@ private:
 public:
 	// getter
 
+	// 테스트용
+	class Model* testModel{ };
+
 public:
 	void Init();
 	void Update(float deltaTime);
