@@ -1,10 +1,7 @@
 #include "pch.h"
 #include "Engine.h"
 #include "call_backs.h"
-#include "Shader.h"
-#include "Renderer.h"
 #include "Timer.h"
-#include "Mesh.h"
 
 Engine::Engine() {
 	m_windowInfo.x = 100;
@@ -70,16 +67,6 @@ void Engine::Init(int* argc, char** argv) {
 	// 타이머 초기화
 	m_timer = std::make_unique<Timer>();
 	m_timer->Init();
-
-	// 쉐이더 프로그램 초기화
-	m_shader = std::make_unique<Shader>();
-	m_shader->CreateShaderProgram();
-
-	m_renderer = std::make_unique<Renderer>();
-	m_renderer->Init(m_shader->GetShaderProgramID());
-
-	m_shader->UseProgram();
-	testMesh = new Mesh{ m_renderer.get() };
 }
 
 void Engine::ReSizeWindow(int w, int h) {
@@ -92,12 +79,9 @@ void Engine::ReSizeWindow(int w, int h) {
 void Engine::Update() {
 	m_timer->Update();
 	m_deltaTime = m_timer->GetDeltaTime();
-	testMesh->Update();
 }
 
 void Engine::Render() {
-	m_shader->UseProgram();
-	testMesh->Render(m_renderer.get());
 }
 
 

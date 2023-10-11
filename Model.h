@@ -4,21 +4,31 @@
 #include <memory>
 #include <string>
 
-class Mesh {
+class Model {
 public:
-	Mesh(const std::string& objectFilePath);
-	~Mesh();
+	Model(const std::string& objectFilePath);
+	~Model();
 
-	Mesh(const Mesh& other) = delete;
-	Mesh* operator=(const Mesh& other) = delete;
+	Model(const Model& other) = delete;
+	Model* operator=(const Model& other) = delete;
 
 private:
-	std::unique_ptr<class Renderer> m_renderer{ };
+	// VAO, VBO, EBO를 가지는 객체
+	std::unique_ptr<class GraphicBuffers> m_graphicsBuffer{ };
 
+	// 정점 속성들을 저장할 vector
 	std::vector<Vertex> m_verticies{ };
 
+	// 정점 노멀들을 저장할 vector
+	std::vector<glm::vec3> m_vertexNormals{ };
+
+	// 정점에 대한 인덱스를 저장할 vector
 	std::vector<unsigned int> m_vertexIndicies{ };
+
+	// 정점 노멀에 대한 인덱스를 저장할 vector
 	std::vector<unsigned int> m_vertexNormalIndicies{ };
+
+	// 텍스처 좌표 인덱스를 저장할 vector
 	std::vector<unsigned int> m_textureIndicies{ };
 
 	void ReadObject(const char* filePath);

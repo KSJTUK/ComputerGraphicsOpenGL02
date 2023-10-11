@@ -27,7 +27,7 @@
     <ClCompile Include="Timer.cpp">
       <Filter>소스 파일\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer.cpp">
+    <ClCompile Include="GraphicBuffers.cpp">
       <Filter>소스 파일\Engine</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -42,7 +42,7 @@
     <ClCompile Include="Object.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
+    <ClCompile Include="Model.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
@@ -56,7 +56,7 @@
     <ClInclude Include="Engine.h">
       <Filter>헤더 파일\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h">
+    <ClInclude Include="GraphicBuffers.h">
       <Filter>헤더 파일\Engine</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
@@ -77,7 +77,7 @@
     <ClInclude Include="vertex_info.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
+    <ClInclude Include="Model.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="gl_headers.h">

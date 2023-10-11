@@ -1,5 +1,5 @@
-#include "Mesh.h"
-#include "Renderer.h"
+#include "Model.h"
+#include "GraphicBuffers.h"
 #include "pch.h"
 #include <fstream>
 #include <sstream>
@@ -27,7 +27,11 @@ void Model::ReadObject(const char* filePath) {
 		std::string delTag{ };     // 앞에 있는 v, vn, f와 같은 태그 제거용
 
 		if (line[0] == 'v') {              // 맨 앞 문자가 v이면 정점에 대한 정보이다
-			if (line[1] == 'n');           // vn == 정점 노멀
+			if (line[1] == 'n') {          // vn == 정점 노멀
+				glm::vec3 tempVec{ };      // 정점 노멀 저장
+				sstream >> delTag >> tempVec.x >> tempVec.y >> tempVec.z;
+				m_vertexNormals.push_back(tempVec);
+			}
 			else if (line[1] == 't');      // vt == 텍스쳐 좌표
 			else if (line[1] == ' ') {     // v == 정점 좌표
 				glm::vec3 tempVec{ };      // 정점 좌표 저장
@@ -96,16 +100,16 @@ glm::mat4 Model::GetModelTransformMat() const {
 }
 
 void Model::Init(unsigned int shaderProgramID) {
-	m_renderer = std::make_unique<class Renderer>();
-	m_renderer->Init(shaderProgramID);
+	m_graphicsBuffer = std::make_unique<class GraphicBuffers>();
+	m_graphicsBuffer->Init(shaderProgramID);
 
-	m_renderer->SetVerticies(m_verticies);
-	m_renderer->SetIndexBuffer(m_vertexIndicies);
+	m_graphicsBuffer->SetVerticies(m_verticies);
+	m_graphicsBuffer->SetIndexBuffer(m_vertexIndicies);
 }
 
 void Model::Update() {
 }
 
 void Model::Render() {
-	m_renderer->SetTransformMat(m_modelTransform);
+	m_graphicsBuffer->SetTransformMat(m_modelTransform);
 }
