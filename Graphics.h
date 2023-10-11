@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <memory>
 
@@ -15,7 +15,11 @@ private:
 	std::unique_ptr<class ModelList> m_modelList{ };
 
 public:
-	void Render();
+	// getter
 
+public:
+	void Init();
+	void Update(float deltaTime);
+	void Render();
 };
 
