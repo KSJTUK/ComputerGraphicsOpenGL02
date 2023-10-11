@@ -7,6 +7,7 @@ ModelList::~ModelList() { }
 
 std::string MakeStringToKey(const std::string& str) {
 	std::string key = str.substr(0, str.find('.'));
+	return key;
 }
 
 void ModelList::Init(unsigned int shaderProgramID) {

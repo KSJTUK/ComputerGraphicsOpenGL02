@@ -78,13 +78,13 @@ void Shader::CompileShaders() {
 	glGetShaderiv(m_vertexShader, GL_COMPILE_STATUS, &result);
 	if (!result) {
 		glGetShaderInfoLog(m_vertexShader, sizeof(errLog), NULL, errLog);
-		std::cout << "vertex shader 컴파일 에러: " << errLog << std::endl;
+		throw std::string{ "vertex shader 컴파일 에러: " + std::string{ errLog } };
 	}
 
 	glGetShaderiv(m_fragmentShader, GL_COMPILE_STATUS, &result);
 	if (!result) {
 		glGetShaderInfoLog(m_fragmentShader, sizeof(errLog), NULL, errLog);
-		std::cout << "fragment shader 컴파일 에러: " << errLog << std::endl;
+		throw std::string{ "fragment shader 컴파일 에러: " + std::string{ errLog } };
 	}
 }
 
@@ -99,7 +99,7 @@ void Shader::AttachAndLinkShaders() {
 	int result{ };
 	glGetProgramiv(m_shaderProgram, GL_LINK_STATUS, &result);
 	if (!result) {
-		std::cerr << "Shaders are not Linked" << std::endl;
+		throw "Shaders are not Linked";
 	}
 }
 

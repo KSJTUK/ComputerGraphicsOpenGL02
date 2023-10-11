@@ -1,12 +1,12 @@
 #pragma once
 
-#include <memory>
 #include "gl_headers.h"
+#include <memory>
 
 class Camera {
 public:
-	Camera();
-	~Camera();
+	Camera() { } 
+	~Camera() { } 
 
 private:
 	// 카메라의 내부 파라미터

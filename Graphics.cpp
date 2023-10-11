@@ -15,7 +15,7 @@ void Graphics::Init() {
 	m_shader->CreateShaderProgram();
 
 	// 카메라 생성
-	m_camera = std::make_unique<Camera>();
+	//m_camera = std::make_unique<Camera>();
 	//m_camera->Init(m_shader->GetShaderProgramID)
 
 	// 모델리스트를 생성하고 모델 불러오기
@@ -33,6 +33,7 @@ void Graphics::Render() {
 	m_shader->UseProgram();
 
 	// 변환 행렬들 계산
-	// 
+
+	
 	// rendering code 
 }
