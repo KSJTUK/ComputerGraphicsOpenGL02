@@ -25,6 +25,14 @@ void Graphics::CameraMove(const glm::vec3& moveVec) {
 	m_camera->Move(moveVec);
 }
 
+void Graphics::CameraViewPointFix() {
+	m_camera->ViewPointFix();
+}
+
+void Graphics::CameraViewPointUnFix() {
+	m_camera->ViewPointUnFix();
+}
+
 void Graphics::Init() {
 	// 쉐이더 프로그램 생성
 	m_shader = std::make_unique<Shader>();

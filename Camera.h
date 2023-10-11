@@ -23,8 +23,15 @@ private:
 	// 카메라 움직임을 위한 변수들
 	float m_moveSpeed{ 20.f };
 
+	float m_fixAt{ 0.f };
+
 public:
+	// getter
 	glm::mat4 GetViewMat() const;
+
+	// setter
+	void ViewPointFix();
+	void ViewPointUnFix();
 
 public:
 	void Move(const glm::vec3& moveVec);

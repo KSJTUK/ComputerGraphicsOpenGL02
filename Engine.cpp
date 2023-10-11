@@ -122,7 +122,7 @@ void Engine::Input(unsigned char key) {
 		break;
 
 	case 'a':
-		m_grapics->CameraMove(glm::vec3{ -1.f, 0.f, 0.f });
+		m_grapics->CameraMove(glm::vec3{ 1.f, 0.f, 0.f });
 		break;
 
 	case 's':
@@ -130,7 +130,23 @@ void Engine::Input(unsigned char key) {
 		break;
 
 	case 'd':
-		m_grapics->CameraMove(glm::vec3{ 1.f, 0.f, 0.f });
+		m_grapics->CameraMove(glm::vec3{ -1.f, 0.f, 0.f });
+		break;
+
+	case 'm':
+		m_grapics->CameraMove(glm::vec3{ 0.f, 1.f, 0.f });
+		break;
+
+	case 'n':
+		m_grapics->CameraMove(glm::vec3{ 0.f, -1.f, 0.f });
+		break;
+
+	case 'v':
+		m_grapics->CameraViewPointFix();
+		break;
+
+	case 'b':
+		m_grapics->CameraViewPointUnFix();
 		break;
 	}
 }

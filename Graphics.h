@@ -42,6 +42,9 @@ public:
 	// 외부 키 입력 이벤트에 의해 수행될 카메라 업데이트 함수들
 	void CameraMove(const glm::vec3& moveVec);
 
+	void CameraViewPointFix();
+	void CameraViewPointUnFix();
+
 public:
 	void Init();
 	void Update(float deltaTime);
