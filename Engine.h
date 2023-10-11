@@ -27,7 +27,7 @@ private:
 	WIN_INFO m_windowInfo;
 
 	std::unique_ptr<class Shader> m_shader{ nullptr };
-	std::unique_ptr<class Renderer> m_renderer{ nullptr };
+	std::shared_ptr<class Renderer> m_renderer{ nullptr };
 	std::unique_ptr<class Timer> m_timer{ nullptr };
 
 	float m_deltaTime{ };

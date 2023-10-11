@@ -5,7 +5,9 @@
 #include <sstream>
 #include <vector>
 
-Mesh::Mesh(class Renderer* renderer) {
+Mesh::Mesh(std::shared_ptr<Renderer>& renderer) {
+	m_renderer = renderer;
+
 	ReadObject("skull.obj");
 
 	glm::mat4 iMat{ 1.f };
@@ -109,6 +111,14 @@ void Mesh::Update() {
 
 }
 
-void Mesh::Render(class Renderer* renderer) {
-	renderer->Render();
+void Mesh::Render() {
+	m_renderer->Render();
+}
+
+void Mesh::RenderingFace(int faceIndex) {
+	unsigned int* faceIndicies = new unsigned int[6];
+
+	memcpy(faceIndicies, &m_vertexIndicies[0] + (faceIndex * 6), 6 * sizeof(unsigned int));
+
+	m_renderer->SetIndexBuffer(faceIndicies, 6);
 }

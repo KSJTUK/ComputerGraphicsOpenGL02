@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Engine.h"
 #include "call_backs.h"
+#include "Camera.h"
 #include "Shader.h"
 #include "Renderer.h"
 #include "Timer.h"
@@ -75,11 +76,13 @@ void Engine::Init(int* argc, char** argv) {
 	m_shader = std::make_unique<Shader>();
 	m_shader->CreateShaderProgram();
 
-	m_renderer = std::make_unique<Renderer>();
+	m_renderer = std::make_shared<Renderer>();
 	m_renderer->Init(m_shader->GetShaderProgramID());
 
+	m_camera = std::make_unique<Camera>();
+
 	m_shader->UseProgram();
-	testMesh = new Mesh{ m_renderer.get() };
+	testMesh = new Mesh{ m_renderer };
 }
 
 void Engine::ReSizeWindow(int w, int h) {
@@ -97,7 +100,7 @@ void Engine::Update() {
 
 void Engine::Render() {
 	m_shader->UseProgram();
-	testMesh->Render(m_renderer.get());
+	testMesh->Render();
 }
 
 

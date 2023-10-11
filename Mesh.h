@@ -5,21 +5,20 @@
 
 class Mesh {
 public:
-	Mesh(class Renderer* renderer);
+	Mesh(std::shared_ptr<class Renderer>& renderer);
 	~Mesh();
 
 	Mesh(const Mesh& other) = delete;
 	Mesh* operator=(const Mesh& other) = delete;
 
 private:
+	std::shared_ptr<class Renderer> m_renderer{ };
+
 	std::vector<Vertex> m_verticies{ };
 
 	std::vector<unsigned int> m_vertexIndicies{ };
 	std::vector<unsigned int> m_vertexNormalIndicies{ };
 	std::vector<unsigned int> m_textureIndicies{ };
-
-	void ReadObject(const char* filePath);
-	void TestPrint(std::vector<glm::vec3>& verticies, std::vector<unsigned int>& indicies);
 
 	// test
 	float m_xRad{ };
@@ -31,6 +30,15 @@ private:
 	glm::mat4 trans{ 1.f };
 
 public:
+	void ReadObject(const char* filePath);
+	void TestPrint(std::vector<glm::vec3>& verticies, std::vector<unsigned int>& indicies);
+
+public:
 	void Update();
-	void Render(class Renderer* renderer);
+	void Render();
+
+public:
+	void RenderingFace(int faceIndex);
+
+	void RenderSideFace(int faceIndex);
 };
