@@ -89,6 +89,7 @@ void Engine::Init(int* argc, char** argv) {
 	m_timer->Init();
 
 	m_grapics = std::make_unique<Graphics>();
+	m_grapics->SetWindowInfo(m_windowInfo);
 	m_grapics->Init();
 }
 

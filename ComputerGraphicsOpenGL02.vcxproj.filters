@@ -111,7 +111,10 @@
       <Filter>헤더 파일\Object</Filter>
     </ClInclude>
     <ClInclude Include="Cube.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="window_info.h">
+      <Filter>헤더 파일\Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

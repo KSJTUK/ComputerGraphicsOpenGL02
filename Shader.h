@@ -1,5 +1,7 @@
 #pragma once
 
+#include "gl_headers.h"
+
 class Shader {
 public:
 	Shader();
@@ -24,6 +26,12 @@ public:
 	void AttachAndLinkShaders();
 	void CreateShaderProgram();
 	void UseProgram();
+
+	// 뷰변환 행렬 세팅 함수
+	void SetViewMat(const glm::mat4& viewMat);
+
+	// 투영변환 행렬 세팅 함수
+	void SetPerspectiveMat(const glm::mat4& perspectiveMat);
 
 public:
 	// Getter 함수들

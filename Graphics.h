@@ -21,8 +21,8 @@ private:
 	// 스크린 화면의 크기를 알아내기 위한 WindowInfo객체 참조
 	std::shared_ptr<struct WindowInfo> m_windowInfo{ }; // aspect(종횡비) = width / height
 
-	float m_near{ };           // 시야 절두체의 가까운 평면과의 거리
-	float m_far{ };            // 시야 절두체의 먼 평면과의 거리
+	float m_near{ 0.1f };           // 시야 절두체의 가까운 평면과의 거리
+	float m_far{ 100.f };           // 시야 절두체의 먼 평면과의 거리
 
 public:
 	// getter
@@ -32,6 +32,7 @@ public:
 
 	// setter
 	void SetWindowInfo(std::shared_ptr<struct WindowInfo>& winInfo);
+	void SetPerspectiveMat();
 
 public:
 	void Init();

@@ -8,7 +8,7 @@ extern class Engine e;
 // 그리기 콜백함수
 void renderFunc()
 {
-	glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
+	glClearColor(0.5f, 0.5f, 0.5f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	// rendering function

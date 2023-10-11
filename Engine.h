@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include <memory>
-#include "window_info.h"
 
 class Engine{
 public:
@@ -14,7 +13,7 @@ public:
 	Engine& operator=(const Engine&) = delete;
 
 private:
-	WIN_INFO m_windowInfo;
+	std::shared_ptr<struct WindowInfo> m_windowInfo{ };
 
 	std::unique_ptr<class Timer> m_timer{ nullptr };
 	std::unique_ptr<class Graphics> m_grapics{ nullptr };
@@ -26,10 +25,10 @@ private:
 	void SubscribeCallbacks();
 
 public:
-	size_t GetWindowWidth() const { return m_windowInfo.width; }
-	size_t GetWindowHeight() const { return m_windowInfo.height; }
-	float GetWindowWidthF() const { return m_windowInfo.fWidth; }
-	float GetWindowHeightF() const { return m_windowInfo.fHeight; }
+	size_t GetWindowWidth() const;
+	size_t GetWindowHeight() const;
+	float GetWindowWidthF() const;
+	float GetWindowHeightF() const;
 
 	float GetDeltaTime() const { return m_deltaTime; };
 

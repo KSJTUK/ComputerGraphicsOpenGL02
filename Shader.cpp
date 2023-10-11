@@ -109,3 +109,11 @@ void Shader::CreateShaderProgram() {
 void Shader::UseProgram() {
 	glUseProgram(m_shaderProgram);
 }
+
+void Shader::SetPerspectiveMat(const glm::mat4& perspectiveMat) {
+	unsigned int perspectiveMatLocation = glGetUniformLocation(m_shaderProgram, "perspectiveMat");
+	if (perspectiveMatLocation == -1) {
+		assert(0);
+	}
+	glUniformMatrix4fv(perspectiveMatLocation, 1, GL_FALSE, glm::value_ptr(perspectiveMat));
+}

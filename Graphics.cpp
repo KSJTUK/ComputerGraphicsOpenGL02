@@ -1,5 +1,6 @@
 ﻿#include "Graphics.h"
 #include "gl_headers.h"
+#include "window_info.h"
 #include "Shader.h"
 #include "ModelList.h"
 #include "Camera.h"
@@ -8,6 +9,17 @@
 Graphics::Graphics() { }
 
 Graphics::~Graphics() { }
+
+void Graphics::SetWindowInfo(std::shared_ptr<struct WindowInfo>& winInfo) {
+	m_windowInfo = winInfo;
+}
+
+void Graphics::SetPerspectiveMat() {
+	float aspect = m_windowInfo->fWidth / m_windowInfo->fHeight;
+	float halfFovy = m_fovy / 2.f;
+
+	m_shader->SetPerspectiveMat(glm::perspective(glm::radians(halfFovy), aspect, m_near, m_far));
+}
 
 void Graphics::Init() {
 	// 쉐이더 프로그램 생성
@@ -25,6 +37,8 @@ void Graphics::Init() {
 	m_modelList->LoadModel("cube.obj");
 
 	testModel = m_modelList->GetModel("cube").get();
+
+	SetPerspectiveMat();
 }
 
 void Graphics::Update(float deltaTime) {
