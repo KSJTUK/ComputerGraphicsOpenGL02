@@ -98,21 +98,29 @@ void Mesh::TestPrint(std::vector<glm::vec3>& verticies, std::vector<unsigned int
 	}
 }
 
-void Mesh::RenderingFace(unsigned int faceIdx, unsigned int faceVertexSize) {
+void Mesh::SetPos(glm::vec3& pos) {
+	m_pos = pos;
+}
+
+void Mesh::SetPos(glm::vec3&& pos) {
+	m_pos = pos;
+}
+
+void Mesh::RenderingFace(unsigned int faceIdx, unsigned int faceSize, unsigned int faceVertexSize) {
 	m_drawVertexIndicies.clear();
 	for (auto i = 0; i < faceVertexSize; ++i) {
 		m_drawVertexIndicies.push_back(m_vertexIndicies[faceIdx * faceVertexSize + i]);
 	}
 }
 
-void Mesh::RenderingTwoFace(int faceIndex1, int faceIndex2, unsigned int faceVertexSize) {
+void Mesh::RenderingTwoFace(int faceIndex1, int faceIndex2, unsigned int faceSize, unsigned int faceVertexSize) {
 	m_drawVertexIndicies.clear();
 	int f1{ faceIndex1 }, f2{ faceIndex2 };
 	if (f1 > f2) {
 		std::swap(f1, f2);
 	}
 	else if (f1 == f2) {
-		f2 = (f2 + 2) % faceVertexSize;
+		f2 = (f2 + 2) % faceSize;
 	}
 
 	for (auto i = 0; i < faceVertexSize; ++i) {
@@ -135,7 +143,7 @@ void Mesh::Update() {
 void Mesh::Render() {
 	glm::mat4 iMat{ 1.f };
 	glm::mat4 s = glm::scale(iMat, glm::vec3{ 0.5f, 0.5f, 0.5f });
-	glm::mat4 t = glm::translate(iMat, glm::vec3{ 0.f, 0.f, 0.f });
+	glm::mat4 t = glm::translate(iMat, m_pos);
 	glm::mat4 r = glm::rotate(iMat, glm::radians(10.f), glm::vec3(1.f, 0.f, 0.f));
 	r = glm::rotate(r, glm::radians(-10.f), glm::vec3(0.f, 1.f, 0.f));
 

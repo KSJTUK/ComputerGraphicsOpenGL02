@@ -84,10 +84,10 @@ void Engine::Init(int* argc, char** argv) {
 	m_shader->UseProgram();
 	m_cubeModel = std::make_shared<class Mesh>(m_renderer, "cube.obj");
 
-	//m_coneModel = std::make_shared<class Mesh>(m_renderer, "cone.obj");
+	m_coneModel = std::make_shared<class Mesh>(m_renderer, "cone.obj");
 
 	m_cube = new Cube{ m_cubeModel };
-	//m_cone = new Cone{ m_coneModel };
+	m_cone = new Cone{ m_coneModel };
 }
 
 void Engine::ReSizeWindow(int w, int h) {
@@ -105,6 +105,7 @@ void Engine::Update() {
 void Engine::Render() {
 	m_shader->UseProgram();
 	m_cube->Render();
+	m_cone->Render();
 }
 
 
@@ -179,12 +180,32 @@ void Engine::Input(unsigned char key) {
 		m_cube->RenderFace(6);
 		break;
 
+	case '7':
+		m_cone->RenderFace(1);
+		break;
+
+	case '8':
+		m_cone->RenderFace(2);
+		break;
+
+	case '9':
+		m_cone->RenderFace(3);
+		break;
+
+	case '0':
+		m_cone->RenderFace(4);
+		break;
+
 	case 'r':
 		m_cube->ResetRender();
 		break;
 
 	case 'c':
 		m_cube->RenderTwoFace(glm::linearRand(1, 6), glm::linearRand(1, 6));
+		break;
+
+	case 't':
+		m_cone->RenderTwoFace(glm::linearRand(1, 4), glm::linearRand(1, 4));
 		break;
 
 	default:

@@ -9,11 +9,11 @@ Cube::~Cube() {
 }
 
 void Cube::RenderFace(unsigned int faceIdx) {
-	m_model->RenderingFace(faceIdx - 1, 6);
+	m_model->RenderingFace(faceIdx - 1, 6, 6);
 }
 
 void Cube::RenderTwoFace(unsigned int faceIdx1, unsigned int faceIdx2) {
-	m_model->RenderingTwoFace(faceIdx1 - 1, faceIdx2 - 1, 6);
+	m_model->RenderingTwoFace(faceIdx1 - 1, faceIdx2 - 1, 6, 6);
 }
 
 void Cube::ResetRender() {

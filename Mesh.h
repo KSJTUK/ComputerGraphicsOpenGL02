@@ -27,13 +27,14 @@ private:
 	float m_yRad{ };
 	float m_zRad{ };
 
-	glm::mat4 m_scale{ 1.f };
-	glm::mat4 m_rotate{ 1.f };
-	glm::mat4 trans{ 1.f };
+	glm::vec3 m_pos{ 0.f };
 
 public:
 	void ReadObject(const char* filePath);
 	void TestPrint(std::vector<glm::vec3>& verticies, std::vector<unsigned int>& indicies);
+
+	void SetPos(glm::vec3& pos);
+	void SetPos(glm::vec3&& pos);
 
 public:
 	void Update();
