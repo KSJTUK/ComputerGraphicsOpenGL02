@@ -25,7 +25,10 @@ public:
 	void CompileShaders();
 	void AttachAndLinkShaders();
 	void CreateShaderProgram();
+
+	// program 사용
 	void UseProgram();
+	void UnUseProgram();
 
 	// 뷰변환 행렬 세팅 함수
 	void SetViewMat(const glm::mat4& viewMat);

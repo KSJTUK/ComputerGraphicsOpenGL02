@@ -38,7 +38,12 @@ void Graphics::Init() {
 
 	testModel = m_modelList->GetModel("cube").get();
 
+	// test
+	m_shader->UseProgram();
+	m_shader->SetViewMat(glm::translate(glm::mat4{ 1.f }, glm::vec3(0.0f, 0.0f, -3.0f)));
+
 	SetPerspectiveMat();
+	m_shader->UnUseProgram();
 }
 
 void Graphics::Update(float deltaTime) {
@@ -52,4 +57,6 @@ void Graphics::Render() {
 	testModel->Render();
 	
 	// rendering code 
+
+	m_shader->UnUseProgram();
 }

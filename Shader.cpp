@@ -110,6 +110,18 @@ void Shader::UseProgram() {
 	glUseProgram(m_shaderProgram);
 }
 
+void Shader::UnUseProgram() {
+	glUseProgram(0);
+}
+
+void Shader::SetViewMat(const glm::mat4& viewMat) {
+	unsigned int viewMatLocation = glGetUniformLocation(m_shaderProgram, "viewMat");
+	if (viewMatLocation == -1) {
+		assert(0);
+	}
+	glUniformMatrix4fv(viewMatLocation, 1, GL_FALSE, glm::value_ptr(viewMat));
+}
+
 void Shader::SetPerspectiveMat(const glm::mat4& perspectiveMat) {
 	unsigned int perspectiveMatLocation = glGetUniformLocation(m_shaderProgram, "perspectiveMat");
 	if (perspectiveMatLocation == -1) {
