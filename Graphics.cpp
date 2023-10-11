@@ -27,8 +27,8 @@ void Graphics::Init() {
 	m_shader->CreateShaderProgram();
 
 	// 카메라 생성
-	//m_camera = std::make_unique<Camera>();
-	//m_camera->Init(m_shader->GetShaderProgramID)
+	m_camera = std::make_unique<Camera>();
+	m_camera->Init();
 
 	// 모델리스트를 생성하고 모델 불러오기
 	m_modelList = std::make_unique<ModelList>();
@@ -38,10 +38,8 @@ void Graphics::Init() {
 
 	testModel = m_modelList->GetModel("cube").get();
 
-	// test
+	// 투영 변환 행렬 계산 및 전송
 	m_shader->UseProgram();
-	m_shader->SetViewMat(glm::translate(glm::mat4{ 1.f }, glm::vec3(0.0f, 0.0f, -3.0f)));
-
 	SetPerspectiveMat();
 	m_shader->UnUseProgram();
 }
@@ -54,6 +52,9 @@ void Graphics::Render() {
 	m_shader->UseProgram();
 
 	// 변환 행렬들 계산
+	m_camera->Render();
+	m_shader->SetViewMat(m_camera->GetViewMat());
+
 	testModel->Render();
 	
 	// rendering code 

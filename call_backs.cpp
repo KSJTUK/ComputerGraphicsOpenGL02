@@ -19,9 +19,7 @@ void renderFunc()
 
 void reshapeFunc(int x, int y)
 {
-	e.SetWindowSize(x, y);
-
-	glViewport(0, 0, x, y);
+	e.ReSizeWindow(x, y);
 }
 
 void idleFunc()
