@@ -3,24 +3,27 @@
 #include "call_backs.h"
 #include "Timer.h"
 #include "Graphics.h"
+#include "window_info.h"
 
 Engine::Engine() {
-	m_windowInfo.x = 100;
-	m_windowInfo.y = 100;
-	m_windowInfo.width = 800;
-	m_windowInfo.height = 600;
-	m_windowInfo.fWidth = static_cast<float>(m_windowInfo.width);
-	m_windowInfo.fHeight = static_cast<float>(m_windowInfo.height);
+	m_windowInfo = std::make_shared<WindowInfo>();
+
+	m_windowInfo->x = 100;
+	m_windowInfo->y = 100;
+	m_windowInfo->width = 800;
+	m_windowInfo->height = 600;
+	m_windowInfo->fWidth = static_cast<float>(m_windowInfo->width);
+	m_windowInfo->fHeight = static_cast<float>(m_windowInfo->height);
 
 	std::string title{ "OpenGL Project 02" };
 	std::string::size_type size = title.size();
-	m_windowInfo.windowTitle = new char[size + 1] {};
-	memcpy(m_windowInfo.windowTitle, title.c_str(), size + 1);
+	m_windowInfo->windowTitle = new char[size + 1] {};
+	memcpy(m_windowInfo->windowTitle, title.c_str(), size + 1);
 }
 
 Engine::~Engine() {
 	// 동적할당 객체들 메모리 할당 해제
-	SafeDeleteArrayPointer(m_windowInfo.windowTitle);
+	SafeDeleteArrayPointer(m_windowInfo->windowTitle);
 }
 
 // 콜백함수들 등록
@@ -36,11 +39,27 @@ void Engine::SubscribeCallbacks() {
 	glutSpecialFunc(specialkeyFunc);
 }
 
+size_t Engine::GetWindowWidth() const {
+	return m_windowInfo->width;
+}
+
+size_t Engine::GetWindowHeight() const {
+	return m_windowInfo->height;
+}
+
+float Engine::GetWindowWidthF() const {
+	return m_windowInfo->fWidth;
+}
+
+float Engine::GetWindowHeightF() const {
+	return m_windowInfo->fHeight;
+}
+
 void Engine::SetWindowSize(int windowWidth, int windowHeight) {
-	m_windowInfo.width = static_cast<size_t>(windowWidth);
-	m_windowInfo.height = static_cast<size_t>(windowHeight);
-	m_windowInfo.fWidth = static_cast<float>(windowWidth);
-	m_windowInfo.fHeight = static_cast<float>(windowHeight);
+	m_windowInfo->width = static_cast<size_t>(windowWidth);
+	m_windowInfo->height = static_cast<size_t>(windowHeight);
+	m_windowInfo->fWidth = static_cast<float>(windowWidth);
+	m_windowInfo->fHeight = static_cast<float>(windowHeight);
 }
 
 
@@ -51,11 +70,11 @@ void Engine::Init(int* argc, char** argv) {
 	// 윈도우 출력모드 설정(더블버퍼링, RGBA)
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	// 윈도우 크기, 좌표 설정
-	glutInitWindowPosition(m_windowInfo.x, m_windowInfo.y);
-	glutInitWindowSize(m_windowInfo.width, m_windowInfo.height);
+	glutInitWindowPosition(m_windowInfo->x, m_windowInfo->y);
+	glutInitWindowSize(m_windowInfo->width, m_windowInfo->height);
 
 	// 윈도우 생성
-	glutCreateWindow(m_windowInfo.windowTitle);
+	glutCreateWindow(m_windowInfo->windowTitle);
 
 	// glew 라이브러리 초기화
 	glewExperimental = GL_TRUE;
@@ -74,10 +93,10 @@ void Engine::Init(int* argc, char** argv) {
 }
 
 void Engine::ReSizeWindow(int w, int h) {
-	m_windowInfo.width = w;
-	m_windowInfo.height = h;
-	m_windowInfo.fWidth = static_cast<float>(m_windowInfo.width);
-	m_windowInfo.fHeight = static_cast<float>(m_windowInfo.height);
+	m_windowInfo->width = w;
+	m_windowInfo->height = h;
+	m_windowInfo->fWidth = static_cast<float>(m_windowInfo->width);
+	m_windowInfo->fHeight = static_cast<float>(m_windowInfo->height);
 }
 
 void Engine::Update() {

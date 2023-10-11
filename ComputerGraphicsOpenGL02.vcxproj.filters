@@ -25,6 +25,12 @@
     <Filter Include="헤더 파일\Graphics">
       <UniqueIdentifier>{82dff6b2-e594-48dd-8e54-384148e4452f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Object">
+      <UniqueIdentifier>{7b1ee1a1-1eee-4fb0-b4f8-337e725afd29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Object">
+      <UniqueIdentifier>{78ccd823-de8f-4722-84a4-5feaea36b3cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -54,11 +60,14 @@
     <ClCompile Include="ModelList.cpp">
       <Filter>소스 파일\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="GraphicBuffers.cpp">
       <Filter>소스 파일\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>소스 파일\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -73,9 +82,6 @@
     </ClInclude>
     <ClInclude Include="call_backs.h">
       <Filter>헤더 파일\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="gl_headers.h">
       <Filter>헤더 파일\Engine</Filter>
@@ -100,6 +106,12 @@
     </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>헤더 파일\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>헤더 파일\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
