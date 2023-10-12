@@ -66,7 +66,6 @@ void Graphics::Update(float deltaTime) {
 }
 
 void Graphics::Render() {
-
 	m_shader->UseProgram();
 
 	// 변환 행렬들 계산

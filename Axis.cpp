@@ -33,10 +33,10 @@ void Axis::Init(unsigned int shaderProgramID) {
 
 	m_axisBuffer->SetVerticies(m_axisVertex);
 	m_axisBuffer->SetIndexBuffer(m_axisVertexIndex);
+	m_axisBuffer->SetTransformMat(glm::mat4{ 1.f });
 }
 
 void Axis::DrawAxis() {
 	m_axisBuffer->SetDrawMode(GL_LINES);
-	m_axisBuffer->SetTransformMat(glm::mat4{ 1.f });
 	m_axisBuffer->Render();
 }
