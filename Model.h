@@ -32,13 +32,16 @@ private:
 	std::vector<unsigned int> m_textureIndicies{ };
 
 	void ReadObject(const char* filePath);
-	void TestPrint(std::vector<glm::vec3>& verticies, std::vector<unsigned int>& indicies);
 
 private:
 	glm::mat4 m_modelTransform{ 1.f };
 
 public:
 	glm::mat4 GetModelTransformMat() const;
+
+	// setter
+	void SetColor(const glm::vec3& color);
+	void SetRandomColor();
 
 public:
 	void Init(unsigned int shaderProgramID);

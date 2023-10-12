@@ -77,6 +77,20 @@ glm::mat4 Model::GetModelTransformMat() const {
 	return m_modelTransform;
 }
 
+void Model::SetColor(const glm::vec3& color) {
+	for (auto& v : m_verticies) {
+		v.color = color;
+	}
+	m_graphicsBuffer->SetVerticies(m_verticies);
+}
+
+void Model::SetRandomColor() {
+	for (auto& v : m_verticies) {
+		v.color = glm::vec3{ glm::linearRand(0.f, 1.f), glm::linearRand(0.f, 1.f), glm::linearRand(0.f, 1.f) };
+	}
+	m_graphicsBuffer->SetVerticies(m_verticies);
+}
+
 void Model::Init(unsigned int shaderProgramID) {
 	m_graphicsBuffer = std::make_unique<class GraphicBuffers>();
 	m_graphicsBuffer->Init(shaderProgramID);

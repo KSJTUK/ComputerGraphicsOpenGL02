@@ -53,6 +53,7 @@ void Graphics::Init() {
 	m_modelList->LoadModel("cube.obj");
 
 	testModel = m_modelList->GetModel("cube").get();
+	testModel->SetRandomColor();
 
 	m_axisSystem = std::make_unique<Axis>();
 	m_axisSystem->Init(m_shader->GetShaderProgramID());
@@ -69,6 +70,7 @@ void Graphics::Update(float deltaTime) {
 }
 
 void Graphics::Render() {
+
 	m_shader->UseProgram();
 
 	// 변환 행렬들 계산

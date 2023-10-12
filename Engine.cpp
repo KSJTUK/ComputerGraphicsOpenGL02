@@ -67,8 +67,8 @@ void Engine::Init(int* argc, char** argv) {
 	// glut라이브러리 초기화
 	glutInit(argc, argv);
 
-	// 윈도우 출력모드 설정(더블버퍼링, RGBA)
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
+	// 윈도우 출력모드 설정(더블버퍼링, RGBA, 깊이버퍼)
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 	// 윈도우 크기, 좌표 설정
 	glutInitWindowPosition(m_windowInfo->x, m_windowInfo->y);
 	glutInitWindowSize(m_windowInfo->width, m_windowInfo->height);
@@ -81,6 +81,9 @@ void Engine::Init(int* argc, char** argv) {
 	if (glewInit() != GLEW_OK) {
 		throw "GLEW 라이브러리 초기화 실패";
 	}
+
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
 
 	SubscribeCallbacks();
 
