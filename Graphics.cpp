@@ -5,6 +5,7 @@
 #include "ModelList.h"
 #include "Camera.h"
 #include "Model.h"
+#include "Axis.h"
 
 Graphics::Graphics() { }
 
@@ -38,6 +39,9 @@ void Graphics::Init() {
 	m_shader = std::make_unique<Shader>();
 	m_shader->CreateShaderProgram();
 
+	// 쉐이더 프로그램이 각종 정점 정보, 행렬들을 등록, 전송할 수 있도록 프로그램 사용 설정
+	m_shader->UseProgram();
+
 	// 카메라 생성
 	m_camera = std::make_unique<Camera>();
 	m_camera->Init();
@@ -50,9 +54,12 @@ void Graphics::Init() {
 
 	testModel = m_modelList->GetModel("cube").get();
 
+	m_axisSystem = std::make_unique<Axis>();
+	m_axisSystem->Init(m_shader->GetShaderProgramID());
+
 	// 투영 변환 행렬 계산 및 전송
-	m_shader->UseProgram();
 	SetPerspectiveMat();
+	// 쉐이더 프로그램 사용 종료
 	m_shader->UnUseProgram();
 }
 
@@ -68,9 +75,10 @@ void Graphics::Render() {
 	m_camera->Render();
 	m_shader->SetViewMat(m_camera->GetViewMat());
 
+	// rendering code 
+	m_axisSystem->DrawAxis();
 	testModel->Render();
 	
-	// rendering code 
 
 	m_shader->UnUseProgram();
 }

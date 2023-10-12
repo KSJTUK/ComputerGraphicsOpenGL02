@@ -73,28 +73,6 @@ void Model::ReadObject(const char* filePath) {
 	m_textureIndicies = indiciesVec[2];
 }
 
-void Model::TestPrint(std::vector<glm::vec3>& verticies, std::vector<unsigned int>& indicies) {
-	size_t vertexSize = m_verticies.size();
-	for (size_t i = 0; i < vertexSize; ++i) {
-		std::cout << "vertex[" << i << "]: " << 
-			m_verticies[i].position.x << " " 
-			<< m_verticies[i].position.y << " " 
-			<< m_verticies[i].position.z << std::endl;
-	}
-
-	// 테스트를 위한 인덱스 정보 출력
-	size_t indiciesSize = m_vertexIndicies.size();
-	for (size_t i = 0; i < indiciesSize; ++i) {
-		if (i % 3 == 0) {
-			std::cout << "face[" << i / 3 << "]: ";
-		}
-		std::cout << " " << m_vertexIndicies[i];
-		if (i % 3 == 2) {
-			std::cout << "\n";
-		}
-	}
-}
-
 glm::mat4 Model::GetModelTransformMat() const {
 	return m_modelTransform;
 }

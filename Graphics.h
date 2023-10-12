@@ -15,6 +15,8 @@ private:
 
 	std::unique_ptr<class ModelList> m_modelList{ };
 
+	std::unique_ptr<class Axis> m_axisSystem{ };
+
 private:
 	// 카메라 외부파라미터 (투영행렬을 생성할 떄 쓰일 변수들)
 	float m_fovy{ 90.f }; // 수직 시야각
