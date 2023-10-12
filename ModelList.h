@@ -17,7 +17,7 @@ private:
 	std::unordered_map<std::string, std::shared_ptr<class Model>> m_modelList{ };
 
 public:
-	std::shared_ptr<class Model> GetModel(const std::string& key);
+	std::shared_ptr<class Model> GetModel(const std::string& key) const;
 
 public:
 	void Init(unsigned int m_shaderProgramID);

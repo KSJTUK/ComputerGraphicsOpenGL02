@@ -2,6 +2,7 @@
 
 #include "gl_headers.h"
 #include <memory>
+#include <list>
 
 class Graphics {
 public:
@@ -34,7 +35,7 @@ public:
 	// getter
 
 	// 테스트용
-	class Model* testModel{ };
+	std::list<class Sphere> m_spheres{ };
 
 	// setter
 	void SetWindowInfo(std::shared_ptr<struct WindowInfo>& winInfo);

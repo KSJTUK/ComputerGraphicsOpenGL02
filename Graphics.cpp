@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "Model.h"
 #include "Axis.h"
+#include "Sphere.h"
 
 Graphics::Graphics() { }
 
@@ -49,11 +50,18 @@ void Graphics::Init() {
 
 	m_modelList->LoadModel("sphere.obj");
 
-	testModel = m_modelList->GetModel("sphere").get();
-	testModel->SetRandomColor();
-
 	m_axisSystem = std::make_unique<Axis>();
 	m_axisSystem->Init(m_shader->GetShaderProgramID());
+
+	for (int i = 0; i < 100; ++i) {
+		m_spheres.push_back(
+			Sphere{ m_modelList.get(),
+			glm::vec3{
+				glm::linearRand(-50.f, 50.f),
+				glm::linearRand(-50.f, 50.f),
+				glm::linearRand(-50.f, 50.f)
+		} });
+	}
 
 	// 투영 변환 행렬 계산 및 전송
 	SetPerspectiveMat();
@@ -63,7 +71,11 @@ void Graphics::Init() {
 
 void Graphics::Update(float deltaTime) {
 	m_deltaTime = deltaTime;
-	m_camera->Update(deltaTime);
+	m_camera->Update(m_deltaTime);
+	for (auto& s : m_spheres) {
+		s.Update(m_deltaTime);
+		s.RotateX();
+	}
 }
 
 void Graphics::Render() {
@@ -75,8 +87,10 @@ void Graphics::Render() {
 
 	// rendering code 
 	m_axisSystem->DrawAxis();
-	testModel->Render();
-	
+
+	for (auto& s : m_spheres) {
+		s.Render();
+	}
 
 	m_shader->UnUseProgram();
 }

@@ -91,6 +91,10 @@ void Model::SetRandomColor() {
 	m_graphicsBuffer->SetVerticies(m_verticies);
 }
 
+void Model::SetTransformMat(const glm::mat4& transformMat) {
+	m_modelTransform = transformMat;
+}
+
 void Model::Init(unsigned int shaderProgramID) {
 	m_graphicsBuffer = std::make_unique<class GraphicBuffers>();
 	m_graphicsBuffer->Init(shaderProgramID);
@@ -105,4 +109,5 @@ void Model::Update() {
 void Model::Render() {
 	m_graphicsBuffer->SetTransformMat(m_modelTransform);
 	m_graphicsBuffer->Render();
+	m_graphicsBuffer->SetTransformMat(glm::mat4{ 1.f });
 }
