@@ -22,16 +22,12 @@ void Graphics::SetPerspectiveMat() {
 	m_shader->SetPerspectiveMat(glm::perspective(glm::radians(halfFovy), aspect, m_near, m_far));
 }
 
-void Graphics::CameraMove(const glm::vec3& moveVec) {
-	m_camera->Move(moveVec);
+void Graphics::Input(unsigned char key) {
+	m_camera->Input(key);
 }
 
-void Graphics::CameraViewPointFix() {
-	m_camera->ViewPointFix();
-}
-
-void Graphics::CameraViewPointUnFix() {
-	m_camera->ViewPointUnFix();
+void Graphics::SpecialInput(int key) {
+	m_camera->SpecialInput(key);
 }
 
 void Graphics::Init() {

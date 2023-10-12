@@ -43,6 +43,7 @@ void keyboardUpFunc(unsigned char key, int x, int y)
 
 void specialkeyFunc(int key, int x, int y)
 {
+	e.SpecialInput(key);
 }
 
 void mouseFunc(int button, int state, int x, int y)

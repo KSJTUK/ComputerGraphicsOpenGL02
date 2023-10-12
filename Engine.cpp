@@ -119,39 +119,11 @@ void Engine::Render() {
 }
 
 void Engine::Input(unsigned char key) {
-	switch (key) {
-	case 'w':
-		m_grapics->CameraMove(glm::vec3{ 0.f, 0.f, 1.f });
-		break;
+	m_grapics->Input(key);
+}
 
-	case 'a':
-		m_grapics->CameraMove(glm::vec3{ 1.f, 0.f, 0.f });
-		break;
-
-	case 's':
-		m_grapics->CameraMove(glm::vec3{ 0.f, 0.f, -1.f });
-		break;
-
-	case 'd':
-		m_grapics->CameraMove(glm::vec3{ -1.f, 0.f, 0.f });
-		break;
-
-	case 'm':
-		m_grapics->CameraMove(glm::vec3{ 0.f, 1.f, 0.f });
-		break;
-
-	case 'n':
-		m_grapics->CameraMove(glm::vec3{ 0.f, -1.f, 0.f });
-		break;
-
-	case 'v':
-		m_grapics->CameraViewPointFix();
-		break;
-
-	case 'b':
-		m_grapics->CameraViewPointUnFix();
-		break;
-	}
+void Engine::SpecialInput(int key) {
+	m_grapics->SpecialInput(key);
 }
 
 

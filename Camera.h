@@ -23,7 +23,12 @@ private:
 	// 카메라 움직임을 위한 변수들
 	float m_moveSpeed{ 20.f };
 
-	float m_fixAt{ 0.f };
+	float m_fixAt{ 1.f };
+
+	// 카메라가 가지는 기저, 카메라의 축 방향 벡터들을 저장할 변수
+	glm::vec3 m_cameraAxisX{ };
+	glm::vec3 m_cameraAxisY{ };
+	glm::vec3 m_cameraAxisZ{ };
 
 public:
 	// getter
@@ -34,7 +39,12 @@ public:
 	void ViewPointUnFix();
 
 public:
+	// 외부 키입력을 카메라가 자체적으로 처리하게 함
+	void Input(unsigned char key);
+	void SpecialInput(int key);
+
 	void Move(const glm::vec3& moveVec);
+	void ViewPointMove(float moveAngle, const glm::vec3& axis);
 
 public:
 	void Init();

@@ -49,6 +49,7 @@ public:
 
 	// 키 입력을 내부적으로 처리할 함수
 	void Input(unsigned char key);
+	void SpecialInput(int key);
 
 	// 게임 루프함수
 	void Loop();

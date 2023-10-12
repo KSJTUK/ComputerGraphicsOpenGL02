@@ -41,11 +41,9 @@ public:
 	void SetPerspectiveMat();
 
 public:
-	// 외부 키 입력 이벤트에 의해 수행될 카메라 업데이트 함수들
-	void CameraMove(const glm::vec3& moveVec);
-
-	void CameraViewPointFix();
-	void CameraViewPointUnFix();
+	// 외부 키입력을 카메라에게 전해주는 함수
+	void Input(unsigned char key);
+	void SpecialInput(int key);
 
 public:
 	void Init();
