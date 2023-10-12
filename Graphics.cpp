@@ -41,14 +41,15 @@ void Graphics::Init() {
 	// 카메라 생성
 	m_camera = std::make_unique<Camera>();
 	m_camera->Init();
+	m_camera->CameraPositionSet(glm::vec3{ 0.f, 0.f, -10.f });
 
 	// 모델리스트를 생성하고 모델 불러오기
 	m_modelList = std::make_unique<ModelList>();
 	m_modelList->Init(m_shader->GetShaderProgramID());
 
-	m_modelList->LoadModel("cube.obj");
+	m_modelList->LoadModel("sphere.obj");
 
-	testModel = m_modelList->GetModel("cube").get();
+	testModel = m_modelList->GetModel("sphere").get();
 	testModel->SetRandomColor();
 
 	m_axisSystem = std::make_unique<Axis>();

@@ -39,6 +39,8 @@ public:
 	glm::mat4 GetViewMat() const;
 
 	// setter
+	void CameraPositionSet(const glm::vec3& position);
+
 	void ViewPointFix();
 	void ViewPointUnFix();
 

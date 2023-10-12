@@ -4,6 +4,10 @@ glm::mat4 Camera::GetViewMat() const {
 	return m_view;
 }
 
+void Camera::CameraPositionSet(const glm::vec3& position) {
+	m_EYE = position;
+}
+
 void Camera::ViewPointFix() {
 	m_fixAt = 0.f;
 }
