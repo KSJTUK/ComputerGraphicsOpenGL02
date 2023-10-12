@@ -111,6 +111,8 @@ void Engine::ReSizeWindow(int w, int h) {
 void Engine::Update() {
 	m_timer->Update();
 	m_deltaTime = m_timer->GetDeltaTime();
+	float fps = m_timer->GetFrame();
+	std::cout << m_deltaTime << "   " << fps << "\n";
 	m_grapics->Update(m_deltaTime);
 }
 

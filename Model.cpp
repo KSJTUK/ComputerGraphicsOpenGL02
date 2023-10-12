@@ -109,5 +109,5 @@ void Model::Update() {
 void Model::Render() {
 	m_graphicsBuffer->SetTransformMat(m_modelTransform);
 	m_graphicsBuffer->Render();
-	m_graphicsBuffer->SetTransformMat(glm::mat4{ 1.f });
+	//m_graphicsBuffer->SetTransformMat(glm::mat4{ 1.f });
 }
