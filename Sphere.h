@@ -3,6 +3,23 @@
 #include "gl_headers.h"
 #include <memory>
 
+class ObjectMove {
+public:
+	static glm::vec3 origin;
+	static glm::mat4 unit;
+	static glm::vec3 axisX;
+	static glm::vec3 axisY;
+	static glm::vec3 axisZ;
+
+private:
+	ObjectMove() = delete;
+	~ObjectMove() = delete;
+
+public:
+	static void OrbitMove(glm::vec3& position, const float& angle, const glm::vec3& axis, const glm::vec3& center = ObjectMove::origin);
+	static void Move(glm::vec3& position, const glm::vec3& direction, const float speed);
+};
+
 class Sphere {
 public:
 	Sphere(const class ModelList* const modelList);
@@ -39,6 +56,9 @@ public:
 	void OrbitX();
 	void OrbitY();
 	void OrbitZ();
+
+	void Rotate(const float& angle, const glm::vec3& axis);
+	void Orbit(const float& angle, const glm::vec3& axis);
 
 public:
 	void Update(float deltaTime);

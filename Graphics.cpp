@@ -55,7 +55,7 @@ void Graphics::Init() {
 	m_axisSystem = std::make_unique<Axis>();
 	m_axisSystem->Init(m_shader->GetShaderProgramID());
 
-	for (int i = 0; i < 10000; ++i) {
+	for (int i = 0; i < 1000; ++i) {
 		m_spheres.push_back(
 			Sphere{ m_modelList.get(),
 			glm::vec3{
