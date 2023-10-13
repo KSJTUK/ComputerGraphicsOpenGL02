@@ -26,15 +26,15 @@ void Sphere::RotateZ() {
 }
 
 void Sphere::OrbitX() {
-	m_orbitAngle.x += m_orbitSpeed * m_deltaTime;
+	m_position = glm::rotate(unit, glm::radians(m_orbitSpeed * m_deltaTime), glm::vec3{ 1.f, 0.f, 0.f }) * glm::vec4{ m_position, 1.f };
 }
 
 void Sphere::OrbitY() {
-	m_orbitAngle.y += m_orbitSpeed * m_deltaTime;
+	m_position = glm::rotate(unit, glm::radians(m_orbitSpeed * m_deltaTime), glm::vec3{ 0.f, 1.f, 0.f }) * glm::vec4{ m_position, 1.f };
 }
 
 void Sphere::OrbitZ() {
-	m_orbitAngle.z += m_orbitSpeed * m_deltaTime;
+	m_position = glm::rotate(unit, glm::radians(m_orbitSpeed * m_deltaTime), glm::vec3{ 0.f, 0.f, 1.f }) * glm::vec4{ m_position, 1.f };
 }
 
 void Sphere::Update(float deltaTime) {
@@ -43,15 +43,14 @@ void Sphere::Update(float deltaTime) {
 
 void Sphere::Render() {
 	glm::mat4 transform{ 1.f };
-	transform = glm::rotate(transform, glm::radians(m_orbitAngle.x), glm::vec3{ 1.f, 0.f, 0.f });
-	transform = glm::rotate(transform, glm::radians(m_orbitAngle.y), glm::vec3{ 0.f, 1.f, 0.f });
-	transform = glm::rotate(transform, glm::radians(m_orbitAngle.z), glm::vec3{ 0.f, 0.f, 1.f });
+	//glm::vec3 orbitAngle{ m_orbitAngle.x,m_orbitAngle.z, m_orbitAngle.y };
+	//glm::mat4 orbit = glm::orientate4(orbitAngle);
+	glm::mat4 rot = glm::orientate4(m_rotAngle);
+	glm::mat4 trans = glm::translate(unit, m_position);
+	glm::mat4 scale = glm::scale(unit, m_sizeScale);
 
-	transform = glm::translate(transform, m_position);
-	transform = glm::rotate(transform, glm::radians(m_rotAngle.x), glm::vec3{ 1.f, 0.f, 0.f });
-	transform = glm::rotate(transform, glm::radians(m_rotAngle.y), glm::vec3{ 0.f, 1.f, 0.f });
-	transform = glm::rotate(transform, glm::radians(m_rotAngle.z), glm::vec3{ 0.f, 0.f, 1.f });
-	transform = glm::scale(transform, m_sizeScale);
+
+	transform = trans * rot * scale;
 
 	m_model->SetTransformMat(transform);
 	m_model->Render();

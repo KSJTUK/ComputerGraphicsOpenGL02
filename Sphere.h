@@ -20,10 +20,17 @@ private:
 
 	glm::vec3 m_orbitAngle{ 0.f };
 
-	float m_angleSpeed{ 100.f };
-	float m_orbitSpeed{ 20.f };
+	float m_angleSpeed{ 10.f };
+	float m_orbitSpeed{ 2.f };
 
 	float m_deltaTime{ };
+
+	// test
+	glm::mat4 unit{ 1.f };
+
+	glm::mat4 scale{ 1.f };
+	glm::mat4 rotate{ 1.f };
+	glm::mat4 trans{ 1.f };
 
 public:
 	void RotateX();

@@ -26,7 +26,7 @@ private:
 	std::shared_ptr<struct WindowInfo> m_windowInfo{ }; // aspect(종횡비) = width / height
 
 	float m_near{ 0.1f };           // 시야 절두체의 가까운 평면과의 거리
-	float m_far{ 100.f };           // 시야 절두체의 먼 평면과의 거리
+	float m_far{ 1000.f };           // 시야 절두체의 먼 평면과의 거리
 
 	// 업데이트를 위한 시간값 저장
 	float m_deltaTime{ };

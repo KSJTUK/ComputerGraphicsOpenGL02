@@ -83,7 +83,7 @@ void Engine::Init(int* argc, char** argv) {
 	}
 
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 
 	SubscribeCallbacks();
 
@@ -112,7 +112,7 @@ void Engine::Update() {
 	m_timer->Update();
 	m_deltaTime = m_timer->GetDeltaTime();
 	float fps = m_timer->GetFrame();
-	std::cout << m_deltaTime << "   " << fps << "\n";
+	//std::cout << m_deltaTime << "   " << fps << "\n";
 	m_grapics->Update(m_deltaTime);
 }
 

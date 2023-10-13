@@ -6,3 +6,4 @@
 #include <gl/glm/glm.hpp>
 #include <gl/glm/ext.hpp>
 #include <gl/glm/gtc/matrix_transform.hpp>
+#include <gl/glm/gtx/euler_angles.hpp>
