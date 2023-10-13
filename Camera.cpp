@@ -80,7 +80,7 @@ void Camera::Move(const glm::vec3& moveVec) {
 
 void Camera::ViewPointMove(float moveAngle, const glm::vec3& axis) {
 	glm::vec4 at{ m_AT, 1.f };
-	m_AT = glm::rotate(glm::mat4{ 1.f }, glm::radians(moveAngle * m_deltaTime), axis) * at;
+	m_AT = glm::rotate(glm::mat4{ 1.f }, glm::radians(moveAngle), axis) * at;
 	m_AT = glm::normalize(m_AT);
 }
 

@@ -21,8 +21,8 @@ private:
 	float m_deltaTime{ };
 
 	// 카메라 움직임을 위한 변수들
-	float m_moveSpeed{ 50.f };
-	float m_angleSpeed{ 100.f };
+	float m_moveSpeed{ 500.f };
+	float m_angleSpeed{ 3.f };
 
 	float m_fixAt{ 1.f };
 

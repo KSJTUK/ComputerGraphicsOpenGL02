@@ -55,14 +55,17 @@ void Graphics::Init() {
 	m_axisSystem = std::make_unique<Axis>();
 	m_axisSystem->Init(m_shader->GetShaderProgramID());
 
-	for (int i = 0; i < 1000; ++i) {
+	m_spheres.push_back(Sphere{ m_modelList.get(),
+		glm::vec3{ 10.f, 10.f, 10.f }
+		});
+
+	float xyz{ 10.f };
+	for (int i = 0; i < 5; ++i) {
 		m_spheres.push_back(
 			Sphere{ m_modelList.get(),
-			glm::vec3{
-				glm::linearRand(-50.f, 50.f),
-				glm::linearRand(-50.f, 50.f),
-				glm::linearRand(-50.f, 50.f)
-		} });
+			glm::vec3{ xyz, xyz, xyz } + m_spheres[0].GetPosition()
+			});
+		xyz -= 5.f;
 	}
 
 	// 투영 변환 행렬 계산 및 전송
@@ -74,10 +77,10 @@ void Graphics::Init() {
 void Graphics::Update(float deltaTime) {
 	m_deltaTime = deltaTime;
 	m_camera->Update(m_deltaTime);
-	for (auto& s : m_spheres) {
-		s.Update(m_deltaTime);
-		//s.RotateX();
-		s.OrbitZ();
+	glm::vec3 move = m_spheres[0].Orbit(0.01f, glm::vec3{ 1.f, 0.f, 1.f }, glm::vec3{ });
+	for (auto i = 1; i < m_spheres.size(); ++i) {
+		m_spheres[i].SetPosition(m_spheres[i].GetPosition() + move);
+		m_spheres[i].Orbit(0.01f, glm::vec3{ -1.f, -1.f, 1.f }, m_spheres[0].GetPosition());
 	}
 }
 

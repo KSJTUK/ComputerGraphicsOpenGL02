@@ -38,7 +38,7 @@ private:
 	glm::vec3 m_orbitAngle{ 0.f };
 
 	float m_angleSpeed{ 10.f };
-	float m_orbitSpeed{ 2.f };
+	float m_orbitSpeed{ 200.f };
 
 	float m_deltaTime{ };
 
@@ -50,6 +50,12 @@ private:
 	glm::mat4 trans{ 1.f };
 
 public:
+	// getter
+	glm::vec3 GetPosition() const;
+
+	void SetPosition(const glm::vec3& position);
+
+public:
 	void RotateX();
 	void RotateY();
 	void RotateZ();
@@ -57,8 +63,7 @@ public:
 	void OrbitY();
 	void OrbitZ();
 
-	void Rotate(const float& angle, const glm::vec3& axis);
-	void Orbit(const float& angle, const glm::vec3& axis);
+	glm::vec3 Orbit(const float& angle, const glm::vec3& axis, const glm::vec3& center);
 
 public:
 	void Update(float deltaTime);

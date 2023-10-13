@@ -43,17 +43,30 @@ void Sphere::OrbitZ() {
 	ObjectMove::OrbitMove(m_position, m_orbitSpeed * m_deltaTime, ObjectMove::axisZ);
 }
 
+glm::vec3 Sphere::Orbit(const float& angle, const glm::vec3& axis, const glm::vec3& center) {
+	glm::vec3 rtVec{ m_position };
+	ObjectMove::OrbitMove(m_position, angle, axis, center);
+	rtVec = m_position - rtVec;
+	return rtVec;
+}
+
+glm::vec3 Sphere::GetPosition() const {
+	return m_position;
+}
+
+void Sphere::SetPosition(const glm::vec3& position) {
+	m_position = position;
+}
+
 void Sphere::Update(float deltaTime) {
 	m_deltaTime = deltaTime;
 }
 
 void Sphere::Render() {
 	glm::mat4 transform{ 1.f };
-
-	glm::mat4 rot = glm::orientate4(m_rotAngle);
+	glm::mat4 rot = glm::orientate4(glm::radians(m_rotAngle));
 	glm::mat4 trans = glm::translate(unit, m_position);
 	glm::mat4 scale = glm::scale(unit, m_sizeScale);
-
 
 	transform = trans * rot * scale;
 
@@ -63,7 +76,7 @@ void Sphere::Render() {
 
 void ObjectMove::OrbitMove(glm::vec3& position, const float& angle, const glm::vec3& axis, const glm::vec3& origin) {
 	glm::vec4 rotPos{ position - origin, 1.f };
-	position = (glm::rotate(ObjectMove::unit, glm::radians(angle), axis) *  rotPos);
+	position = glm::orientate4(glm::radians(angle * axis)) *  rotPos;
 	position += origin;
 }
 
