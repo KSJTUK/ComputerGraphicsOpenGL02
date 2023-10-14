@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "gl_headers.h"
 #include <memory>
@@ -9,24 +9,24 @@ public:
 	~Camera() { } 
 
 private:
-	// Ä«¸Ş¶óÀÇ ³»ºÎ ÆÄ¶ó¹ÌÅÍ
+	// ì¹´ë©”ë¼ì˜ ë‚´ë¶€ íŒŒë¼ë¯¸í„°
 	glm::vec3 m_EYE{ 0.f, 0.f, -3.f };
 	glm::vec3 m_AT{ 0.f, 0.f, 1.f };
 	glm::vec3 m_UP{ 0.f, 1.f, 0.f };
 
-	// ºäº¯È¯ Çà·Ä
+	// ë·°ë³€í™˜ í–‰ë ¬
 	glm::mat4 m_view{ 1.f };
 
-	// Ä«¸Ş¶ó ¾÷µ¥ÀÌÆ®¸¦ À§ÇÑ ½Ã°£ °ª ÀúÀå
+	// ì¹´ë©”ë¼ ì—…ë°ì´íŠ¸ë¥¼ ìœ„í•œ ì‹œê°„ ê°’ ì €ì¥
 	float m_deltaTime{ };
 
-	// Ä«¸Ş¶ó ¿òÁ÷ÀÓÀ» À§ÇÑ º¯¼öµé
+	// ì¹´ë©”ë¼ ì›€ì§ì„ì„ ìœ„í•œ ë³€ìˆ˜ë“¤
 	float m_moveSpeed{ 500.f };
 	float m_angleSpeed{ 3.f };
 
 	float m_fixAt{ 1.f };
 
-	// Ä«¸Ş¶ó°¡ °¡Áö´Â ±âÀú, Ä«¸Ş¶óÀÇ Ãà ¹æÇâ º¤ÅÍµéÀ» ÀúÀåÇÒ º¯¼ö
+	// ì¹´ë©”ë¼ê°€ ê°€ì§€ëŠ” ê¸°ì €, ì¹´ë©”ë¼ì˜ ì¶• ë°©í–¥ ë²¡í„°ë“¤ì„ ì €ì¥í•  ë³€ìˆ˜
 	glm::vec3 m_cameraAxisX{ };
 	glm::vec3 m_cameraAxisY{ };
 	glm::vec3 m_cameraAxisZ{ };
@@ -45,7 +45,7 @@ public:
 	void ViewPointUnFix();
 
 public:
-	// ¿ÜºÎ Å°ÀÔ·ÂÀ» Ä«¸Ş¶ó°¡ ÀÚÃ¼ÀûÀ¸·Î Ã³¸®ÇÏ°Ô ÇÔ
+	// ì™¸ë¶€ í‚¤ì…ë ¥ì„ ì¹´ë©”ë¼ê°€ ìì²´ì ìœ¼ë¡œ ì²˜ë¦¬í•˜ê²Œ í•¨
 	void Input(unsigned char key);
 	void SpecialInput(int key);
 

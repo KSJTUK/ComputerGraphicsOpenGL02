@@ -1,6 +1,6 @@
-#pragma once
+ï»¿#pragma once
 
-// »ý¼ºÇÒ À©µµ¿ìÀÇ¤Ñ Á¤º¸¸¦ ´ãÀ» ±¸Á¶Ã¼ Á¤ÀÇ
+// ìƒì„±í•  ìœˆë„ìš°ì˜ã…¡ ì •ë³´ë¥¼ ë‹´ì„ êµ¬ì¡°ì²´ ì •ì˜
 struct WindowInfo {
 	int x;
 	int y;

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
 #include <unordered_map>
@@ -17,10 +17,10 @@ public:
 	static void Destroy();
 
 private:
-	// ¸ğµ¨ ³»ºÎÀÇ ½¦ÀÌ´õ ÃÊ±âÈ­¿¡ ÇÊ¿äÇÑ ÇÁ·Î±×·¥ ID
+	// ëª¨ë¸ ë‚´ë¶€ì˜ ì‰ì´ë” ì´ˆê¸°í™”ì— í•„ìš”í•œ í”„ë¡œê·¸ë¨ ID
 	unsigned int m_shaderProgramID{ };
 
-	// ¸ğµ¨µéÀ» ÀúÀåÇÒ ¸Ê °´Ã¼ »ı¼º
+	// ëª¨ë¸ë“¤ì„ ì €ì¥í•  ë§µ ê°ì²´ ìƒì„±
 	std::unordered_map<std::string, std::shared_ptr<class Model>> m_modelList{ };
 
 public:

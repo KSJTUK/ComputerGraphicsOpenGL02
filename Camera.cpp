@@ -1,4 +1,4 @@
-#include "Camera.h"
+Ôªø#include "Camera.h"
 
 glm::mat4 Camera::GetViewMat() const {
 	return m_view;
@@ -91,7 +91,7 @@ void Camera::Init() {
 void Camera::Update(float deltaTime) {
 	m_deltaTime = deltaTime;
 
-	// ƒ´∏ﬁ∂Û ±‚¿˙ ∞ËªÍ º¯º≠ -> n, u, v -> ƒ´∏ﬁ∂Û z, x, y√‡
+	// Ïπ¥Î©îÎùº Í∏∞Ï†Ä Í≥ÑÏÇ∞ ÏàúÏÑú -> n, u, v -> Ïπ¥Î©îÎùº z, x, yÏ∂ï
 	m_cameraAxisZ = glm::normalize(-m_AT);
 	m_cameraAxisX = glm::normalize(glm::cross(m_UP, m_cameraAxisZ));
 	m_cameraAxisY = glm::normalize(glm::cross(m_cameraAxisZ, m_cameraAxisX));

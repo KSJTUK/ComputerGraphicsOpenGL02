@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <memory>
 #include "gl_headers.h"
 
@@ -25,11 +25,12 @@ public:
 	Object(const std::shared_ptr<class Model>& model, const glm::vec3& initPosition);
 	~Object();
 
-private:
-	// ¸ğµ¨
+protected:
+	// ëª¨ë¸
 	std::shared_ptr<class Model> m_model{ };
+	std::string m_modelTag{ };
 
-	// À§Ä¡, È¸Àü º¯¼öµé
+	// ìœ„ì¹˜, íšŒì „ ë³€ìˆ˜ë“¤
 	glm::vec3 m_sizeScale{ 1.f };
 	glm::vec3 m_position{ 0.f };
 	glm::vec3 m_rotAngle{ 0.f };

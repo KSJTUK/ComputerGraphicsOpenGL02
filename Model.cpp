@@ -1,4 +1,4 @@
-#include "Model.h"
+ï»¿#include "Model.h"
 #include "GraphicBuffers.h"
 #include "pch.h"
 #include <fstream>
@@ -24,23 +24,23 @@ void Model::ReadObject(const char* filePath) {
 	while (!objFile.eof()) {
 		std::getline(objFile, line);
 		std::stringstream sstream{ line };
-		std::string delTag{ };     // ¾Õ¿¡ ÀÖ´Â v, vn, f¿Í °°Àº ÅÂ±× Á¦°Å¿ë
+		std::string delTag{ };     // ì•žì— ìžˆëŠ” v, vn, fì™€ ê°™ì€ íƒœê·¸ ì œê±°ìš©
 
-		if (line[0] == 'v') {              // ¸Ç ¾Õ ¹®ÀÚ°¡ vÀÌ¸é Á¤Á¡¿¡ ´ëÇÑ Á¤º¸ÀÌ´Ù
-			if (line[1] == 'n') {          // vn == Á¤Á¡ ³ë¸Ö
-				glm::vec3 tempVec{ };      // Á¤Á¡ ³ë¸Ö ÀúÀå
+		if (line[0] == 'v') {              // ë§¨ ì•ž ë¬¸ìžê°€ vì´ë©´ ì •ì ì— ëŒ€í•œ ì •ë³´ì´ë‹¤
+			if (line[1] == 'n') {          // vn == ì •ì  ë…¸ë©€
+				glm::vec3 tempVec{ };      // ì •ì  ë…¸ë©€ ì €ìž¥
 				sstream >> delTag >> tempVec.x >> tempVec.y >> tempVec.z;
 				m_vertexNormals.push_back(tempVec);
 			}
-			else if (line[1] == 't');      // vt == ÅØ½ºÃÄ ÁÂÇ¥
-			else if (line[1] == ' ') {     // v == Á¤Á¡ ÁÂÇ¥
-				glm::vec3 tempVec{ };      // Á¤Á¡ ÁÂÇ¥ ÀúÀå
+			else if (line[1] == 't');      // vt == í…ìŠ¤ì³ ì¢Œí‘œ
+			else if (line[1] == ' ') {     // v == ì •ì  ì¢Œí‘œ
+				glm::vec3 tempVec{ };      // ì •ì  ì¢Œí‘œ ì €ìž¥
 				sstream >> delTag >> tempVec.x >> tempVec.y >> tempVec.z;
 				m_verticies.push_back(Vertex{ tempVec, glm::vec3{ }, glm::vec2{ } });
 			}
 		}
-		else if (line[0] == 'f') {         // ¸Ç ¾Õ ¹®ÀÚ°¡ fÀÌ¸é face(¸é)¿¡ ´ëÇÑ Á¤º¸ÀÌ´Ù
-			std::string face[3]{ };        // f a/b/c -> a == Á¤Á¡ ÀÎµ¦½º, b == ÅØ½ºÃ³ ÀÎµ¦½º, c == ³ë¸Ö ÀÎµ¦½º
+		else if (line[0] == 'f') {         // ë§¨ ì•ž ë¬¸ìžê°€ fì´ë©´ face(ë©´)ì— ëŒ€í•œ ì •ë³´ì´ë‹¤
+			std::string face[3]{ };        // f a/b/c -> a == ì •ì  ì¸ë±ìŠ¤, b == í…ìŠ¤ì²˜ ì¸ë±ìŠ¤, c == ë…¸ë©€ ì¸ë±ìŠ¤
 			sstream >> delTag >> face[0] >> face[1] >> face[2];
 
 			for (int i = 0; i < 3; ++i) {

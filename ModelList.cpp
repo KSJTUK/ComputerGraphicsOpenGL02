@@ -1,4 +1,4 @@
-#include "ModelList.h"
+ï»¿#include "ModelList.h"
 #include "Model.h"
 
 // constructor and distructor
@@ -8,7 +8,7 @@ ModelList::ModelList() { }
 ModelList::~ModelList() { }
 // -------------------------------
 
-// static º¯¼ö
+// static ë³€ìˆ˜
 ModelList* ModelList::m_instance = nullptr;
 
 // static Method (single tone)

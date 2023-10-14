@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "vertex_info.h"
 #include <vector>
 #include <memory>
@@ -13,22 +13,22 @@ public:
 	Model* operator=(const Model& other) = delete;
 
 private:
-	// VAO, VBO, EBO¸¦ °¡Áö´Â °´Ã¼
+	// VAO, VBO, EBOë¥¼ ê°€ì§€ëŠ” ê°ì²´
 	std::unique_ptr<class GraphicBuffers> m_graphicsBuffer{ };
 
-	// Á¤Á¡ ¼Ó¼ºµéÀ» ÀúÀåÇÒ vector
+	// ì •ì  ì†ì„±ë“¤ì„ ì €ì¥í•  vector
 	std::vector<Vertex> m_verticies{ };
 
-	// Á¤Á¡ ³ë¸ÖµéÀ» ÀúÀåÇÒ vector
+	// ì •ì  ë…¸ë©€ë“¤ì„ ì €ì¥í•  vector
 	std::vector<glm::vec3> m_vertexNormals{ };
 
-	// Á¤Á¡¿¡ ´ëÇÑ ÀÎµ¦½º¸¦ ÀúÀåÇÒ vector
+	// ì •ì ì— ëŒ€í•œ ì¸ë±ìŠ¤ë¥¼ ì €ì¥í•  vector
 	std::vector<unsigned int> m_vertexIndicies{ };
 
-	// Á¤Á¡ ³ë¸Ö¿¡ ´ëÇÑ ÀÎµ¦½º¸¦ ÀúÀåÇÒ vector
+	// ì •ì  ë…¸ë©€ì— ëŒ€í•œ ì¸ë±ìŠ¤ë¥¼ ì €ì¥í•  vector
 	std::vector<unsigned int> m_vertexNormalIndicies{ };
 
-	// ÅØ½ºÃ³ ÁÂÇ¥ ÀÎµ¦½º¸¦ ÀúÀåÇÒ vector
+	// í…ìŠ¤ì²˜ ì¢Œí‘œ ì¸ë±ìŠ¤ë¥¼ ì €ì¥í•  vector
 	std::vector<unsigned int> m_textureIndicies{ };
 
 	void ReadObject(const char* filePath);
