@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <string>
 #include <memory>
 #include "gl_headers.h"
 

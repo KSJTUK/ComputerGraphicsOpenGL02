@@ -26,6 +26,8 @@ private:
 public:
 	std::shared_ptr<class Model> GetModel(const std::string& key) const;
 
+	void SetDrawModes(int drawMode);
+
 public:
 	void Init(unsigned int m_shaderProgramID);
 	void LoadModel(const std::string& objectFilePath);

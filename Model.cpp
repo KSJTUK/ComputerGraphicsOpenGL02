@@ -91,6 +91,10 @@ void Model::SetRandomColor() {
 	m_graphicsBuffer->SetVerticies(m_verticies);
 }
 
+void Model::SetDrawMode(int drawMode) {
+	m_graphicsBuffer->SetDrawMode(drawMode);
+}
+
 void Model::SetTransformMat(const glm::mat4& transformMat) {
 	m_modelTransform = transformMat;
 }

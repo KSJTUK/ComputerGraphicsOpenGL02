@@ -29,6 +29,12 @@ private:
 	// 업데이트를 위한 시간값 저장
 	float m_deltaTime{ };
 
+	// 은면 제거를 위한 플래그
+	bool m_culling{ true };
+
+	// 와이어 / 솔리드 객체 변환을 위한 플래그
+	bool m_drawSolid{ true };
+
 public:
 	// getter
 

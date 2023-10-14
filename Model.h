@@ -42,6 +42,7 @@ public:
 	// setter
 	void SetColor(const glm::vec3& color);
 	void SetRandomColor();
+	void SetDrawMode(int drawMode);
 	void SetTransformMat(const glm::mat4& transformMat);
 
 public:

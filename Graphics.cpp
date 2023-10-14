@@ -24,6 +24,26 @@ void Graphics::SetPerspectiveMat() {
 }
 
 void Graphics::Input(unsigned char key) {
+	if (key == 'w') {
+		m_drawSolid = !m_drawSolid;
+		if (m_drawSolid) {
+			ModelList::GetInst()->SetDrawModes(GL_TRIANGLES);
+		}
+		else {
+			ModelList::GetInst()->SetDrawModes(GL_LINE_LOOP);
+		}
+	}
+
+	if (key == 'h') {
+		m_culling = !m_culling;
+		if (m_culling) {
+			glEnable(GL_CULL_FACE);
+		}
+		else {
+			glDisable(GL_CULL_FACE);
+		}
+	}
+
 	m_camera->Input(key);
 }
 

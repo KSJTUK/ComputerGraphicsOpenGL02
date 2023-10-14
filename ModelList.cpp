@@ -57,6 +57,12 @@ void ModelList::LoadModel(const std::string& objectFilePath) {
 void ModelList::LoadModelFromFile(const std::string& modelsFilePath) {
 }
 
+void ModelList::SetDrawModes(int drawMode) {
+	for (auto& element : m_modelList) {
+		element.second->SetDrawMode(drawMode);
+	}
+}
+
 std::shared_ptr<class Model> ModelList::GetModel(const std::string& key) const {
 	auto iter = m_modelList.find(key);
 	if (iter == m_modelList.end()) {
