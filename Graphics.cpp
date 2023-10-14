@@ -6,7 +6,7 @@
 #include "Camera.h"
 #include "Model.h"
 #include "Axis.h"
-#include "Sphere.h"
+#include "Object.h"
 
 Graphics::Graphics() { }
 
@@ -54,19 +54,6 @@ void Graphics::Init() {
 	m_axisSystem = std::make_unique<Axis>();
 	m_axisSystem->Init(m_shader->GetShaderProgramID());
 
-	m_spheres.push_back(Sphere{ ModelList::GetInst()->GetModel("sphere"),
-		glm::vec3{ 10.f, 10.f, 10.f }
-		});
-
-	float xyz{ 10.f };
-	for (int i = 0; i < 5; ++i) {
-		m_spheres.push_back(
-			Sphere{ ModelList::GetInst()->GetModel("sphere"),
-			glm::vec3{ xyz, xyz, xyz } + m_spheres[0].GetPosition()
-			});
-		xyz -= 5.f;
-	}
-
 	// 투영 변환 행렬 계산 및 전송
 	SetPerspectiveMat();
 	// 쉐이더 프로그램 사용 종료
@@ -76,11 +63,6 @@ void Graphics::Init() {
 void Graphics::Update(float deltaTime) {
 	m_deltaTime = deltaTime;
 	m_camera->Update(m_deltaTime);
-	glm::vec3 move = m_spheres[0].Orbit(0.01f, glm::vec3{ 1.f, 0.f, 1.f }, glm::vec3{ });
-	for (auto i = 1; i < m_spheres.size(); ++i) {
-		m_spheres[i].SetPosition(m_spheres[i].GetPosition() + move);
-		m_spheres[i].Orbit(0.01f, glm::vec3{ -1.f, -1.f, 1.f }, m_spheres[0].GetPosition());
-	}
 }
 
 void Graphics::Render() {
@@ -88,14 +70,9 @@ void Graphics::Render() {
 
 	// 변환 행렬들 계산
 	m_camera->Render();
-	m_shader->SetViewMat(m_camera->GetViewMat());
 
 	// rendering code 
 	m_axisSystem->DrawAxis();
-
-	for (auto& s : m_spheres) {
-		s.Render();
-	}
 
 	m_shader->UnUseProgram();
 }

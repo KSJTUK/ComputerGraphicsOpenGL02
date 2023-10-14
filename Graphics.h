@@ -32,9 +32,6 @@ private:
 public:
 	// getter
 
-	// 테스트용
-	std::vector<class Sphere> m_spheres{ };
-
 	// setter
 	void SetWindowInfo(std::shared_ptr<struct WindowInfo>& winInfo);
 	void SetPerspectiveMat();
