@@ -5,9 +5,16 @@
 #include <memory>
 
 class ModelList {
-public:
+private:
 	ModelList();
 	~ModelList();
+
+private:
+	static ModelList* m_instance;
+
+public:
+	static ModelList* GetInst();
+	static void Destroy();
 
 private:
 	// 모델 내부의 쉐이더 초기화에 필요한 프로그램 ID

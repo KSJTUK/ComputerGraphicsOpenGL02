@@ -22,8 +22,8 @@ public:
 
 class Sphere {
 public:
-	Sphere(const class ModelList* const modelList);
-	Sphere(const ModelList* const modelList, const glm::vec3& initPosition);
+	Sphere(const std::shared_ptr<class Model>& model);
+	Sphere(const std::shared_ptr<class Model>& model, const glm::vec3& initPosition);
 	~Sphere();
 
 private:

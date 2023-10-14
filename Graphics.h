@@ -14,8 +14,6 @@ private:
 
 	std::unique_ptr<class Camera> m_camera{ };
 
-	std::unique_ptr<class ModelList> m_modelList{ };
-
 	std::unique_ptr<class Axis> m_axisSystem{ };
 
 private:

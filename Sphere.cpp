@@ -8,12 +8,12 @@ glm::vec3 ObjectMove::axisX = glm::vec3{ 1.f, 0.f, 0.f };
 glm::vec3 ObjectMove::axisY = glm::vec3{ 0.f, 1.f, 0.f };
 glm::vec3 ObjectMove::axisZ = glm::vec3{ 0.f, 0.f, 1.f };
 
-Sphere::Sphere(const ModelList* const modelList) {
-	m_model = modelList->GetModel("sphere");
+Sphere::Sphere(const std::shared_ptr<class Model>& model) {
+	m_model = model;
 }
 
-Sphere::Sphere(const ModelList* const modelList, const glm::vec3& initPosition) {
-	m_model = modelList->GetModel("sphere");
+Sphere::Sphere(const std::shared_ptr<class Model>& model, const glm::vec3& initPosition) {
+	m_model = model;
 	m_position = initPosition;
 }
 

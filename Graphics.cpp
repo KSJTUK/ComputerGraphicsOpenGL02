@@ -45,24 +45,23 @@ void Graphics::Init() {
 	m_camera->CameraPositionSet(glm::vec3{ 0.f, 0.f, -10.f });
 
 	// 모델리스트를 생성하고 모델 불러오기
-	m_modelList = std::make_unique<ModelList>();
-	m_modelList->Init(m_shader->GetShaderProgramID());
+	ModelList::GetInst()->Init(m_shader->GetShaderProgramID());
 
-	m_modelList->LoadModel("sphere.obj");
-	m_modelList->LoadModel("cube.obj");
-	m_modelList->LoadModel("cone.obj");
+	ModelList::GetInst()->LoadModel("sphere.obj");
+	ModelList::GetInst()->LoadModel("cube.obj");
+	ModelList::GetInst()->LoadModel("cone.obj");
 
 	m_axisSystem = std::make_unique<Axis>();
 	m_axisSystem->Init(m_shader->GetShaderProgramID());
 
-	m_spheres.push_back(Sphere{ m_modelList.get(),
+	m_spheres.push_back(Sphere{ ModelList::GetInst()->GetModel("sphere"),
 		glm::vec3{ 10.f, 10.f, 10.f }
 		});
 
 	float xyz{ 10.f };
 	for (int i = 0; i < 5; ++i) {
 		m_spheres.push_back(
-			Sphere{ m_modelList.get(),
+			Sphere{ ModelList::GetInst()->GetModel("sphere"),
 			glm::vec3{ xyz, xyz, xyz } + m_spheres[0].GetPosition()
 			});
 		xyz -= 5.f;

@@ -20,7 +20,7 @@ float Timer::GetTimeScale() const {
     return m_timeScale;
 }
 
-double Timer::GetFrame() const {
+float Timer::GetFrame() const {
     return m_fps;
 }
 

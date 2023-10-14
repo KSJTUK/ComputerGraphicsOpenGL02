@@ -26,7 +26,7 @@ public:
 	void SetTimeScale(float timeScale);
 	float GetDeltaTime() const;
 	float GetTimeScale() const;
-	double GetFrame() const;
+	float GetFrame() const;
 
 public:
 	void Init();

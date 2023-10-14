@@ -1,9 +1,32 @@
 #include "ModelList.h"
 #include "Model.h"
 
+// constructor and distructor
+// -------------------------------
 ModelList::ModelList() { }
 
 ModelList::~ModelList() { }
+// -------------------------------
+
+// static º¯¼ö
+ModelList* ModelList::m_instance = nullptr;
+
+// static Method (single tone)
+// -------------------------------
+ModelList* ModelList::GetInst() {
+	if (!m_instance) {
+		m_instance = new ModelList;
+	}
+	return m_instance;
+}
+
+void ModelList::Destroy() {
+	if (m_instance) {
+		delete m_instance;
+	}
+	m_instance = nullptr;
+}
+// -------------------------------
 
 std::string MakeStringToKey(const std::string& str) {
 	std::string key = str.substr(0, str.find('.'));
