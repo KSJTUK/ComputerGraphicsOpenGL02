@@ -15,6 +15,7 @@ void keyboardUpFunc(unsigned char, int, int);
 
 // 키보드 특수키 처리함수
 void specialkeyFunc(int, int, int);
+void specialKeyUpFunc(int key, int x, int y);
 
 // 마우스 입력 처리함수
 void mouseFunc(int, int, int, int);

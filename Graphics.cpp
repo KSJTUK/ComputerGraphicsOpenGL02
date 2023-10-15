@@ -23,7 +23,7 @@ void Graphics::SetPerspectiveMat() {
 	m_shader->SetPerspectiveMat(glm::perspective(glm::radians(halfFovy), aspect, m_near, m_far));
 }
 
-void Graphics::Input(unsigned char key) {
+void Graphics::Input(unsigned char key, bool down) {
 	if (key == 'w') {
 		m_drawSolid = !m_drawSolid;
 		if (m_drawSolid) {
@@ -44,11 +44,15 @@ void Graphics::Input(unsigned char key) {
 		}
 	}
 
-	m_camera->Input(key);
+	m_camera->Input(key, down);
 }
 
-void Graphics::SpecialInput(int key) {
-	m_camera->SpecialInput(key);
+void Graphics::SpecialInput(int key, bool down) {
+	if (key == GLUT_KEY_CTRL_L or key == GLUT_KEY_CTRL_R) {
+		controlDowned = true;
+	}
+
+	m_camera->SpecialInput(key, down);
 }
 
 void Graphics::Init() {
@@ -74,6 +78,8 @@ void Graphics::Init() {
 	m_axisSystem = std::make_unique<Axis>();
 	m_axisSystem->Init(m_shader->GetShaderProgramID());
 
+	m_object = new Object{ ModelList::GetInst()->GetModel("cube") };
+
 	// 투영 변환 행렬 계산 및 전송
 	SetPerspectiveMat();
 	// 쉐이더 프로그램 사용 종료
@@ -90,9 +96,12 @@ void Graphics::Render() {
 
 	// 변환 행렬들 계산
 	m_camera->Render();
+	m_shader->SetViewMat(m_camera->GetViewMat());
 
 	// rendering code 
 	m_axisSystem->DrawAxis();
+
+	m_object->Render();
 
 	m_shader->UnUseProgram();
 }

@@ -16,21 +16,21 @@ void Camera::ViewPointUnFix() {
 	m_fixAt = 1.f;
 }
 
-void Camera::Input(unsigned char key) {
+void Camera::Input(unsigned char key, bool down) {
 	switch (key) {
-	case 'w':
+	case 'l':
 		Move(-m_cameraAxisZ);
 		break;
 		
-	case 's':
+	case ',':
 		Move(m_cameraAxisZ);
 		break;
 
-	case 'a':
+	case '.':
 		Move(-m_cameraAxisX);
 		break;
 
-	case 'd':
+	case '/':
 		Move(m_cameraAxisX);
 		break;
 
@@ -52,7 +52,7 @@ void Camera::Input(unsigned char key) {
 	}
 }
 
-void Camera::SpecialInput(int key) {
+void Camera::SpecialInput(int key, bool down) {
 	switch (key) {
 	case GLUT_KEY_RIGHT:
 		ViewPointMove(-m_angleSpeed, m_cameraAxisY);

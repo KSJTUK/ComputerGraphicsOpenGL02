@@ -33,21 +33,28 @@ void idleFunc()
 
 void keyboardFunc(unsigned char key, int x, int y)
 {
-	e.Input(key);
+	e.Input(key, true);
 }
 
 void keyboardUpFunc(unsigned char key, int x, int y)
 {
-	
+	e.Input(key, false);
 }
 
 void specialkeyFunc(int key, int x, int y)
 {
-	e.SpecialInput(key);
+	e.SpecialInput(key, true);
+}
+
+void specialKeyUpFunc(int key, int x, int y)
+{
+	e.SpecialInput(key, false);
+
 }
 
 void mouseFunc(int button, int state, int x, int y)
 {
+	
 }
 
 void mouseLeftDown(int state, int x, int y)

@@ -37,6 +37,7 @@ void Engine::SubscribeCallbacks() {
 	glutPassiveMotionFunc(mousePassiveMotion);
 	glutIdleFunc(idleFunc);
 	glutSpecialFunc(specialkeyFunc);
+	glutSpecialUpFunc(specialKeyUpFunc);
 }
 
 size_t Engine::GetWindowWidth() const {
@@ -120,12 +121,12 @@ void Engine::Render() {
 	m_grapics->Render();
 }
 
-void Engine::Input(unsigned char key) {
-	m_grapics->Input(key);
+void Engine::Input(unsigned char key, bool down) {
+	m_grapics->Input(key, down);
 }
 
-void Engine::SpecialInput(int key) {
-	m_grapics->SpecialInput(key);
+void Engine::SpecialInput(int key, bool down) {
+	m_grapics->SpecialInput(key, down);
 }
 
 

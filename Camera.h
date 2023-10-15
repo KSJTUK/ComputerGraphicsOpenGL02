@@ -10,8 +10,8 @@ public:
 
 private:
 	// 카메라의 내부 파라미터
-	glm::vec3 m_EYE{ 0.f, 0.f, -3.f };
-	glm::vec3 m_AT{ 0.f, 0.f, 1.f };
+	glm::vec3 m_EYE{ 5.f, 5.f, -5.f };
+	glm::vec3 m_AT{ 2.f, 2.f, 2.f };
 	glm::vec3 m_UP{ 0.f, 1.f, 0.f };
 
 	// 뷰변환 행렬
@@ -21,7 +21,7 @@ private:
 	float m_deltaTime{ };
 
 	// 카메라 움직임을 위한 변수들
-	float m_moveSpeed{ 500.f };
+	float m_moveSpeed{ 1000.f };
 	float m_angleSpeed{ 3.f };
 
 	float m_fixAt{ 1.f };
@@ -46,8 +46,8 @@ public:
 
 public:
 	// 외부 키입력을 카메라가 자체적으로 처리하게 함
-	void Input(unsigned char key);
-	void SpecialInput(int key);
+	void Input(unsigned char key, bool down);
+	void SpecialInput(int key, bool down);
 
 	void Move(const glm::vec3& moveVec);
 	void ViewPointMove(float moveAngle, const glm::vec3& axis);

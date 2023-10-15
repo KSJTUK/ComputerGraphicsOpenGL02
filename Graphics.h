@@ -29,11 +29,25 @@ private:
 	// 업데이트를 위한 시간값 저장
 	float m_deltaTime{ };
 
+	class Object* m_object{ };
+
 	// 은면 제거를 위한 플래그
 	bool m_culling{ true };
 
 	// 와이어 / 솔리드 객체 변환을 위한 플래그
 	bool m_drawSolid{ true };
+
+	// solution union
+	bool controlDowned{ false };
+
+	//solution 15
+#ifdef SOLUTION15
+	bool rotateX{ false };
+	bool rotateY{ false };
+#endif
+
+#ifdef SOLUTION16
+#endif
 
 public:
 	// getter
@@ -44,8 +58,8 @@ public:
 
 public:
 	// 외부 키입력을 카메라에게 전해주는 함수
-	void Input(unsigned char key);
-	void SpecialInput(int key);
+	void Input(unsigned char key, bool down);
+	void SpecialInput(int key, bool down);
 
 public:
 	void Init();
