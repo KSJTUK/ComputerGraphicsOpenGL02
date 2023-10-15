@@ -8,6 +8,13 @@ void Camera::CameraPositionSet(const glm::vec3& position) {
 	m_EYE = position;
 }
 
+void Camera::CameraViewPointSet(const glm::vec3& at) {
+	m_AT = at;
+	if (m_AT == glm::vec3{ 0.f }) {
+		m_AT = glm::vec3{ 0.f, 0.f, 1.f };
+	}
+}
+
 void Camera::ViewPointFix() {
 	m_fixAt = 0.f;
 }

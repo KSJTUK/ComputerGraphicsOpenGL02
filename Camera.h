@@ -40,6 +40,7 @@ public:
 
 	// setter
 	void CameraPositionSet(const glm::vec3& position);
+	void CameraViewPointSet(const glm::vec3& at);
 
 	void ViewPointFix();
 	void ViewPointUnFix();

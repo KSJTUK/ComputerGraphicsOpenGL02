@@ -118,3 +118,146 @@ void Solution15::Update(float deltaTime) {
 void Solution15::Render() {
 	m_object->Render();
 }
+
+void Solution16::Init() {
+	m_objects.push_back(Object{ ModelList::GetInst()->GetModel("cube"), glm::vec3{ 10.f, 0.f, 0.f }, "cube" });
+	m_objects.push_back(Object{ ModelList::GetInst()->GetModel("sphere"), glm::vec3{ -10.f, 0.f, 0.f }, "sphere" });
+	for (auto i = 0; i < m_objects.size(); ++i) {
+		m_rotateX.push_back(0);
+		m_rotateY.push_back(0);
+	}
+
+	oribit = 0;
+}
+
+void Solution16::ReInit() {
+	m_objects.clear();
+	m_rotateX.clear();
+	m_rotateY.clear();
+	Init();
+}
+
+void Solution16::Input(unsigned char key, bool down) {
+	if (down) {
+		if (key == 'x') {
+			for (auto& rot : m_rotateX) {
+				if (rot == 0) {
+					rot = 1;
+				}
+				else if (rot == 1) {
+					rot = -1;
+				}
+				else {
+					rot = 0;
+				}
+			}
+		}
+
+		if (key == 'y') {
+			for (auto& rot : m_rotateY) {
+				if (rot == 0) {
+					rot = 1;
+				}
+				else if (rot == 1) {
+					rot = -1;
+				}
+				else {
+					rot = 0;
+				}
+			}
+		}
+
+		if (key == '1') {
+			size_t loopSize{ m_objects.size() };
+			for (auto i = 0; i < loopSize; ++i) {
+				if (m_objects[i].GetPosition().x < 0.f) {
+					m_rotateX[i] = 1;
+					m_rotateY[i] = 1;
+				}
+				else {
+					m_rotateX[i] = 0;
+					m_rotateY[i] = 0;
+				}
+			}
+		}
+		else if (key == '2') {
+			size_t loopSize{ m_objects.size() };
+			for (auto i = 0; i < loopSize; ++i) {
+				if (m_objects[i].GetPosition().x > 0.f) {
+					m_rotateX[i] = 1;
+					m_rotateY[i] = 1;
+				}
+				else {
+					m_rotateX[i] = 0;
+					m_rotateY[i] = 0;
+				}
+			}
+		}
+		else if (key == '3') {
+			for (auto& rot : m_rotateX) {
+				if (rot == 0) {
+					rot = 1;
+				}
+				else if (rot == 1) {
+					rot = -1;
+				}
+				else {
+					rot = 0;
+				}
+			}
+
+			for (auto& rot : m_rotateY) {
+				if (rot == 0) {
+					rot = 1;
+				}
+				else if (rot == 1) {
+					rot = -1;
+				}
+				else {
+					rot = 0;
+				}
+			}
+		}
+
+		if (key == 'r') {
+			if (oribit == 0) {
+				oribit = 1;
+			}
+			else if (oribit == 1) {
+				oribit = -1;
+			}
+			else {
+				oribit = 0;
+			}
+		}
+
+		if (key == 's') {
+			ReInit();
+		}
+
+		if (key == 'c') {
+			
+		}
+	}
+}
+
+void Solution16::SpecialInput(int key, bool down)
+{
+}
+
+void Solution16::Update(float deltaTime) {
+	m_deltaTime = deltaTime;
+	size_t loopSize{ m_objects.size() };
+	for (auto i = 0; i < loopSize; ++i) {
+		m_objects[i].Update(m_deltaTime);
+		m_objects[i].RotateX(m_rotateX[i]);
+		m_objects[i].RotateY(m_rotateY[i]);
+		m_objects[i].OrbitZ(oribit);
+	}
+}
+
+void Solution16::Render() {
+	for (auto& object : m_objects) {
+		object.Render();
+	}
+}

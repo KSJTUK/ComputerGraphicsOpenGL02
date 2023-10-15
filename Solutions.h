@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 
 class Solutions {
 public: 
@@ -26,8 +27,31 @@ private:
 
 	float m_deltaTime{ };
 
-	bool m_drawSolid{ false };
-	bool m_culling{ false };
+	bool m_drawSolid{ true };
+	bool m_culling{ true };
+
+public:
+	void Init();
+	void ReInit();
+	void Input(unsigned char key, bool down);
+	void SpecialInput(int key, bool down);
+	void Update(float deltaTime);
+	void Render();
+};
+
+class Solution16 : public Solutions {
+public:
+	Solution16() { };
+	~Solution16() { }
+
+private:
+	std::vector<class Object> m_objects{ };
+	std::vector<int> m_rotateX{ };
+	std::vector<int> m_rotateY{ };
+	
+	int oribit{ 0 };
+
+	float m_deltaTime{ };
 
 public:
 	void Init();
