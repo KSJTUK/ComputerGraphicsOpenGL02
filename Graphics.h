@@ -4,6 +4,8 @@
 #include <memory>
 #include <vector>
 
+#define SOLUTION15
+
 class Graphics {
 public:
 	Graphics();
@@ -42,8 +44,8 @@ private:
 
 	//solution 15
 #ifdef SOLUTION15
-	bool rotateX{ false };
-	bool rotateY{ false };
+	int rotateX{ 0 };
+	int rotateY{ 0 };
 #endif
 
 #ifdef SOLUTION16

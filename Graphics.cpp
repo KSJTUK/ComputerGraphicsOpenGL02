@@ -44,6 +44,38 @@ void Graphics::Input(unsigned char key, bool down) {
 		}
 	}
 
+#ifdef SOLUTION15
+	if (key == 'x') {
+		if (rotateX == 0) {
+			rotateX = 1;
+		}
+		else if (rotateX == 1) {
+			rotateX = -1;
+		}
+		else {
+			rotateX = 0;
+		}
+	}
+
+	if (key == 'y') {
+		if (rotateY == 0) {
+			rotateY = 1;
+		}
+		else if (rotateY == 1) {
+			rotateY = -1;
+		}
+		else {
+			rotateY = 0;
+		}
+	}
+
+	if (key == 's') {
+		m_object->SetPosition(glm::vec3{ 0.f });
+		rotateX = 0;
+		rotateY = 0;
+	}
+#endif
+
 	m_camera->Input(key, down);
 }
 
@@ -114,6 +146,11 @@ void Graphics::Update(float deltaTime) {
 	m_deltaTime = deltaTime;
 	m_camera->Update(m_deltaTime);
 	m_object->Update(m_deltaTime);
+
+#ifdef SOLUTION15
+	m_object->RotateX(rotateX);
+	m_object->RotateZ(-rotateY);
+#endif
 }
 
 void Graphics::Render() {

@@ -20,15 +20,15 @@ Object::Object(const std::shared_ptr<class Model>& model, const glm::vec3& initP
 Object::~Object() { }
 
 void Object::RotateX(int rev) {
-	m_rotAngle.x += m_angleSpeed * m_deltaTime;
+	m_rotAngle.x += rev * m_angleSpeed * m_deltaTime;
 }
 
 void Object::RotateY(int rev) {
-	m_rotAngle.y += m_angleSpeed * m_deltaTime;
+	m_rotAngle.y += rev * m_angleSpeed * m_deltaTime;
 }
 
 void Object::RotateZ(int rev) {
-	m_rotAngle.z += m_angleSpeed * m_deltaTime;
+	m_rotAngle.z += rev * m_angleSpeed * m_deltaTime;
 }
 
 void Object::OrbitX(int rev) {
