@@ -7,6 +7,7 @@
 #include "Model.h"
 #include "Axis.h"
 #include "Object.h"
+#include "Solutions.h"
 
 Graphics::Graphics() { }
 
@@ -24,58 +25,7 @@ void Graphics::SetPerspectiveMat() {
 }
 
 void Graphics::Input(unsigned char key, bool down) {
-	if (key == 'w') {
-		m_drawSolid = !m_drawSolid;
-		if (m_drawSolid) {
-			ModelList::GetInst()->SetDrawModes(GL_TRIANGLES);
-		}
-		else {
-			ModelList::GetInst()->SetDrawModes(GL_LINE_LOOP);
-		}
-	}
-
-	if (key == 'h') {
-		m_culling = !m_culling;
-		if (m_culling) {
-			glEnable(GL_CULL_FACE);
-		}
-		else {
-			glDisable(GL_CULL_FACE);
-		}
-	}
-
-#ifdef SOLUTION15
-	if (key == 'x') {
-		if (rotateX == 0) {
-			rotateX = 1;
-		}
-		else if (rotateX == 1) {
-			rotateX = -1;
-		}
-		else {
-			rotateX = 0;
-		}
-	}
-
-	if (key == 'y') {
-		if (rotateY == 0) {
-			rotateY = 1;
-		}
-		else if (rotateY == 1) {
-			rotateY = -1;
-		}
-		else {
-			rotateY = 0;
-		}
-	}
-
-	if (key == 's') {
-		m_object->SetPosition(glm::vec3{ 0.f });
-		rotateX = 0;
-		rotateY = 0;
-	}
-#endif
-
+	m_solutions[m_curSolutionIndex]->Input(key, down);
 	m_camera->Input(key, down);
 }
 
@@ -93,21 +43,20 @@ void Graphics::SpecialInput(int key, bool down) {
 		m_camera->SpecialInput(key, down);
 	}
 	else {
-		if (key == GLUT_KEY_RIGHT) {
-			m_object->MoveX(-1);
+		if (key == GLUT_KEY_F2) {
+			if (m_curSolutionIndex < m_solutions.size() - 1) {
+				++m_curSolutionIndex;
+				m_solutions[m_curSolutionIndex]->ReInit();
+			}
+		}
+		else if (key == GLUT_KEY_F3) {
+			if (m_curSolutionIndex > 1) {
+				--m_curSolutionIndex;
+				m_solutions[m_curSolutionIndex]->ReInit();
+			}
 		}
 
-		if (key == GLUT_KEY_LEFT) {
-			m_object->MoveX();
-		}
-
-		if (key == GLUT_KEY_UP) {
-			m_object->MoveY();
-		}
-
-		if (key == GLUT_KEY_DOWN) {
-			m_object->MoveY(-1);
-		}
+		m_solutions[m_curSolutionIndex]->SpecialInput(key, down);
 	}
 }
 
@@ -134,7 +83,12 @@ void Graphics::Init() {
 	m_axisSystem = std::make_unique<Axis>();
 	m_axisSystem->Init(m_shader->GetShaderProgramID());
 
-	m_object = new Object{ ModelList::GetInst()->GetModel("cube") };
+	m_solutions.push_back(new Solution15{ });
+	
+	for (auto& solution : m_solutions) {
+		solution->Init();
+	}
+	m_curSolutionIndex = 0;
 
 	// 투영 변환 행렬 계산 및 전송
 	SetPerspectiveMat();
@@ -145,12 +99,7 @@ void Graphics::Init() {
 void Graphics::Update(float deltaTime) {
 	m_deltaTime = deltaTime;
 	m_camera->Update(m_deltaTime);
-	m_object->Update(m_deltaTime);
-
-#ifdef SOLUTION15
-	m_object->RotateX(rotateX);
-	m_object->RotateZ(-rotateY);
-#endif
+	m_solutions[m_curSolutionIndex]->Update(deltaTime);
 }
 
 void Graphics::Render() {
@@ -163,7 +112,7 @@ void Graphics::Render() {
 	// rendering code 
 	m_axisSystem->DrawAxis();
 
-	m_object->Render();
+	m_solutions[m_curSolutionIndex]->Render();
 
 	m_shader->UnUseProgram();
 }

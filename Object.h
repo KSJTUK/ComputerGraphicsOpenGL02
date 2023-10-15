@@ -24,6 +24,8 @@ class Object {
 public:
 	Object(const std::shared_ptr<class Model>& model);
 	Object(const std::shared_ptr<class Model>& model, const glm::vec3& initPosition);
+	Object(const std::shared_ptr<class Model>& model, const glm::vec3& initPosition, std::string& modelTag);
+	Object(const std::shared_ptr<class Model>& model, const glm::vec3& initPosition, std::string&& modelTag);
 	~Object();
 
 protected:
@@ -54,8 +56,11 @@ protected:
 public:
 	// getter
 	glm::vec3 GetPosition() const;
+	std::string GetModelTag();
 
 	void SetPosition(const glm::vec3& position);
+	void SetModel(const std::shared_ptr<class Model>& newModel);
+	void SetModel(const std::string& newModelTag);
 
 public:
 	void RotateX(int rev = 1);

@@ -31,25 +31,11 @@ private:
 	// 업데이트를 위한 시간값 저장
 	float m_deltaTime{ };
 
-	class Object* m_object{ };
-
-	// 은면 제거를 위한 플래그
-	bool m_culling{ true };
-
-	// 와이어 / 솔리드 객체 변환을 위한 플래그
-	bool m_drawSolid{ true };
-
 	// solution union
 	bool controlDowned{ false };
 
-	//solution 15
-#ifdef SOLUTION15
-	int rotateX{ 0 };
-	int rotateY{ 0 };
-#endif
-
-#ifdef SOLUTION16
-#endif
+	std::vector<class Solutions*> m_solutions{ };
+	int m_curSolutionIndex{ };
 
 public:
 	// getter

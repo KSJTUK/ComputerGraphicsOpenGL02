@@ -17,6 +17,18 @@ Object::Object(const std::shared_ptr<class Model>& model, const glm::vec3& initP
 	m_position = initPosition;
 }
 
+Object::Object(const std::shared_ptr<class Model>& model, const glm::vec3& initPosition, std::string& modelTag) {
+	m_model = model;
+	m_position = initPosition;
+	m_modelTag = modelTag;
+}
+
+Object::Object(const std::shared_ptr<class Model>& model, const glm::vec3& initPosition, std::string&& modelTag) {
+	m_model = model;
+	m_position = initPosition;
+	m_modelTag = modelTag;
+}
+
 Object::~Object() { }
 
 void Object::RotateX(int rev) {
@@ -72,8 +84,21 @@ glm::vec3 Object::GetPosition() const {
 	return m_position;
 }
 
+std::string Object::GetModelTag() {
+	return m_modelTag;
+}
+
 void Object::SetPosition(const glm::vec3& position) {
 	m_position = position;
+}
+
+void Object::SetModel(const std::shared_ptr<class Model>& newModel) {
+	m_model = newModel;
+}
+
+void Object::SetModel(const std::string& newModelTag) {
+	m_model = ModelList::GetInst()->GetModel(newModelTag);
+	m_modelTag = newModelTag;
 }
 
 void Object::Update(float deltaTime) {
