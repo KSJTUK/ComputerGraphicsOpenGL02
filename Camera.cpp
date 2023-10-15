@@ -22,11 +22,11 @@ void Camera::Input(unsigned char key, bool down) {
 		Move(-m_cameraAxisZ);
 		break;
 		
-	case ',':
+	case '.':
 		Move(m_cameraAxisZ);
 		break;
 
-	case '.':
+	case ',':
 		Move(-m_cameraAxisX);
 		break;
 

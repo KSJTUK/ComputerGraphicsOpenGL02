@@ -38,6 +38,7 @@ protected:
 
 	glm::vec3 m_orbitAngle{ 0.f };
 
+	float m_moveSpeed{ 200.f };
 	float m_angleSpeed{ 10.f };
 	float m_orbitSpeed{ 200.f };
 
@@ -57,12 +58,19 @@ public:
 	void SetPosition(const glm::vec3& position);
 
 public:
-	void RotateX();
-	void RotateY();
-	void RotateZ();
-	void OrbitX();
-	void OrbitY();
-	void OrbitZ();
+	void RotateX(int rev = 1);
+	void RotateY(int rev = 1);
+	void RotateZ(int rev = 1);
+
+	void OrbitX(int rev = 1);
+	void OrbitY(int rev = 1);
+	void OrbitZ(int rev = 1);
+
+	void MoveX(int rev = 1);
+	void MoveY(int rev = 1);
+	void MoveZ(int rev = 1);
+
+	glm::vec3 Move(glm::vec3& direction);
 
 	glm::vec3 Orbit(const float& angle, const glm::vec3& axis, const glm::vec3& center);
 

@@ -49,10 +49,34 @@ void Graphics::Input(unsigned char key, bool down) {
 
 void Graphics::SpecialInput(int key, bool down) {
 	if (key == GLUT_KEY_CTRL_L or key == GLUT_KEY_CTRL_R) {
-		controlDowned = true;
+		if (down) {
+			controlDowned = true;
+		}
+		else {
+			controlDowned = false;
+		}
 	}
 
-	m_camera->SpecialInput(key, down);
+	if (controlDowned) {
+		m_camera->SpecialInput(key, down);
+	}
+	else {
+		if (key == GLUT_KEY_RIGHT) {
+			m_object->MoveX(-1);
+		}
+
+		if (key == GLUT_KEY_LEFT) {
+			m_object->MoveX();
+		}
+
+		if (key == GLUT_KEY_UP) {
+			m_object->MoveY();
+		}
+
+		if (key == GLUT_KEY_DOWN) {
+			m_object->MoveY(-1);
+		}
+	}
 }
 
 void Graphics::Init() {
@@ -89,6 +113,7 @@ void Graphics::Init() {
 void Graphics::Update(float deltaTime) {
 	m_deltaTime = deltaTime;
 	m_camera->Update(m_deltaTime);
+	m_object->Update(m_deltaTime);
 }
 
 void Graphics::Render() {

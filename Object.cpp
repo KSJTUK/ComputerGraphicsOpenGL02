@@ -19,28 +19,46 @@ Object::Object(const std::shared_ptr<class Model>& model, const glm::vec3& initP
 
 Object::~Object() { }
 
-void Object::RotateX() {
+void Object::RotateX(int rev) {
 	m_rotAngle.x += m_angleSpeed * m_deltaTime;
 }
 
-void Object::RotateY() {
+void Object::RotateY(int rev) {
 	m_rotAngle.y += m_angleSpeed * m_deltaTime;
 }
 
-void Object::RotateZ() {
+void Object::RotateZ(int rev) {
 	m_rotAngle.z += m_angleSpeed * m_deltaTime;
 }
 
-void Object::OrbitX() {
-	ObjectMove::OrbitMove(m_position, m_orbitSpeed * m_deltaTime, ObjectMove::axisX);
+void Object::OrbitX(int rev) {
+	ObjectMove::OrbitMove(m_position, m_orbitSpeed * m_deltaTime, static_cast<float>(rev) * ObjectMove::axisX);
 }
 
-void Object::OrbitY() {
-	ObjectMove::OrbitMove(m_position, m_orbitSpeed * m_deltaTime, ObjectMove::axisY);
+void Object::OrbitY(int rev) {
+	ObjectMove::OrbitMove(m_position, m_orbitSpeed * m_deltaTime, static_cast<float>(rev) * ObjectMove::axisY);
 }
 
-void Object::OrbitZ() {
-	ObjectMove::OrbitMove(m_position, m_orbitSpeed * m_deltaTime, ObjectMove::axisZ);
+void Object::OrbitZ(int rev) {
+	ObjectMove::OrbitMove(m_position, m_orbitSpeed * m_deltaTime, static_cast<float>(rev) * ObjectMove::axisZ);
+}
+
+void Object::MoveX(int rev) {
+	ObjectMove::Move(m_position, static_cast<float>(rev) * ObjectMove::axisX, m_moveSpeed * m_deltaTime);
+}
+
+void Object::MoveY(int rev) {
+	ObjectMove::Move(m_position, static_cast<float>(rev) * ObjectMove::axisY, m_moveSpeed * m_deltaTime);
+}
+
+void Object::MoveZ(int rev) {
+	ObjectMove::Move(m_position, static_cast<float>(rev) * ObjectMove::axisZ, m_moveSpeed * m_deltaTime);
+}
+
+glm::vec3 Object::Move(glm::vec3& direction) {
+	glm::vec3 rtVec{ m_position };
+	ObjectMove::Move(m_position, direction, m_moveSpeed * m_deltaTime);
+	return rtVec;
 }
 
 glm::vec3 Object::Orbit(const float& angle, const glm::vec3& axis, const glm::vec3& center) {
