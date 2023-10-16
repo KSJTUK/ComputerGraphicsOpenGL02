@@ -11,10 +11,19 @@ public:
 	~Spiral() { }
 
 private:
-	std::unique_ptr<GraphicBuffers> m_spiralBuffer{ };
+	static std::unique_ptr<GraphicBuffers> m_spiralBuffer;
 
-	std::vector<Vertex> m_spiralVertex{ };
-	std::vector<unsigned int> m_spiralVertexIndex{ };
+	static std::vector<Vertex> m_spiralVertex;
+	static std::vector<unsigned int> m_spiralVertexIndex;
+
+	glm::vec3 m_position{ 0.f };
+	glm::mat4 m_transformMat{ 1.f };
+
+public:
+	void SetPosition(const glm::vec3& mat4);
+	size_t GetSpiralSize() const;
+
+	Vertex operator[](size_t index) const;
 
 public:
 	void Init(unsigned int shaderProgramID);

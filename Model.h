@@ -10,7 +10,7 @@ public:
 	~Model();
 
 	Model(const Model& other) = delete;
-	Model* operator=(const Model& other) = delete;
+	Model& operator=(const Model& other) = delete;
 
 private:
 	// VAO, VBO, EBO를 가지는 객체

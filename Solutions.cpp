@@ -309,7 +309,7 @@ void Solution17::Init() {
 
 	spiral = new Spiral{ };
 	spiral->Init(m_shaderProgramID);
-	spiral->MakeSpiral(10000, glm::vec3{ }, 3.f, 1.f);
+	spiral->MakeSpiral(10000, glm::vec3{ }, 3.f, 1);
 }
 
 void Solution17::ReInit() {
@@ -320,7 +320,129 @@ void Solution17::ReInit() {
 }
 
 void Solution17::Input(unsigned char key, bool down) {
+	if (down) {
+		if (key == 'x') {
+			for (auto& rot : m_rotateX) {
+				if (rot == 0) {
+					rot = 1;
+				}
+				else if (rot == 1) {
+					rot = -1;
+				}
+				else {
+					rot = 0;
+				}
+			}
+		}
 
+		if (key == 'y') {
+			for (auto& rot : m_rotateY) {
+				if (rot == 0) {
+					rot = 1;
+				}
+				else if (rot == 1) {
+					rot = -1;
+				}
+				else {
+					rot = 0;
+				}
+			}
+		}
+
+		if (key == '1') {
+			size_t loopSize{ m_objects.size() };
+			for (auto i = 0; i < loopSize; ++i) {
+				if (m_objects[i].GetPosition().x < 0.f) {
+					m_rotateX[i] = 1;
+					m_rotateY[i] = 1;
+				}
+				else {
+					m_rotateX[i] = 0;
+					m_rotateY[i] = 0;
+				}
+			}
+		}
+		else if (key == '2') {
+			size_t loopSize{ m_objects.size() };
+			for (auto i = 0; i < loopSize; ++i) {
+				if (m_objects[i].GetPosition().x > 0.f) {
+					m_rotateX[i] = 1;
+					m_rotateY[i] = 1;
+				}
+				else {
+					m_rotateX[i] = 0;
+					m_rotateY[i] = 0;
+				}
+			}
+		}
+		else if (key == '3') {
+			for (auto& rot : m_rotateX) {
+				if (rot == 0) {
+					rot = 1;
+				}
+				else if (rot == 1) {
+					rot = -1;
+				}
+				else {
+					rot = 0;
+				}
+			}
+
+			for (auto& rot : m_rotateY) {
+				if (rot == 0) {
+					rot = 1;
+				}
+				else if (rot == 1) {
+					rot = -1;
+				}
+				else {
+					rot = 0;
+				}
+			}
+		}
+
+		if (key == 'r') {
+			if (oribit == 0) {
+				oribit = 1;
+			}
+			else if (oribit == 1) {
+				oribit = -1;
+			}
+			else {
+				oribit = 0;
+			}
+		}
+
+		if (key == 's') {
+			ReInit();
+		}
+
+		if (key == 'c') {
+			std::string tags[3]{ "cone", "cube", "sphere" };
+			for (auto& e : m_objects) {
+				e.SetModel(tags[glm::linearRand(0, 2)]);
+			}
+
+			size_t loopSize{ m_orbitObject.size() };
+			for (auto i = 0; i < loopSize; ++i) {
+				m_orbitObject[i].SetModel(m_objects[i].GetModelTag());
+			}
+		}
+
+		if (key == 'o') {
+			if (m_orbitObject.empty()) {
+				size_t loopSize{ m_objects.size() };
+				for (auto i = 0; i < loopSize; ++i) {
+					glm::vec3 initPos{ m_objects[i].GetPosition() };
+					initPos.x += 10.f;
+					m_orbitObject.push_back(Object{ m_objects[i].GetModelTag(), initPos });
+				}
+			}
+			else {
+				m_orbitObject.clear();
+			}
+		}
+	}
 }
 
 void Solution17::SpecialInput(int key, bool down) {
@@ -328,8 +450,21 @@ void Solution17::SpecialInput(int key, bool down) {
 }
 
 void Solution17::Update(float deltaTime) {
-	for (auto& object : m_objects) {
-		object.Update(deltaTime);
+	size_t loopSize{ m_objects.size() };
+	std::vector<glm::vec3> prevPos{ };
+	for (auto i = 0; i < loopSize; ++i) {
+		m_objects[i].Update(deltaTime);
+		m_objects[i].RotateX(m_rotateX[i]);
+		m_objects[i].RotateY(m_rotateY[i]);
+		prevPos.push_back(m_objects[i].MoveSpiral(*spiral));
+	}
+
+
+	loopSize = m_orbitObject.size();
+	for (auto i = 0; i < loopSize; ++i) {
+		glm::vec3 pos{ m_objects[i].GetPosition() };
+		m_orbitObject[i].SetPosition(prevPos[i] + m_orbitObject[i].GetPosition());
+		m_orbitObject[i].Orbit(0.01f, glm::vec3{ 0.f, 0.f, 1.f }, pos);
 	}
 }
 
@@ -338,6 +473,10 @@ void Solution17::Render() {
 
 
 	for (auto& object : m_objects) {
+		object.Render();
+	}
+
+	for (auto& object : m_orbitObject) {
 		object.Render();
 	}
 }

@@ -1,19 +1,11 @@
 ﻿#pragma once
 #include <string>
 #include <memory>
+#include <functional>
 #include "gl_headers.h"
+#include "Spiral.h"
 
-//class ObjectMoveState {
-//public:
-//	ObjectMoveState();
-//	~ObjectMoveState();
-//
-//private:
-//	std::string state{ };
-//
-//public:
-//	void Update(float deltaTime, Object* const object);
-//};
+class Object;
 
 class ObjectMove {
 public:
@@ -28,6 +20,8 @@ private:
 	~ObjectMove() = delete;
 
 public:
+	static void SpiralMove(Object& object, const Spiral& spiral, size_t step);
+	static void SpiralMove(Object& object, const Spiral& spiral, size_t step, const glm::vec3& cetner);
 	static void OrbitMove(glm::vec3& position, const float& angle, const glm::vec3& axis, const glm::vec3& center = ObjectMove::origin);
 	static void Move(glm::vec3& position, const glm::vec3& direction, const float speed);
 };
@@ -67,6 +61,11 @@ protected:
 	glm::mat4 rotate{ 1.f };
 	glm::mat4 trans{ 1.f };
 
+	size_t m_spiralStep{  };
+	int m_spiralDir{ 1 };
+	float m_spiralMoveTime{ 0.005f };
+	float m_timeCount{ };
+
 public:
 	// getter
 	glm::vec3 GetPosition() const;
@@ -93,6 +92,8 @@ public:
 
 	glm::vec3 Orbit(const float& angle, const glm::vec3& axis, const glm::vec3& center);
 
+	glm::vec3 MoveSpiral(const Spiral& move);
+		
 public:
 	void Update(float deltaTime);
 	void Render();

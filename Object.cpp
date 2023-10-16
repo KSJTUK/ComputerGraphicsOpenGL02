@@ -104,6 +104,25 @@ glm::vec3 Object::Orbit(const float& angle, const glm::vec3& axis, const glm::ve
 	return rtVec;
 }
 
+glm::vec3 Object::MoveSpiral(const Spiral& move) {
+	glm::vec3 rtVec{ m_position };
+	if (m_spiralMoveTime < m_timeCount) {
+		m_timeCount = 0.f;
+		ObjectMove::SpiralMove((*this), move, m_spiralStep);
+		m_spiralStep += m_spiralDir;
+		if (m_spiralStep >= move.GetSpiralSize()) {
+			m_spiralStep = move.GetSpiralSize() - 1;
+			m_spiralDir = -1;
+		}
+		else if (m_spiralStep <= 0) {
+			m_spiralStep = 0;
+			m_spiralDir = 1;
+		}
+	}
+	rtVec = m_position - rtVec;
+	return rtVec;
+}
+
 glm::vec3 Object::GetPosition() const {
 	return m_position;
 }
@@ -128,6 +147,7 @@ void Object::SetModel(const std::string& newModelTag) {
 
 void Object::Update(float deltaTime) {
 	m_deltaTime = deltaTime;
+	m_timeCount += deltaTime;
 }
 
 void Object::Render() {
@@ -142,6 +162,10 @@ void Object::Render() {
 	m_model->Render();
 }
 
+void ObjectMove::SpiralMove(Object& object, const Spiral& spiral, size_t step) {
+	object.SetPosition(spiral[step].position);
+}
+
 void ObjectMove::OrbitMove(glm::vec3& position, const float& angle, const glm::vec3& axis, const glm::vec3& origin) {
 	glm::vec4 rotPos{ position - origin, 1.f };
 	position = glm::orientate4(glm::radians(angle * axis)) * rotPos;
@@ -151,7 +175,3 @@ void ObjectMove::OrbitMove(glm::vec3& position, const float& angle, const glm::v
 void ObjectMove::Move(glm::vec3& position, const glm::vec3& direction, const float speed) {
 	position += direction * speed;
 }
-//
-//void ObjectMoveState::Update(float deltaTime, Object* const object) {
-//
-//}
