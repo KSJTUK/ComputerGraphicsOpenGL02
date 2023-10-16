@@ -63,3 +63,37 @@ public:
 	void Update(float deltaTime);
 	void Render();
 };
+
+class Solution17 : public Solutions {
+public:
+	Solution17() { };
+	~Solution17() { }
+
+private:
+	unsigned int m_shaderProgramID{ };
+
+	std::vector<class Object> m_objects{ };
+	std::vector<int> m_rotateX{ };
+	std::vector<int> m_rotateY{ };
+
+	std::vector<class Object> m_orbitObject{ };
+
+	class Spiral* spiral{ nullptr };
+
+	int oribit{ 0 };
+
+	float m_deltaTime{ };
+
+	bool drawSpiral{ true };
+
+public:
+	void SetShaderProgramID(unsigned int shaderProgramID);
+
+public:
+	void Init();
+	void ReInit();
+	void Input(unsigned char key, bool down);
+	void SpecialInput(int key, bool down);
+	void Update(float deltaTime);
+	void Render();
+};

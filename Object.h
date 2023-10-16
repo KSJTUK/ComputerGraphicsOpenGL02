@@ -3,6 +3,18 @@
 #include <memory>
 #include "gl_headers.h"
 
+//class ObjectMoveState {
+//public:
+//	ObjectMoveState();
+//	~ObjectMoveState();
+//
+//private:
+//	std::string state{ };
+//
+//public:
+//	void Update(float deltaTime, Object* const object);
+//};
+
 class ObjectMove {
 public:
 	static glm::vec3 origin;

@@ -39,28 +39,31 @@ void Graphics::SpecialInput(int key, bool down) {
 		}
 	}
 
-	if (controlDowned) {
-		m_camera->SpecialInput(key, down);
-	}
-	else {
-		if (key == GLUT_KEY_F2) {
-			if (m_curSolutionIndex < m_solutions.size() - 1) {
-				++m_curSolutionIndex;
-				m_solutions[m_curSolutionIndex]->ReInit();
-				m_camera->CameraPositionSet(glm::vec3{ 0.f, 0.f, -10.f });
-				m_camera->CameraViewPointSet(glm::vec3{ 0.f, 0.f, 1.f });
-			}
-		}
-		else if (key == GLUT_KEY_F3) {
-			if (m_curSolutionIndex > 0) {
-				--m_curSolutionIndex;
-				m_solutions[m_curSolutionIndex]->ReInit();
-				m_camera->CameraPositionSet(glm::vec3{ 0.f, 0.f, -10.f });
-				m_camera->CameraViewPointSet(glm::vec3{ 0.f, 0.f, 1.f });
-			}
-		}
+	if (down) {
 
-		m_solutions[m_curSolutionIndex]->SpecialInput(key, down);
+		if (controlDowned) {
+			m_camera->SpecialInput(key, down);
+		}
+		else {
+			if (key == GLUT_KEY_F2) {
+				if (m_curSolutionIndex < m_solutions.size() - 1) {
+					++m_curSolutionIndex;
+					m_solutions[m_curSolutionIndex]->ReInit();
+					//m_camera->CameraPositionSet(glm::vec3{ 0.f, 0.f, -10.f });
+					//m_camera->CameraViewPointSet(glm::vec3{ 0.f, 0.f, 1.f });
+				}
+			}
+			else if (key == GLUT_KEY_F3) {
+				if (m_curSolutionIndex > 0) {
+					--m_curSolutionIndex;
+					m_solutions[m_curSolutionIndex]->ReInit();
+					//m_camera->CameraPositionSet(glm::vec3{ 0.f, 0.f, -10.f });
+					//m_camera->CameraViewPointSet(glm::vec3{ 0.f, 0.f, 1.f });
+				}
+			}
+
+			m_solutions[m_curSolutionIndex]->SpecialInput(key, down);
+		}
 	}
 }
 
@@ -89,6 +92,9 @@ void Graphics::Init() {
 
 	m_solutions.push_back(new Solution15{ });
 	m_solutions.push_back(new Solution16{ });
+	Solution17* s{ new Solution17{ } };
+	s->SetShaderProgramID(m_shader->GetShaderProgramID());
+	m_solutions.push_back(s);
 	
 	for (auto& solution : m_solutions) {
 		solution->Init();

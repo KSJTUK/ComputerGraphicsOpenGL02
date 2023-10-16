@@ -69,6 +69,12 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Solutions.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Spiral.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -115,6 +121,12 @@
     </ClInclude>
     <ClInclude Include="Axis.h">
       <Filter>헤더 파일\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Solutions.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Spiral.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

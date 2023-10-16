@@ -2,6 +2,8 @@
 #include "ModelList.h"
 #include "Model.h"
 #include "Object.h"
+#include "Axis.h"
+#include "Spiral.h"
 
 void Solution15::Init() {
 	m_object = new Object{ ModelList::GetInst()->GetModel("cube"), glm::vec3{ 0.f }, "cube" };
@@ -288,5 +290,54 @@ void Solution16::Render() {
 
 	for (auto& orbitObject : m_orbitObject) {
 		orbitObject.Render();
+	}
+}
+
+void Solution17::SetShaderProgramID(unsigned int shaderProgramID) {
+	m_shaderProgramID = shaderProgramID;
+}
+
+void Solution17::Init() {
+	m_objects.push_back(Object{ ModelList::GetInst()->GetModel("cube"), glm::vec3{ 5.f, 0.f, 0.f }, "cube" });
+	m_objects.push_back(Object{ ModelList::GetInst()->GetModel("sphere"), glm::vec3{ -5.f, 0.f, 0.f }, "sphere" });
+	for (auto i = 0; i < m_objects.size(); ++i) {
+		m_rotateX.push_back(0);
+		m_rotateY.push_back(0);
+	}
+
+	oribit = 0;
+
+	spiral = new Spiral{ };
+	spiral->Init(m_shaderProgramID);
+	spiral->MakeSpiral(10000, glm::vec3{ }, 3.f, 1.f);
+}
+
+void Solution17::ReInit() {
+	m_objects.clear();
+	m_rotateX.clear();
+	m_rotateY.clear();
+	Init();
+}
+
+void Solution17::Input(unsigned char key, bool down) {
+
+}
+
+void Solution17::SpecialInput(int key, bool down) {
+
+}
+
+void Solution17::Update(float deltaTime) {
+	for (auto& object : m_objects) {
+		object.Update(deltaTime);
+	}
+}
+
+void Solution17::Render() {
+	if (drawSpiral) spiral->DrawSpiral();
+
+
+	for (auto& object : m_objects) {
+		object.Render();
 	}
 }

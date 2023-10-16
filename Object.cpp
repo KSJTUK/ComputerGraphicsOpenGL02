@@ -151,3 +151,7 @@ void ObjectMove::OrbitMove(glm::vec3& position, const float& angle, const glm::v
 void ObjectMove::Move(glm::vec3& position, const glm::vec3& direction, const float speed) {
 	position += direction * speed;
 }
+//
+//void ObjectMoveState::Update(float deltaTime, Object* const object) {
+//
+//}
