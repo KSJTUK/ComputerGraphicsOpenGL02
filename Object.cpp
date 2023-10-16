@@ -29,6 +29,12 @@ Object::Object(const std::shared_ptr<class Model>& model, const glm::vec3& initP
 	m_modelTag = modelTag;
 }
 
+Object::Object(const std::string& modelTag, const glm::vec3& initPosition) {
+	m_model = ModelList::GetInst()->GetModel(modelTag);
+	m_modelTag = modelTag;
+	m_position = initPosition;
+}
+
 Object::~Object() { }
 
 void Object::RotateX(int rev) {
@@ -43,28 +49,46 @@ void Object::RotateZ(int rev) {
 	m_rotAngle.z += rev * m_angleSpeed * m_deltaTime;
 }
 
-void Object::OrbitX(int rev) {
+glm::vec3 Object::OrbitX(int rev) {
+	glm::vec3 rtVec{ m_position };
 	ObjectMove::OrbitMove(m_position, m_orbitSpeed * m_deltaTime, static_cast<float>(rev) * ObjectMove::axisX);
+	rtVec = m_position - rtVec;
+	return rtVec;
 }
 
-void Object::OrbitY(int rev) {
+glm::vec3 Object::OrbitY(int rev) {
+	glm::vec3 rtVec{ m_position };
 	ObjectMove::OrbitMove(m_position, m_orbitSpeed * m_deltaTime, static_cast<float>(rev) * ObjectMove::axisY);
+	rtVec = m_position - rtVec;
+	return rtVec;
 }
 
-void Object::OrbitZ(int rev) {
+glm::vec3 Object::OrbitZ(int rev) {
+	glm::vec3 rtVec{ m_position };
 	ObjectMove::OrbitMove(m_position, m_orbitSpeed * m_deltaTime, static_cast<float>(rev) * ObjectMove::axisZ);
+	rtVec = m_position - rtVec;
+	return rtVec;
 }
 
-void Object::MoveX(int rev) {
+glm::vec3 Object::MoveX(int rev) {
+	glm::vec3 rtVec{ m_position };
 	ObjectMove::Move(m_position, static_cast<float>(rev) * ObjectMove::axisX, m_moveSpeed * m_deltaTime);
+	rtVec = m_position - rtVec;
+	return rtVec;
 }
 
-void Object::MoveY(int rev) {
+glm::vec3 Object::MoveY(int rev) {
+	glm::vec3 rtVec{ m_position };
 	ObjectMove::Move(m_position, static_cast<float>(rev) * ObjectMove::axisY, m_moveSpeed * m_deltaTime);
+	rtVec = m_position - rtVec;
+	return rtVec;
 }
 
-void Object::MoveZ(int rev) {
+glm::vec3 Object::MoveZ(int rev) {
+	glm::vec3 rtVec{ m_position };
 	ObjectMove::Move(m_position, static_cast<float>(rev) * ObjectMove::axisZ, m_moveSpeed * m_deltaTime);
+	rtVec = m_position - rtVec;
+	return rtVec;
 }
 
 glm::vec3 Object::Move(glm::vec3& direction) {
@@ -97,6 +121,7 @@ void Object::SetModel(const std::shared_ptr<class Model>& newModel) {
 }
 
 void Object::SetModel(const std::string& newModelTag) {
+	m_model.reset();
 	m_model = ModelList::GetInst()->GetModel(newModelTag);
 	m_modelTag = newModelTag;
 }

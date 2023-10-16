@@ -48,6 +48,8 @@ private:
 	std::vector<class Object> m_objects{ };
 	std::vector<int> m_rotateX{ };
 	std::vector<int> m_rotateY{ };
+
+	std::vector<class Object> m_orbitObject{ };
 	
 	int oribit{ 0 };
 

@@ -72,12 +72,7 @@ void Solution15::Input(unsigned char key, bool down) {
 		}
 
 		if (key == 'p') {
-			glm::vec3 position{ m_object->GetPosition() };
 			std::string prevTag{ m_object->GetModelTag() };
-			if (m_object) {
-				delete m_object;
-			}
-
 			if (prevTag == "cube") {
 				m_object->SetModel("cone");
 			}
@@ -120,8 +115,8 @@ void Solution15::Render() {
 }
 
 void Solution16::Init() {
-	m_objects.push_back(Object{ ModelList::GetInst()->GetModel("cube"), glm::vec3{ 10.f, 0.f, 0.f }, "cube" });
-	m_objects.push_back(Object{ ModelList::GetInst()->GetModel("sphere"), glm::vec3{ -10.f, 0.f, 0.f }, "sphere" });
+	m_objects.push_back(Object{ ModelList::GetInst()->GetModel("cube"), glm::vec3{ 5.f, 0.f, 0.f }, "cube" });
+	m_objects.push_back(Object{ ModelList::GetInst()->GetModel("sphere"), glm::vec3{ -5.f, 0.f, 0.f }, "sphere" });
 	for (auto i = 0; i < m_objects.size(); ++i) {
 		m_rotateX.push_back(0);
 		m_rotateY.push_back(0);
@@ -236,7 +231,29 @@ void Solution16::Input(unsigned char key, bool down) {
 		}
 
 		if (key == 'c') {
-			
+			std::string tags[3]{ "cone", "cube", "sphere" };
+			for (auto& e : m_objects) {
+				e.SetModel(tags[glm::linearRand(0, 2)]);
+			}
+
+			size_t loopSize{ m_orbitObject.size() };
+			for (auto i = 0; i < loopSize; ++i) {
+				m_orbitObject[i].SetModel(m_objects[i].GetModelTag());
+			}
+		}
+
+		if (key == 'o') {
+			if (m_orbitObject.empty()) {
+				size_t loopSize{ m_objects.size() };
+				for (auto i = 0; i < loopSize; ++i) {
+					glm::vec3 initPos{ m_objects[i].GetPosition() };
+					initPos.x += 10.f;
+					m_orbitObject.push_back(Object{ m_objects[i].GetModelTag(), initPos });
+				}
+			}
+			else {
+				m_orbitObject.clear();
+			}
 		}
 	}
 }
@@ -248,16 +265,28 @@ void Solution16::SpecialInput(int key, bool down)
 void Solution16::Update(float deltaTime) {
 	m_deltaTime = deltaTime;
 	size_t loopSize{ m_objects.size() };
+	std::vector<glm::vec3> prevPos{ };
 	for (auto i = 0; i < loopSize; ++i) {
 		m_objects[i].Update(m_deltaTime);
 		m_objects[i].RotateX(m_rotateX[i]);
 		m_objects[i].RotateY(m_rotateY[i]);
-		m_objects[i].OrbitZ(oribit);
+		prevPos.push_back(m_objects[i].OrbitZ(oribit));
+	}
+	
+	loopSize = m_orbitObject.size();
+	for (auto i = 0; i < loopSize; ++i) {
+		glm::vec3 pos{ m_objects[i].GetPosition() };
+		m_orbitObject[i].SetPosition(prevPos[i] + m_orbitObject[i].GetPosition());
+		m_orbitObject[i].Orbit(0.01f, glm::vec3{ 0.f, 0.f, 1.f }, pos);
 	}
 }
 
 void Solution16::Render() {
 	for (auto& object : m_objects) {
 		object.Render();
+	}
+
+	for (auto& orbitObject : m_orbitObject) {
+		orbitObject.Render();
 	}
 }

@@ -47,7 +47,7 @@ void Graphics::SpecialInput(int key, bool down) {
 			if (m_curSolutionIndex < m_solutions.size() - 1) {
 				++m_curSolutionIndex;
 				m_solutions[m_curSolutionIndex]->ReInit();
-				m_camera->CameraPositionSet(glm::vec3{ 0.f, 0.f, -3.f });
+				m_camera->CameraPositionSet(glm::vec3{ 0.f, 0.f, -10.f });
 				m_camera->CameraViewPointSet(glm::vec3{ 0.f, 0.f, 1.f });
 			}
 		}
@@ -55,7 +55,7 @@ void Graphics::SpecialInput(int key, bool down) {
 			if (m_curSolutionIndex > 0) {
 				--m_curSolutionIndex;
 				m_solutions[m_curSolutionIndex]->ReInit();
-				m_camera->CameraPositionSet(glm::vec3{ 0.f, 0.f, -3.f });
+				m_camera->CameraPositionSet(glm::vec3{ 0.f, 0.f, -10.f });
 				m_camera->CameraViewPointSet(glm::vec3{ 0.f, 0.f, 1.f });
 			}
 		}
