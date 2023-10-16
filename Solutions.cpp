@@ -307,9 +307,8 @@ void Solution17::Init() {
 
 	oribit = 0;
 
-	spiral = new Spiral{ };
-	spiral->Init(m_shaderProgramID);
-	spiral->MakeSpiral(10000, glm::vec3{ }, 3.f, 1);
+	Spiral::Init(m_shaderProgramID);
+	Spiral::MakeSpiral(10000, glm::vec3{ }, 1.f, 1);
 }
 
 void Solution17::ReInit() {
@@ -446,7 +445,22 @@ void Solution17::Input(unsigned char key, bool down) {
 }
 
 void Solution17::SpecialInput(int key, bool down) {
-
+	if (down) {
+		if (key == GLUT_KEY_F10) {
+			drawSpiral = !drawSpiral;
+			if (m_spirals.empty()) {
+				size_t loopSize{ m_objects.size() };
+				for (auto i = 0; i < loopSize; ++i) {
+					Spiral newSpiral{ };
+					newSpiral.SetPosition(m_objects[i].GetPosition());
+					m_spirals.push_back(newSpiral);
+				}
+			}
+			else {
+				m_spirals.clear();
+			}
+		}
+	}
 }
 
 void Solution17::Update(float deltaTime) {
@@ -456,7 +470,9 @@ void Solution17::Update(float deltaTime) {
 		m_objects[i].Update(deltaTime);
 		m_objects[i].RotateX(m_rotateX[i]);
 		m_objects[i].RotateY(m_rotateY[i]);
-		prevPos.push_back(m_objects[i].MoveSpiral(*spiral));
+		if (!m_spirals.empty()) {
+			prevPos.push_back(m_objects[i].MoveSpiral(m_spirals[i]));
+		}
 	}
 
 
@@ -469,7 +485,9 @@ void Solution17::Update(float deltaTime) {
 }
 
 void Solution17::Render() {
-	if (drawSpiral) spiral->DrawSpiral();
+	for (auto& spiral : m_spirals) {
+		spiral.DrawSpiral();
+	}
 
 
 	for (auto& object : m_objects) {

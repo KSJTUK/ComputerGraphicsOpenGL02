@@ -26,8 +26,8 @@ public:
 	Vertex operator[](size_t index) const;
 
 public:
-	void Init(unsigned int shaderProgramID);
-	void MakeSpiral(int numOfPoints, const glm::vec3& center, float stepRadius, int angleDir);
+	static void Init(unsigned int shaderProgramID);
+	static void MakeSpiral(int numOfPoints, const glm::vec3& center, float stepRadius, int angleDir);
 	void DrawSpiral();
 };
 

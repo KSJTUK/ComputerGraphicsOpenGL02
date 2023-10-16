@@ -78,7 +78,7 @@ private:
 
 	std::vector<class Object> m_orbitObject{ };
 
-	class Spiral* spiral{ nullptr };
+	std::vector<class Spiral> m_spirals{ };
 
 	int oribit{ 0 };
 

@@ -12,7 +12,8 @@ Vertex Spiral::operator[](size_t index) const {
 	if (index >= m_spiralVertex.size()) {
 		throw "vertex index size over";
 	}
-	return m_spiralVertex[index];
+	Vertex rtVertex{ m_spiralVertex[index].position + m_position, m_spiralVertex[index].color, m_spiralVertex[index].texture };
+	return rtVertex;
 }
 
 void Spiral::SetPosition(const glm::vec3& position) {
