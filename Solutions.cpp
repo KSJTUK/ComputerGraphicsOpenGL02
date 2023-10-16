@@ -7,6 +7,7 @@
 
 void Solution15::Init() {
 	m_object = new Object{ ModelList::GetInst()->GetModel("cube"), glm::vec3{ 0.f }, "cube" };
+	m_object->MoveToPoint(1, glm::vec3{ 10.f, 10.f, 10.f });
 }
 
 void Solution15::ReInit() {

@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <string>
 #include <memory>
-#include <functional>
+#include <queue>
 #include "gl_headers.h"
 #include "Spiral.h"
 
@@ -21,9 +21,9 @@ private:
 
 public:
 	static void SpiralMove(Object& object, const Spiral& spiral, size_t step);
-	static void SpiralMove(Object& object, const Spiral& spiral, size_t step, const glm::vec3& cetner);
 	static void OrbitMove(glm::vec3& position, const float& angle, const glm::vec3& axis, const glm::vec3& center = ObjectMove::origin);
 	static void Move(glm::vec3& position, const glm::vec3& direction, const float speed);
+	static bool MoveToPoints(const glm::vec3& start, const glm::vec3& end, glm::vec3& position, float moveSteps, float& countStep);
 };
 
 class Object {
@@ -66,6 +66,11 @@ protected:
 	float m_spiralMoveTime{ 0.005f };
 	float m_timeCount{ };
 
+	// 
+	glm::vec3 m_moveStartPoint{ };
+	std::queue<glm::vec3> m_movePoints{ };
+	float m_movePointSteps{ 0.f };
+
 public:
 	// getter
 	glm::vec3 GetPosition() const;
@@ -93,6 +98,8 @@ public:
 	glm::vec3 Orbit(const float& angle, const glm::vec3& axis, const glm::vec3& center);
 
 	glm::vec3 MoveSpiral(const Spiral& move);
+
+	void MoveToPoint(size_t count, ...);
 		
 public:
 	void Update(float deltaTime);

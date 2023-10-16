@@ -123,6 +123,16 @@ glm::vec3 Object::MoveSpiral(const Spiral& move) {
 	return rtVec;
 }
 
+void Object::MoveToPoint(size_t count, ...) {
+	va_list list;
+
+	va_start(list, count);
+	for (auto i = 0; i < count; ++i) {
+		m_movePoints.push(va_arg(list, glm::vec3));
+	}
+	va_end(list);
+}
+
 glm::vec3 Object::GetPosition() const {
 	return m_position;
 }
@@ -148,6 +158,14 @@ void Object::SetModel(const std::string& newModelTag) {
 void Object::Update(float deltaTime) {
 	m_deltaTime = deltaTime;
 	m_timeCount += deltaTime;
+	if (m_movePoints.empty()) {
+		m_moveStartPoint = m_position;
+		return;
+	}
+	if (!ObjectMove::MoveToPoints(m_moveStartPoint, m_movePoints.front(), m_position, 0.1f * m_deltaTime, m_movePointSteps)) {
+		m_moveStartPoint = m_movePoints.front();
+		m_movePoints.pop();
+	}
 }
 
 void Object::Render() {
@@ -174,4 +192,14 @@ void ObjectMove::OrbitMove(glm::vec3& position, const float& angle, const glm::v
 
 void ObjectMove::Move(glm::vec3& position, const glm::vec3& direction, const float speed) {
 	position += direction * speed;
+}
+
+bool ObjectMove::MoveToPoints(const glm::vec3& start, const glm::vec3& end, glm::vec3& position, float moveSteps, float& countStep) {
+	position = (1.f - countStep) * start + countStep * end;
+	if (countStep >= 1.f) {
+		position = end;
+		return false;
+	}
+	countStep += moveSteps;
+	return true;
 }
