@@ -567,6 +567,7 @@ void Solution19::Update(float deltaTime) {
 
 	for (int i = 0; i < 3; ++i) {
 		m_orbitPlanetsMoon[i].Update(deltaTime, deltaPositions[i]);
+		m_orbitPlanetsMoon[i].OrbitAxisRotate(glm::vec3{ 0.f, 0.f, 1.f }, 0.01f, 0.005f);
 	}
 
 	static float timeCount{ };
