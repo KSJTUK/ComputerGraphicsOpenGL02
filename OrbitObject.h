@@ -47,6 +47,6 @@ private:
 	CircleEffect m_circle{ };
 
 public:
-	void Update(float deltaTime, const glm::vec3& centerObjectDeltaPosition);
+	glm::vec3 Update(float deltaTime, const glm::vec3& centerObjectDeltaPosition);
 	void Render();
 };

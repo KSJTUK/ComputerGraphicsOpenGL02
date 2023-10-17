@@ -12,8 +12,8 @@ OrbitObject::OrbitObject(const std::string& modelTag, const glm::vec3& orbitCent
 	m_orbitAxis = glm::normalize(orbitAxis);
 	m_orbitCenter = orbitCenter;
 	if (glm::all(glm::lessThan(glm::abs(m_orbitAxis - glm::vec3{ 0.f, 1.f, 0.f }), glm::vec3(EPSILON)))) {
-		m_orbitAxis = glm::vec3{ 1.f, 0.f, 0.f };
-		m_position = orbitCenter + glm::normalize(glm::cross(m_orbitAxis, glm::vec3{ 0.f, 1.f, 0.f })) * orbitRadius;
+		m_orbitAxis = glm::vec3{ 0.f, 1.f, 0.f };
+		m_position = orbitCenter + glm::vec3{ 1.f, 0.f, 0.f } * orbitRadius;
 	}
 	else {
 		m_position = orbitCenter + glm::normalize(glm::cross(m_orbitAxis, glm::vec3{ 0.f, 1.f, 0.f })) * orbitRadius;
@@ -27,10 +27,13 @@ OrbitObject::OrbitObject(const std::string& modelTag, const glm::vec3& orbitCent
 
 OrbitObject::~OrbitObject() { }
 
-void OrbitObject::Update(float deltaTime, const glm::vec3& centerObjectDeltaPosition) {
+glm::vec3 OrbitObject::Update(float deltaTime, const glm::vec3& centerObjectDeltaPosition) {
+	glm::vec3 prevPosition{ m_position };
 	m_orbitCenter += centerObjectDeltaPosition;
 	m_position += centerObjectDeltaPosition;
 	ObjectMove::OrbitMove(m_position, m_orbitSpeed, m_orbitAxis, m_orbitCenter);
+	m_circle.SetPosition(m_orbitCenter);
+	return m_position - prevPosition;
 }
 
 void OrbitObject::Render() {
@@ -49,12 +52,16 @@ void CircleEffect::SetPosition(const glm::vec3& position) {
 }
 
 void CircleEffect::SetAxis(const glm::vec3& axis) {
-	//glm::vec3 right{ glm::normalize(glm::cross(axis, glm::vec3{ 0.f, 1.f, 0.f })) };
-	glm::vec3 normal{ glm::normalize(axis) };
+	float EPSILON{ 0.000001f };
+	if (glm::all(glm::lessThan(glm::abs(axis - glm::vec3{ 0.f, 1.f, 0.f }), glm::vec3(EPSILON)))) {
+		m_rotateAxis = glm::vec3{ 0.f, 1.f, 0.f };
+	}
+	else {
+		glm::vec3 normal{ glm::normalize(axis) };
 
-	m_rotAngle = std::acosf(glm::dot(normal, glm::vec3{ 0.f, 1.f, 0.f}));
-	m_rotateAxis = glm::normalize(glm::cross(glm::vec3{ 0.f, 1.f, 0.f }, normal));
-	//m_rotateAxis = glm::normalize(glm::cross(normal, glm::vec3{ 0.f, -1.f, 0.f }));
+		m_rotAngle = std::acosf(glm::dot(normal, glm::vec3{ 0.f, 1.f, 0.f }));
+		m_rotateAxis = glm::normalize(glm::cross(glm::vec3{ 0.f, 1.f, 0.f }, normal));
+	}
 }
 
 void CircleEffect::Init(unsigned int shaderProgramID) {
