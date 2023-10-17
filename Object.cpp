@@ -198,6 +198,7 @@ bool ObjectMove::MoveToPoints(const glm::vec3& start, const glm::vec3& end, glm:
 	position = (1.f - countStep) * start + countStep * end;
 	if (countStep >= 1.f) {
 		position = end;
+		countStep = 0.f;
 		return false;
 	}
 	countStep += moveSteps;
