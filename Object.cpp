@@ -162,7 +162,7 @@ void Object::Update(float deltaTime) {
 		m_moveStartPoint = m_position;
 		return;
 	}
-	if (!ObjectMove::MoveToPoints(m_moveStartPoint, m_movePoints.front(), m_position, 0.1f * m_deltaTime, m_movePointSteps)) {
+	if (!ObjectMove::MoveToPoints(m_moveStartPoint, m_movePoints.front(), m_position, m_movePointSteps)) {
 		m_moveStartPoint = m_movePoints.front();
 		m_movePoints.pop();
 	}
@@ -194,7 +194,7 @@ void ObjectMove::Move(glm::vec3& position, const glm::vec3& direction, const flo
 	position += direction * speed;
 }
 
-bool ObjectMove::MoveToPoints(const glm::vec3& start, const glm::vec3& end, glm::vec3& position, float moveSteps, float& countStep) {
+bool ObjectMove::MoveToPoints(const glm::vec3& start, const glm::vec3& end, glm::vec3& position, float& countStep) {
 	float moveStep{ (1.f / glm::length(end - start)) / 1000.f };
 	position = (1.f - countStep) * start + countStep * end;
 	if (countStep >= 1.f) {

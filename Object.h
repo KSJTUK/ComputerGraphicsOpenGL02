@@ -23,7 +23,7 @@ public:
 	static void SpiralMove(Object& object, const Spiral& spiral, size_t step);
 	static void OrbitMove(glm::vec3& position, const float& angle, const glm::vec3& axis, const glm::vec3& center = ObjectMove::origin);
 	static void Move(glm::vec3& position, const glm::vec3& direction, const float speed);
-	static bool MoveToPoints(const glm::vec3& start, const glm::vec3& end, glm::vec3& position, float moveSteps, float& countStep);
+	static bool MoveToPoints(const glm::vec3& start, const glm::vec3& end, glm::vec3& position, float& countStep);
 };
 
 class Object {
