@@ -27,6 +27,10 @@ OrbitObject::OrbitObject(const std::string& modelTag, const glm::vec3& orbitCent
 
 OrbitObject::~OrbitObject() { }
 
+glm::vec3 OrbitObject::Orbit(const float& angle, const glm::vec3& axis, const glm::vec3& center) {
+	return OrbitAxisRotate(axis, angle, 0.f);
+}
+
 glm::vec3 OrbitObject::OrbitAxisRotate(const glm::vec3& rotateAxis, const float& angle, float rotateTime) {
 	m_orbitAxisRotateTimeCount += m_deltaTime;
 	if (rotateTime < m_orbitAxisRotateTimeCount) {

@@ -564,6 +564,19 @@ void Solution19::Input(unsigned char key, bool down) {
 			}
 		}
 
+		if (key == 'y') {
+			constexpr float EPSILON = 0.0001f;
+			if (m_rotateDirOrbitY < EPSILON and m_rotateDirOrbitY > -EPSILON) {
+				m_rotateDirOrbitY = 1.f;
+			}
+			else if (m_rotateDirOrbitY > 1.f - EPSILON) {
+				m_rotateDirOrbitY = -1.f;
+			}
+			else {
+				m_rotateDirOrbitY = 0.f;
+			}
+		}
+
 		if (key == 'z') {
 			constexpr float EPSILON = 0.0001f;
 			if (m_rotateDirOrbitZ < EPSILON and m_rotateDirOrbitZ > -EPSILON) {
@@ -585,16 +598,18 @@ void Solution19::SpecialInput(int key, bool down)
 
 void Solution19::Update(float deltaTime) {
 	m_originPlanet->Update(deltaTime);
-	static float axisRotZ = 0.1f;
+	m_originPlanet->Orbit(0.01f, glm::vec3{ 0.f, 1.f, 0.f }, glm::vec3{ });
 
 	std::vector<glm::vec3> deltaPositions{ };
 	for (int i = 0; i < 3; ++i) {
 		deltaPositions.push_back(m_orbitPlanet[i].Update(deltaTime, m_originPlanet->GetPosition()));
+		deltaPositions[i] += m_orbitPlanet[i].Orbit(m_rotateDirOrbitY * 0.01f, glm::vec3{ 0.f, 1.f, 0.f }, m_originPlanet->GetPosition());
 		deltaPositions[i] += m_orbitPlanet[i].OrbitAxisRotate(glm::vec3{ 0.f, 0.f, 1.f }, m_rotateDirOrbitZ * 0.01f, 0.01f);
 	}
 
 	for (int i = 0; i < 3; ++i) {
 		m_orbitPlanetsMoon[i].Update(deltaTime, deltaPositions[i]);
+		m_orbitPlanetsMoon[i].Orbit(m_rotateDirOrbitY * 0.01f, glm::vec3{ 0.f, 1.f, 0.f }, m_originPlanet->GetPosition());
 		m_orbitPlanetsMoon[i].OrbitAxisRotate(glm::vec3{ 0.f, 0.f, 1.f }, m_rotateDirOrbitZ * 0.01f, 0.001f);
 	}
 }

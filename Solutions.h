@@ -129,6 +129,7 @@ private:
 	std::vector<class OrbitObject> m_orbitPlanetsMoon{ };
 
 	float m_rotateDirOrbitZ{ 0.f };
+	float m_rotateDirOrbitY{ 0.f };
 
 public:
 	void Init();
