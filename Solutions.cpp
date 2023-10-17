@@ -279,7 +279,7 @@ void Solution16::Update(float deltaTime) {
 		m_objects[i].RotateY(m_rotateY[i]);
 		prevPos.push_back(m_objects[i].Orbit(0.01f * oribit, glm::vec3{ 0.f, 1.f, 0.f }, glm::vec3{ }));
 	}
-	
+
 	loopSize = m_orbitObject.size();
 	for (auto i = 0; i < loopSize; ++i) {
 		glm::vec3 pos{ m_objects[i].GetPosition() };
@@ -439,7 +439,7 @@ void Solution17::Input(unsigned char key, bool down) {
 				for (auto i = 0; i < loopSize; ++i) {
 					glm::vec3 initPos{ m_objects[i].GetPosition() };
 					initPos.x += 5.f;
-					m_orbitObject.push_back(Object{ m_objects[i].GetModelTag(), initPos});
+					m_orbitObject.push_back(Object{ m_objects[i].GetModelTag(), initPos });
 				}
 			}
 			else {

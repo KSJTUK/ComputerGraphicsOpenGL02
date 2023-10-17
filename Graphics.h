@@ -4,12 +4,17 @@
 #include <memory>
 #include <vector>
 
+#define CUR_PROJECTION_MAT_ORTHO 0
+#define CUR_PROJECTION_MAT_PERSPECTIVE 1
+
 class Graphics {
 public:
 	Graphics();
 	~Graphics();
 
 private:
+	bool m_isInited{ false };
+
 	std::unique_ptr<class Shader> m_shader{ };
 
 	std::unique_ptr<class Camera> m_camera{ };
@@ -26,6 +31,7 @@ private:
 	float m_near{ 0.1f };           // 시야 절두체의 가까운 평면과의 거리
 	float m_far{ 1000.f };           // 시야 절두체의 먼 평면과의 거리
 
+
 	// 업데이트를 위한 시간값 저장
 	float m_deltaTime{ };
 
@@ -35,12 +41,16 @@ private:
 	std::vector<class Solutions*> m_solutions{ };
 	int m_curSolutionIndex{ };
 
+	int m_curProjectionMat{ CUR_PROJECTION_MAT_PERSPECTIVE };
+
 public:
 	// getter
+	bool IsInited() const;
 
 	// setter
 	void SetWindowInfo(std::shared_ptr<struct WindowInfo>& winInfo);
 	void SetPerspectiveMat();
+	void SetOrthoMat();
 
 public:
 	// 외부 키입력을 카메라에게 전해주는 함수

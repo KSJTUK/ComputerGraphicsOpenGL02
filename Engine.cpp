@@ -103,8 +103,9 @@ void Engine::ReSizeWindow(int w, int h) {
 	m_windowInfo->fWidth = static_cast<float>(m_windowInfo->width);
 	m_windowInfo->fHeight = static_cast<float>(m_windowInfo->height);
 
-	m_grapics->SetWindowInfo(m_windowInfo);
-	m_grapics->SetPerspectiveMat();
+	if (m_grapics->IsInited()) {
+		m_grapics->SetWindowInfo(m_windowInfo);
+	}
 
 	glViewport(0, 0, w, h);
 }

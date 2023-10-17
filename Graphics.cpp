@@ -14,15 +14,41 @@ Graphics::Graphics() { }
 
 Graphics::~Graphics() { }
 
+bool Graphics::IsInited() const {
+	return m_isInited;
+}
+
 void Graphics::SetWindowInfo(std::shared_ptr<struct WindowInfo>& winInfo) {
 	m_windowInfo = winInfo;
+	if (m_curProjectionMat == CUR_PROJECTION_MAT_ORTHO) {
+		SetOrthoMat();
+	}
+	else {
+		SetPerspectiveMat();
+	}
 }
 
 void Graphics::SetPerspectiveMat() {
+	if (!m_isInited) {
+		return;
+	}
+
+	m_shader->UseProgram();
 	float aspect = m_windowInfo->fWidth / m_windowInfo->fHeight;
 	float halfFovy = m_fovy / 2.f;
 
 	m_shader->SetPerspectiveMat(glm::perspective(glm::radians(halfFovy), aspect, m_near, m_far));
+	m_shader->UnUseProgram();
+}
+
+void Graphics::SetOrthoMat() {
+	if (!m_isInited) {
+		return;
+	}
+
+	m_shader->UseProgram();
+	m_shader->SetPerspectiveMat(glm::ortho(-100.f, 100.f, -100.f, 100.f, -100.f, 100.f));
+	m_shader->UnUseProgram();
 }
 
 void Graphics::Input(unsigned char key, bool down) {
@@ -63,12 +89,24 @@ void Graphics::SpecialInput(int key, bool down) {
 				}
 			}
 
+			else if (key == GLUT_KEY_F11) {
+				if (m_curProjectionMat == CUR_PROJECTION_MAT_PERSPECTIVE) {
+					SetOrthoMat();
+					m_curProjectionMat = CUR_PROJECTION_MAT_ORTHO;
+				}
+				else {
+					SetPerspectiveMat();
+					m_curProjectionMat = CUR_PROJECTION_MAT_PERSPECTIVE;
+				}
+			}
+
 			m_solutions[m_curSolutionIndex]->SpecialInput(key, down);
 		}
 	}
 }
 
 void Graphics::Init() {
+	m_curProjectionMat = CUR_PROJECTION_MAT_PERSPECTIVE;
 	// 쉐이더 프로그램 생성
 	m_shader = std::make_unique<Shader>();
 	m_shader->CreateShaderProgram();
@@ -110,6 +148,7 @@ void Graphics::Init() {
 	SetPerspectiveMat();
 	// 쉐이더 프로그램 사용 종료
 	m_shader->UnUseProgram();
+	m_isInited = true;
 }
 
 void Graphics::Update(float deltaTime) {
