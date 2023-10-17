@@ -34,6 +34,7 @@ public:
 	Object(const std::shared_ptr<class Model>& model, const glm::vec3& initPosition, std::string&& modelTag);
 
 	Object(const std::string& modelTag, const glm::vec3& initPosition);
+	Object(const std::string& modelTag);
 	~Object();
 
 protected:
@@ -46,20 +47,12 @@ protected:
 	glm::vec3 m_position{ 0.f };
 	glm::vec3 m_rotAngle{ 0.f };
 
-	glm::vec3 m_orbitAngle{ 0.f };
-
 	float m_moveSpeed{ 200.f };
 	float m_angleSpeed{ 10.f };
-	float m_orbitSpeed{ 10.f };
-
 	float m_deltaTime{ };
 
 	// test
 	glm::mat4 unit{ 1.f };
-
-	glm::mat4 scale{ 1.f };
-	glm::mat4 rotate{ 1.f };
-	glm::mat4 trans{ 1.f };
 
 	size_t m_spiralStep{  };
 	int m_spiralDir{ 1 };
@@ -86,10 +79,6 @@ public:
 	void RotateX(int rev = 1);
 	void RotateY(int rev = 1);
 	void RotateZ(int rev = 1);
-
-	glm::vec3 OrbitX(int rev = 1);
-	glm::vec3 OrbitY(int rev = 1);
-	glm::vec3 OrbitZ(int rev = 1);
 
 	glm::vec3 MoveX(int rev = 1);
 	glm::vec3 MoveY(int rev = 1);

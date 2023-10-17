@@ -4,6 +4,7 @@
 #include "Object.h"
 #include "Axis.h"
 #include "Spiral.h"
+#include "OrbitObject.h"
 
 void Solution15::Init() {
 	m_object = new Object{ ModelList::GetInst()->GetModel("cube"), glm::vec3{ 0.f }, "cube" };
@@ -276,7 +277,7 @@ void Solution16::Update(float deltaTime) {
 		m_objects[i].Update(m_deltaTime);
 		m_objects[i].RotateX(m_rotateX[i]);
 		m_objects[i].RotateY(m_rotateY[i]);
-		prevPos.push_back(m_objects[i].OrbitY(oribit));
+		prevPos.push_back(m_objects[i].Orbit(0.01f * oribit, glm::vec3{ 0.f, 1.f, 0.f }, glm::vec3{ }));
 	}
 	
 	loopSize = m_orbitObject.size();
@@ -551,6 +552,8 @@ void Solution19::Init() {
 	for (auto& moon : m_orbitPlanetsMoon) {
 		moon.SetScaleFactor(glm::vec3{ 0.4f });
 	}
+
+	m_orbit.push_back(OrbitObject{ "sphere", glm::vec3{ }, glm::vec3{ 1.f, 1.f, 1.f }, 20.f, 0.01f });
 }
 
 void Solution19::ReInit()
@@ -592,14 +595,18 @@ void Solution19::Update(float deltaTime) {
 		}
 		axisRotZ += 0.1f;
 	}
+
+	m_orbit[0].Update(deltaTime, glm::vec3{ });
 }
 
 void Solution19::Render() {
-	m_originPlanet->Render();
+	/*m_originPlanet->Render();
 	for (auto& object : m_orbitPlanet) {
 		object.Render();
 	}
 	for (auto& object : m_orbitPlanetsMoon) {
 		object.Render();
-	}
+	}*/
+
+	m_orbit[0].Render();
 }

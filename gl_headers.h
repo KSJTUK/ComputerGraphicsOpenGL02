@@ -8,3 +8,4 @@
 #include <gl/glm/gtc/matrix_transform.hpp>
 #include <gl/glm/gtx/euler_angles.hpp>
 #include <gl/glm/gtx/vector_angle.hpp>
+#include <gl/glm/gtc/quaternion.hpp>

@@ -8,6 +8,7 @@
 #include "Axis.h"
 #include "Object.h"
 #include "Solutions.h"
+#include "OrbitObject.h"
 
 Graphics::Graphics() { }
 
@@ -78,7 +79,7 @@ void Graphics::Init() {
 	// 카메라 생성
 	m_camera = std::make_unique<Camera>();
 	m_camera->Init();
-	m_camera->CameraPositionSet(glm::vec3{ 0.f, 0.f, -10.f });
+	//m_camera->CameraPositionSet(glm::vec3{ 0.f, 0.f, -10.f });
 
 	// 모델리스트를 생성하고 모델 불러오기
 	ModelList::GetInst()->Init(m_shader->GetShaderProgramID());
@@ -89,6 +90,9 @@ void Graphics::Init() {
 
 	m_axisSystem = std::make_unique<Axis>();
 	m_axisSystem->Init(m_shader->GetShaderProgramID());
+
+	CircleEffect::Init(m_shader->GetShaderProgramID());
+	CircleEffect::MakeCircle();
 
 	m_solutions.push_back(new Solution15{ });
 	m_solutions.push_back(new Solution16{ });

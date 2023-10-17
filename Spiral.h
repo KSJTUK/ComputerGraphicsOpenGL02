@@ -20,7 +20,7 @@ private:
 	glm::mat4 m_transformMat{ 1.f };
 
 public:
-	void SetPosition(const glm::vec3& mat4);
+	void SetPosition(const glm::vec3& position);
 	size_t GetSpiralSize() const;
 
 	Vertex operator[](size_t index) const;

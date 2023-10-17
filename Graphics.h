@@ -4,8 +4,6 @@
 #include <memory>
 #include <vector>
 
-#define SOLUTION15
-
 class Graphics {
 public:
 	Graphics();

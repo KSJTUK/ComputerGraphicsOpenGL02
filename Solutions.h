@@ -127,6 +127,7 @@ private:
 	class Object* m_originPlanet{ };
 	std::vector<class Object> m_orbitPlanet{ };
 	std::vector<class Object> m_orbitPlanetsMoon{ };
+	std::vector<class OrbitObject> m_orbit{ };
 
 public:
 	void Init();

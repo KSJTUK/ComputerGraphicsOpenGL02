@@ -35,6 +35,11 @@ Object::Object(const std::string& modelTag, const glm::vec3& initPosition) {
 	m_position = initPosition;
 }
 
+Object::Object(const std::string& modelTag) {
+	m_model = ModelList::GetInst()->GetModel(modelTag);
+	m_modelTag = modelTag;
+}
+
 Object::~Object() { }
 
 void Object::RotateX(int rev) {
@@ -47,27 +52,6 @@ void Object::RotateY(int rev) {
 
 void Object::RotateZ(int rev) {
 	m_rotAngle.z += rev * m_angleSpeed * m_deltaTime;
-}
-
-glm::vec3 Object::OrbitX(int rev) {
-	glm::vec3 rtVec{ m_position };
-	ObjectMove::OrbitMove(m_position, m_orbitSpeed * m_deltaTime, static_cast<float>(rev) * ObjectMove::axisX);
-	rtVec = m_position - rtVec;
-	return rtVec;
-}
-
-glm::vec3 Object::OrbitY(int rev) {
-	glm::vec3 rtVec{ m_position };
-	ObjectMove::OrbitMove(m_position, m_orbitSpeed * m_deltaTime, static_cast<float>(rev) * ObjectMove::axisY);
-	rtVec = m_position - rtVec;
-	return rtVec;
-}
-
-glm::vec3 Object::OrbitZ(int rev) {
-	glm::vec3 rtVec{ m_position };
-	ObjectMove::OrbitMove(m_position, m_orbitSpeed * m_deltaTime, static_cast<float>(rev) * ObjectMove::axisZ);
-	rtVec = m_position - rtVec;
-	return rtVec;
 }
 
 glm::vec3 Object::MoveX(int rev) {
