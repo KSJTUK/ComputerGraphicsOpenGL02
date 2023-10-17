@@ -8,10 +8,6 @@
 
 void Solution15::Init() {
 	m_object = new Object{ ModelList::GetInst()->GetModel("cube"), glm::vec3{ 0.f }, "cube" };
-	m_object->MoveToPoint(3, glm::vec3{ 10.f, 10.f, 10.f },
-		glm::vec3{ 0.f, 0.f, 0.f },
-		glm::vec3{ 10.f, 10.f, 10.f }
-	);
 }
 
 void Solution15::ReInit() {
@@ -444,6 +440,62 @@ void Solution17::Input(unsigned char key, bool down) {
 			}
 			else {
 				m_orbitObject.clear();
+			}
+		}
+
+		if (key == 't') {
+			if (!m_objects.empty()) {
+				for (auto& e : m_objects) {
+					e.ScaleAll(glm::vec3{ 0.01f, 0.01f, 0.01f });
+				}
+			}
+
+			if (!m_orbitObject.empty()) {
+				for (auto& e : m_orbitObject) {
+					e.ScaleAll(glm::vec3{ 0.01f, 0.01f, 0.01f });
+				}
+			}
+		}
+
+		if (key == 'y') {
+			if (!m_objects.empty()) {
+				for (auto& e : m_objects) {
+					e.ScaleAll(glm::vec3{ -0.01f, -0.01f, -0.01f });
+				}
+			}
+
+			if (!m_orbitObject.empty()) {
+				for (auto& e : m_orbitObject) {
+					e.ScaleAll(glm::vec3{ -0.01f, -0.01f, -0.01f });
+				}
+			}
+		}
+
+		if (key == 'u') {
+			if (!m_objects.empty()) {
+				for (auto& e : m_objects) {
+					e.Scale(glm::vec3{ 0.01f, 0.01f, 0.01f });
+				}
+			}
+
+			if (!m_orbitObject.empty()) {
+				for (auto& e : m_orbitObject) {
+					e.Scale(glm::vec3{ 0.01f, 0.01f, 0.01f });
+				}
+			}
+		}
+
+		if (key == 'i') {
+			if (!m_objects.empty()) {
+				for (auto& e : m_objects) {
+					e.Scale(glm::vec3{ -0.01f, -0.01f, -0.01f });
+				}
+			}
+
+			if (!m_orbitObject.empty()) {
+				for (auto& e : m_orbitObject) {
+					e.Scale(glm::vec3{ -0.01f, -0.01f, -0.01f });
+				}
 			}
 		}
 	}

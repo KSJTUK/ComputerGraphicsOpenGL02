@@ -46,6 +46,7 @@ protected:
 	glm::vec3 m_sizeScale{ 1.f };
 	glm::vec3 m_position{ 0.f };
 	glm::vec3 m_rotAngle{ 0.f };
+	glm::vec3 m_scaleAll{ 1.f };
 
 	float m_moveSpeed{ 200.f };
 	float m_angleSpeed{ 10.f };
@@ -87,6 +88,9 @@ public:
 	glm::vec3 MoveX(int rev = 1);
 	glm::vec3 MoveY(int rev = 1);
 	glm::vec3 MoveZ(int rev = 1);
+
+	void Scale(const glm::vec3& factors);
+	void ScaleAll(const glm::vec3& factors);
 
 	glm::vec3 Move(glm::vec3& direction);
 

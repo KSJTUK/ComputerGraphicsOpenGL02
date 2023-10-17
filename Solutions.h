@@ -85,6 +85,8 @@ private:
 
 	float m_deltaTime{ };
 
+	glm::vec3 m_scaleAllFactors{ 1.f };
+
 	bool drawSpiral{ true };
 
 public:

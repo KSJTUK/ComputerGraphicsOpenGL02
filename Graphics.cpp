@@ -142,7 +142,9 @@ void Graphics::Init() {
 	for (auto& solution : m_solutions) {
 		solution->Init();
 	}
-	m_curSolutionIndex = m_solutions.size() - 1;
+
+	// test
+	//m_curSolutionIndex = m_solutions.size() - 1;
 
 	// 투영 변환 행렬 계산 및 전송
 	SetPerspectiveMat();

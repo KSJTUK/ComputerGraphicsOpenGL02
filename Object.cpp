@@ -75,6 +75,14 @@ glm::vec3 Object::MoveZ(int rev) {
 	return rtVec;
 }
 
+void Object::Scale(const glm::vec3& factors) {
+	m_sizeScale += factors;
+}
+
+void Object::ScaleAll(const glm::vec3& factors) {
+	m_scaleAll += factors;
+}
+
 glm::vec3 Object::Move(glm::vec3& direction) {
 	glm::vec3 rtVec{ m_position };
 	ObjectMove::Move(m_position, direction, m_moveSpeed * m_deltaTime);
@@ -167,8 +175,9 @@ void Object::Render() {
 	glm::mat4 rot = glm::yawPitchRoll(angles.y, angles.x, angles.z);
 	glm::mat4 trans = glm::translate(unit, m_position);
 	glm::mat4 scale = glm::scale(unit, m_sizeScale);
+	glm::mat4 scaleAll = glm::scale(unit, m_scaleAll);
 
-	transform = trans * rot * scale;
+	transform = scaleAll * trans * rot * scale;
 
 	m_model->SetTransformMat(transform);
 	m_model->Render();
