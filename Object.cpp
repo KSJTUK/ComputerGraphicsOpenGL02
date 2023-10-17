@@ -141,6 +141,10 @@ std::string Object::GetModelTag() {
 	return m_modelTag;
 }
 
+void Object::SetScaleFactor(const glm::vec3& factor) {
+	m_sizeScale = factor;
+}
+
 void Object::SetPosition(const glm::vec3& position) {
 	m_position = position;
 }
@@ -170,7 +174,8 @@ void Object::Update(float deltaTime) {
 
 void Object::Render() {
 	glm::mat4 transform{ 1.f };
-	glm::mat4 rot = glm::orientate4(glm::radians(m_rotAngle));
+	glm::vec3 angles{ glm::radians(m_rotAngle) };
+	glm::mat4 rot = glm::yawPitchRoll(angles.y, angles.x, angles.z);
 	glm::mat4 trans = glm::translate(unit, m_position);
 	glm::mat4 scale = glm::scale(unit, m_sizeScale);
 
@@ -186,7 +191,8 @@ void ObjectMove::SpiralMove(Object& object, const Spiral& spiral, size_t step) {
 
 void ObjectMove::OrbitMove(glm::vec3& position, const float& angle, const glm::vec3& axis, const glm::vec3& origin) {
 	glm::vec4 rotPos{ position - origin, 1.f };
-	position = glm::orientate4(glm::radians(angle * axis)) * rotPos;
+	glm::vec3 angles{ glm::radians(angle * axis) };
+	position = glm::yawPitchRoll(angles.y, angles.x, angles.z) * rotPos;
 	position += origin;
 }
 

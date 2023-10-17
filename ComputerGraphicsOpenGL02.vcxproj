@@ -138,6 +138,7 @@
     <ClCompile Include="GraphicBuffers.cpp" />
     <ClCompile Include="ModelList.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="OrbitObject.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Solutions.cpp" />
     <ClCompile Include="Spiral.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="GraphicBuffers.h" />
     <ClInclude Include="ModelList.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="OrbitObject.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Solutions.h" />

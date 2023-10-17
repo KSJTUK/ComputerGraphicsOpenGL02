@@ -95,11 +95,12 @@ void Graphics::Init() {
 	Solution17* s{ new Solution17{ } };
 	s->SetShaderProgramID(m_shader->GetShaderProgramID());
 	m_solutions.push_back(s);
+	m_solutions.push_back(new Solution19{ });
 	
 	for (auto& solution : m_solutions) {
 		solution->Init();
 	}
-	m_curSolutionIndex = 0;
+	m_curSolutionIndex = m_solutions.size() - 1;
 
 	// 투영 변환 행렬 계산 및 전송
 	SetPerspectiveMat();

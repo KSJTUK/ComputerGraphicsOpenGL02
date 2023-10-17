@@ -76,6 +76,8 @@ public:
 	glm::vec3 GetPosition() const;
 	std::string GetModelTag();
 
+	void SetScaleFactor(const glm::vec3& factor);
+
 	void SetPosition(const glm::vec3& position);
 	void SetModel(const std::shared_ptr<class Model>& newModel);
 	void SetModel(const std::string& newModelTag);

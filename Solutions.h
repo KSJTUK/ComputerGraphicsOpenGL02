@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "gl_headers.h"
 
 class Solutions {
 public: 
@@ -88,6 +89,44 @@ private:
 
 public:
 	void SetShaderProgramID(unsigned int shaderProgramID);
+
+public:
+	void Init();
+	void ReInit();
+	void Input(unsigned char key, bool down);
+	void SpecialInput(int key, bool down);
+	void Update(float deltaTime);
+	void Render();
+};
+
+class Solution18 : public Solutions {
+public:
+	Solution18() { }
+	~Solution18() { }
+
+private:
+	class Object* m_cube{ };
+	class Object* m_cone{ };
+
+public:
+
+};
+
+class Solution19 : public Solutions {
+public:
+	Solution19() { }
+	~Solution19() { }
+
+private:
+	glm::vec3 orbitAxis[3]{
+		{ 0.f, 1.f, 0.f },
+		{ 1.f, 1.f, 0.f },
+		{ -1.f, 1.f, 0.f }
+	};
+
+	class Object* m_originPlanet{ };
+	std::vector<class Object> m_orbitPlanet{ };
+	std::vector<class Object> m_orbitPlanetsMoon{ };
 
 public:
 	void Init();

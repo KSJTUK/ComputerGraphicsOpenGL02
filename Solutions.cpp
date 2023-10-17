@@ -113,7 +113,7 @@ void Solution15::Update(float deltaTime) {
 	m_deltaTime = deltaTime;
 	m_object->Update(m_deltaTime);
 	m_object->RotateX(rotateX);
-	m_object->RotateZ(-rotateY);
+	m_object->RotateY(-rotateY);
 }
 
 void Solution15::Render() {
@@ -276,14 +276,14 @@ void Solution16::Update(float deltaTime) {
 		m_objects[i].Update(m_deltaTime);
 		m_objects[i].RotateX(m_rotateX[i]);
 		m_objects[i].RotateY(m_rotateY[i]);
-		prevPos.push_back(m_objects[i].OrbitZ(oribit));
+		prevPos.push_back(m_objects[i].OrbitY(oribit));
 	}
 	
 	loopSize = m_orbitObject.size();
 	for (auto i = 0; i < loopSize; ++i) {
 		glm::vec3 pos{ m_objects[i].GetPosition() };
 		m_orbitObject[i].SetPosition(prevPos[i] + m_orbitObject[i].GetPosition());
-		m_orbitObject[i].Orbit(0.01f, glm::vec3{ 0.f, 0.f, 1.f }, pos);
+		m_orbitObject[i].Orbit(0.01f, glm::vec3{ 0.f, 1.f, 0.f }, pos);
 	}
 }
 
@@ -438,7 +438,7 @@ void Solution17::Input(unsigned char key, bool down) {
 				for (auto i = 0; i < loopSize; ++i) {
 					glm::vec3 initPos{ m_objects[i].GetPosition() };
 					initPos.x += 5.f;
-					m_orbitObject.push_back(Object{ m_objects[i].GetModelTag(), m_objects[i].GetPosition()});
+					m_orbitObject.push_back(Object{ m_objects[i].GetModelTag(), initPos});
 				}
 			}
 			else {
@@ -510,7 +510,7 @@ void Solution17::Update(float deltaTime) {
 	for (auto i = 0; i < loopSize; ++i) {
 		glm::vec3 pos{ m_objects[i].GetPosition() };
 		m_orbitObject[i].SetPosition(prevPos[i] + m_orbitObject[i].GetPosition());
-		m_orbitObject[i].Orbit(0.01f, glm::vec3{ 0.f, 0.f, 1.f }, pos);
+		m_orbitObject[i].Orbit(0.01f, glm::vec3{ 0.f, 1.f, 0.f }, pos);
 	}
 }
 
@@ -525,6 +525,67 @@ void Solution17::Render() {
 	}
 
 	for (auto& object : m_orbitObject) {
+		object.Render();
+	}
+}
+
+void Solution19::Init() {
+	m_originPlanet = new Object{ "sphere", glm::vec3{ } };
+	m_originPlanet->SetScaleFactor(glm::vec3{ 3.f });
+
+	glm::vec3 position{ 25.f, 0.f, 0.f };
+	m_orbitPlanet.push_back(Object{ "sphere", position });
+
+	for (int i = 1; i < 3; ++i) {
+		position = 25.f * glm::cross(orbitAxis[i], glm::vec3{ 0.f, 1.f, 0.f });
+		m_orbitPlanet.push_back(Object{ "sphere", position });
+	}
+
+	position = { 5.f, 0.f, 0.f };
+	m_orbitPlanetsMoon.push_back(Object{ "sphere", position + m_orbitPlanet[0].GetPosition() });
+	for (int i = 1; i < 3; ++i) {
+		position = 5.f * glm::cross(orbitAxis[i], glm::vec3{ 0.f, 1.f, 0.f });
+		m_orbitPlanetsMoon.push_back(Object{ "sphere", position + m_orbitPlanet[i].GetPosition()});
+	}
+
+	for (auto& moon : m_orbitPlanetsMoon) {
+		moon.SetScaleFactor(glm::vec3{ 0.3f, 0.4f, 0.4f });
+	}
+}
+
+void Solution19::ReInit()
+{
+}
+
+void Solution19::Input(unsigned char key, bool down)
+{
+}
+
+void Solution19::SpecialInput(int key, bool down)
+{
+}
+
+void Solution19::Update(float deltaTime) {
+	m_originPlanet->Update(deltaTime);
+	std::vector<glm::vec3> prevPosOrbitPlanet{ };
+	for (int i = 0; i < 3; ++i) {
+		m_orbitPlanet[i].Update(deltaTime);
+		prevPosOrbitPlanet.push_back(m_orbitPlanet[i].Orbit(0.01f, orbitAxis[i], m_originPlanet->GetPosition()));
+	}
+
+	for (int i = 0; i < 3; ++i) {
+		m_orbitPlanetsMoon[i].Update(deltaTime);
+		m_orbitPlanetsMoon[i].SetPosition(prevPosOrbitPlanet[i] + m_orbitPlanetsMoon[i].GetPosition());
+		m_orbitPlanetsMoon[i].Orbit(0.03f, orbitAxis[i], m_orbitPlanet[i].GetPosition());
+	}
+}
+
+void Solution19::Render() {
+	m_originPlanet->Render();
+	for (auto& object : m_orbitPlanet) {
+		object.Render();
+	}
+	for (auto& object : m_orbitPlanetsMoon) {
 		object.Render();
 	}
 }
