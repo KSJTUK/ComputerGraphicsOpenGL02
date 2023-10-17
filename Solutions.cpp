@@ -563,24 +563,13 @@ void Solution19::Update(float deltaTime) {
 	std::vector<glm::vec3> deltaPositions{ };
 	for (int i = 0; i < 3; ++i) {
 		deltaPositions.push_back(m_orbitPlanet[i].Update(deltaTime, m_originPlanet->GetPosition()));
+		deltaPositions[i] += m_orbitPlanet[i].OrbitAxisRotate(glm::vec3{ 0.f, 0.f, 1.f }, 0.01f, 0.01f);
 	}
 
 	for (int i = 0; i < 3; ++i) {
 		m_orbitPlanetsMoon[i].Update(deltaTime, deltaPositions[i]);
-		m_orbitPlanetsMoon[i].OrbitAxisRotate(glm::vec3{ 0.f, 0.f, 1.f }, 0.01f, 0.005f);
+		m_orbitPlanetsMoon[i].OrbitAxisRotate(glm::vec3{ 1.f, 0.f, 1.f }, 0.01f, 0.001f);
 	}
-
-	static float timeCount{ };
-	static float time{ 0.3f };
-
-	//timeCount += deltaTime;
-	//if (timeCount > time) {
-	//	timeCount = 0.f;
-	//	for (int i = 0; i < 3; ++i) {
-	//		orbitAxis[i] = glm::rotateZ(orbitAxis[i], glm::radians(axisRotZ));
-	//	}
-	//	axisRotZ += 0.1f;
-	//}
 }
 
 void Solution19::Render() {

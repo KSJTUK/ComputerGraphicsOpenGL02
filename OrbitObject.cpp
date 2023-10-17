@@ -27,14 +27,18 @@ OrbitObject::OrbitObject(const std::string& modelTag, const glm::vec3& orbitCent
 
 OrbitObject::~OrbitObject() { }
 
-void OrbitObject::OrbitAxisRotate(const glm::vec3& rotateAxis, const float& angle, float rotateTime) {
+glm::vec3 OrbitObject::OrbitAxisRotate(const glm::vec3& rotateAxis, const float& angle, float rotateTime) {
 	m_orbitAxisRotateTimeCount += m_deltaTime;
 	if (rotateTime < m_orbitAxisRotateTimeCount) {
 		m_orbitAxisRotateTimeCount = 0.f;
-		m_orbitAxis = glm::rotate(glm::mat4{ 1.f }, glm::radians(angle), rotateAxis) * glm::vec4{ m_orbitAxis, 1.f };
+
+		glm::vec3 prevPosition{ m_position };
+		m_orbitAxis = glm::rotate(m_orbitAxis, glm::radians(angle), rotateAxis);
 		ObjectMove::OrbitMove(m_position, angle, rotateAxis, m_orbitCenter);
 		m_circle.SetAxis(m_orbitAxis);
+		return m_position - prevPosition;
 	}
+	return glm::vec3{ };
 }
 
 glm::vec3 OrbitObject::Update(float deltaTime, const glm::vec3& centerObjectDeltaPosition) {

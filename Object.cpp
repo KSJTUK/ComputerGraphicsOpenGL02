@@ -174,9 +174,10 @@ void ObjectMove::SpiralMove(Object& object, const Spiral& spiral, size_t step) {
 }
 
 void ObjectMove::OrbitMove(glm::vec3& position, const float& angle, const glm::vec3& axis, const glm::vec3& origin) {
-	glm::vec4 rotPos{ position - origin, 1.f };
-	glm::vec3 angles{ glm::radians(angle * axis) };
-	position = glm::yawPitchRoll(angles.y, angles.x, angles.z) * rotPos;
+	glm::vec3 rotPos{ position - origin };
+	//glm::vec3 angles{ glm::radians(angle * axis) };
+	position = glm::rotate(rotPos, glm::radians(angle), axis);
+	//position = glm::yawPitchRoll(angles.y, angles.x, angles.z) * rotPos;
 	position += origin;
 }
 

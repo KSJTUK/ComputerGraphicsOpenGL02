@@ -49,7 +49,7 @@ private:
 	float m_orbitAxisRotateTimeCount{ 0.f };
 
 public:
-	void OrbitAxisRotate(const glm::vec3& rotateAxis, const float& angle, float rotateTime);
+	glm::vec3 OrbitAxisRotate(const glm::vec3& rotateAxis, const float& angle, float rotateTime);
 
 public:
 	glm::vec3 Update(float deltaTime, const glm::vec3& centerObjectDeltaPosition);

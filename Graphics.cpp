@@ -92,7 +92,7 @@ void Graphics::Init() {
 	m_axisSystem->Init(m_shader->GetShaderProgramID());
 
 	CircleEffect::Init(m_shader->GetShaderProgramID());
-	CircleEffect::MakeCircle();
+	CircleEffect::MakeCircle(0.1f);
 
 	m_solutions.push_back(new Solution15{ });
 	m_solutions.push_back(new Solution16{ });
