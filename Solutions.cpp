@@ -563,6 +563,19 @@ void Solution19::Input(unsigned char key, bool down) {
 				ModelList::GetInst()->SetDrawModes(GL_LINES);
 			}
 		}
+
+		if (key == 'z') {
+			constexpr float EPSILON = 0.0001f;
+			if (m_rotateDirOrbitZ < EPSILON and m_rotateDirOrbitZ > -EPSILON) {
+				m_rotateDirOrbitZ = 1.f;
+			}
+			else if (m_rotateDirOrbitZ > 1.f - EPSILON) {
+				m_rotateDirOrbitZ = -1.f;
+			}
+			else {
+				m_rotateDirOrbitZ = 0.f;
+			}
+		}
 	}
 }
 
@@ -577,12 +590,12 @@ void Solution19::Update(float deltaTime) {
 	std::vector<glm::vec3> deltaPositions{ };
 	for (int i = 0; i < 3; ++i) {
 		deltaPositions.push_back(m_orbitPlanet[i].Update(deltaTime, m_originPlanet->GetPosition()));
-		deltaPositions[i] += m_orbitPlanet[i].OrbitAxisRotate(glm::vec3{ 0.f, 0.f, 1.f }, 0.01f, 0.01f);
+		deltaPositions[i] += m_orbitPlanet[i].OrbitAxisRotate(glm::vec3{ 0.f, 0.f, 1.f }, m_rotateDirOrbitZ * 0.01f, 0.01f);
 	}
 
 	for (int i = 0; i < 3; ++i) {
 		m_orbitPlanetsMoon[i].Update(deltaTime, deltaPositions[i]);
-		m_orbitPlanetsMoon[i].OrbitAxisRotate(glm::vec3{ 1.f, 0.f, 1.f }, 0.01f, 0.001f);
+		m_orbitPlanetsMoon[i].OrbitAxisRotate(glm::vec3{ 0.f, 0.f, 1.f }, m_rotateDirOrbitZ * 0.01f, 0.001f);
 	}
 }
 
