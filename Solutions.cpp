@@ -437,8 +437,8 @@ void Solution17::Input(unsigned char key, bool down) {
 				size_t loopSize{ m_objects.size() };
 				for (auto i = 0; i < loopSize; ++i) {
 					glm::vec3 initPos{ m_objects[i].GetPosition() };
-					initPos.x += 10.f;
-					m_orbitObject.push_back(Object{ m_objects[i].GetModelTag(), initPos });
+					initPos.x += 5.f;
+					m_orbitObject.push_back(Object{ m_objects[i].GetModelTag(), m_objects[i].GetPosition()});
 				}
 			}
 			else {
@@ -464,6 +464,29 @@ void Solution17::SpecialInput(int key, bool down) {
 				m_spirals.clear();
 			}
 		}
+
+		glm::vec3 originpositions[2]{
+			m_objects[1].GetPosition(),
+			m_objects[0].GetPosition()
+		};
+		if (key == GLUT_KEY_F6) {
+			for (auto& object : m_objects) {
+				object.MoveToPoint(2, glm::vec3{ }, object.GetPosition());
+			}
+		}
+		if (key == GLUT_KEY_F7) {
+			for (auto i = 0; i < 2; ++i) {
+				m_objects[i].MoveToPoint(1, originpositions[i]);
+			}
+		}
+
+		if (key == GLUT_KEY_F8) {
+			float dir{ 1.f };
+			for (auto i = 0; i < 2; ++i) {
+				m_objects[i].MoveToPoint(2, glm::vec3{ 0.f, 10.f * dir, 0.f }, originpositions[i]);
+				dir = -dir;
+			}
+		}
 	}
 }
 
@@ -476,6 +499,9 @@ void Solution17::Update(float deltaTime) {
 		m_objects[i].RotateY(m_rotateY[i]);
 		if (!m_spirals.empty()) {
 			prevPos.push_back(m_objects[i].MoveSpiral(m_spirals[i]));
+		}
+		else {
+			prevPos.push_back(glm::vec3{ });
 		}
 	}
 
