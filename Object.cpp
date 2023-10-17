@@ -125,6 +125,10 @@ std::string Object::GetModelTag() {
 	return m_modelTag;
 }
 
+glm::vec3 Object::GetDeltaPosition() const {
+	return m_position - m_prevPosition;
+}
+
 void Object::SetScaleFactor(const glm::vec3& factor) {
 	m_sizeScale = factor;
 }
@@ -144,6 +148,7 @@ void Object::SetModel(const std::string& newModelTag) {
 }
 
 void Object::Update(float deltaTime) {
+	m_prevPosition = m_position;
 	m_deltaTime = deltaTime;
 	m_timeCount += deltaTime;
 	if (m_movePoints.empty()) {

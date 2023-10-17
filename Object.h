@@ -54,6 +54,9 @@ protected:
 	// test
 	glm::mat4 unit{ 1.f };
 
+	// 
+	glm::vec3 m_prevPosition{ };
+
 	size_t m_spiralStep{  };
 	int m_spiralDir{ 1 };
 	float m_spiralMoveTime{ 0.005f };
@@ -68,6 +71,7 @@ public:
 	// getter
 	glm::vec3 GetPosition() const;
 	std::string GetModelTag();
+	glm::vec3 GetDeltaPosition() const;
 
 	void SetScaleFactor(const glm::vec3& factor);
 

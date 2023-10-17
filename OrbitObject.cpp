@@ -27,6 +27,24 @@ OrbitObject::OrbitObject(const std::string& modelTag, const glm::vec3& orbitCent
 
 OrbitObject::~OrbitObject() { }
 
+glm::vec3 OrbitObject::MoveX(int rev) {
+	glm::vec3 deltaPosition{ Object::MoveX(rev) };
+	//m_circle.SetPosition(m_position);
+	return deltaPosition;
+}
+
+glm::vec3 OrbitObject::MoveY(int rev) {
+	glm::vec3 deltaPosition{ Object::MoveY(rev) };
+	//m_circle.SetPosition(m_position);
+	return deltaPosition;
+}
+
+glm::vec3 OrbitObject::MoveZ(int rev) {
+	glm::vec3 deltaPosition{ Object::MoveZ(rev) };
+	//m_circle.SetPosition(m_position);
+	return deltaPosition;
+}
+
 glm::vec3 OrbitObject::Orbit(const float& angle, const glm::vec3& axis, const glm::vec3& center) {
 	return OrbitAxisRotate(axis, angle, 0.f);
 }

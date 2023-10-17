@@ -49,6 +49,10 @@ private:
 	float m_orbitAxisRotateTimeCount{ 0.f };
 
 public:
+	glm::vec3 MoveX(int rev = 1);
+	glm::vec3 MoveY(int rev = 1);
+	glm::vec3 MoveZ(int rev = 1);
+
 	glm::vec3 Orbit(const float& angle, const glm::vec3& axis, const glm::vec3& center);
 	glm::vec3 OrbitAxisRotate(const glm::vec3& rotateAxis, const float& angle, float rotateTime);
 	glm::vec3 OrbitAxisRotate(const glm::vec3& rotateAxis, const float& angle, float rotateTime, float dir);

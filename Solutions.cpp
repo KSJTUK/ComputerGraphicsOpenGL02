@@ -589,6 +589,30 @@ void Solution19::Input(unsigned char key, bool down) {
 				m_rotateDirOrbitZ = 0.f;
 			}
 		}
+
+		if (key == 'w') {
+			m_originPlanet->MoveY();
+		}
+
+		if (key == 's') {
+			m_originPlanet->MoveY(-1);
+		}
+
+		if (key == 'd') {
+			m_originPlanet->MoveX();
+		}
+
+		if (key == 'a') {
+			m_originPlanet->MoveX(-1);
+		}
+
+		if (key == '+' or key == '=') {
+			m_originPlanet->MoveZ(-1);
+		}
+
+		if (key == '-' or key == '_') {
+			m_originPlanet->MoveZ();
+		}
 	}
 }
 
@@ -597,12 +621,14 @@ void Solution19::SpecialInput(int key, bool down)
 }
 
 void Solution19::Update(float deltaTime) {
+	glm::vec3 originPlanetDeltaPosition = m_originPlanet->GetDeltaPosition();
+
 	m_originPlanet->Update(deltaTime);
-	m_originPlanet->Orbit(0.01f, glm::vec3{ 0.f, 1.f, 0.f }, glm::vec3{ });
+	m_originPlanet->Orbit(m_rotateDirOrbitY * 0.01f, glm::vec3{ 0.f, 1.f, 0.f }, glm::vec3{ });
 
 	std::vector<glm::vec3> deltaPositions{ };
 	for (int i = 0; i < 3; ++i) {
-		deltaPositions.push_back(m_orbitPlanet[i].Update(deltaTime, m_originPlanet->GetPosition()));
+		deltaPositions.push_back(m_orbitPlanet[i].Update(deltaTime, originPlanetDeltaPosition));
 		deltaPositions[i] += m_orbitPlanet[i].Orbit(m_rotateDirOrbitY * 0.01f, glm::vec3{ 0.f, 1.f, 0.f }, m_originPlanet->GetPosition());
 		deltaPositions[i] += m_orbitPlanet[i].OrbitAxisRotate(glm::vec3{ 0.f, 0.f, 1.f }, m_rotateDirOrbitZ * 0.01f, 0.01f);
 	}
