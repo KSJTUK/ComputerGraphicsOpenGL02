@@ -195,12 +195,13 @@ void ObjectMove::Move(glm::vec3& position, const glm::vec3& direction, const flo
 }
 
 bool ObjectMove::MoveToPoints(const glm::vec3& start, const glm::vec3& end, glm::vec3& position, float moveSteps, float& countStep) {
+	float moveStep{ (1.f / glm::length(end - start)) / 1000.f };
 	position = (1.f - countStep) * start + countStep * end;
 	if (countStep >= 1.f) {
 		position = end;
 		countStep = 0.f;
 		return false;
 	}
-	countStep += moveSteps;
+	countStep += moveStep;
 	return true;
 }
