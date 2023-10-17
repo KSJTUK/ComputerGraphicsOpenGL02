@@ -35,6 +35,7 @@ std::string MakeStringToKey(const std::string& str) {
 
 void ModelList::Init(unsigned int shaderProgramID) {
 	m_shaderProgramID = shaderProgramID;
+	m_currentDrawMode = GL_TRIANGLES;
 }
 
 void ModelList::LoadModel(const std::string& objectFilePath) {
@@ -58,9 +59,14 @@ void ModelList::LoadModelFromFile(const std::string& modelsFilePath) {
 }
 
 void ModelList::SetDrawModes(int drawMode) {
+	m_currentDrawMode = drawMode;
 	for (auto& element : m_modelList) {
-		element.second->SetDrawMode(drawMode);
+		element.second->SetDrawMode(m_currentDrawMode);
 	}
+}
+
+int ModelList::GetCurrentDrawMode() const {
+	return m_currentDrawMode;
 }
 
 std::shared_ptr<class Model> ModelList::GetModel(const std::string& key) const {

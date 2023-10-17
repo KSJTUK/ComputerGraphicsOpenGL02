@@ -128,6 +128,9 @@ private:
 	std::vector<class OrbitObject> m_orbitPlanet{ };
 	std::vector<class OrbitObject> m_orbitPlanetsMoon{ };
 
+	bool m_orbitRotateY{ };
+	bool m_orbitRotateZ{ };
+
 public:
 	void Init();
 	void ReInit();

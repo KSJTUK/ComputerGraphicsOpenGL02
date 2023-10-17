@@ -50,6 +50,7 @@ private:
 
 public:
 	glm::vec3 OrbitAxisRotate(const glm::vec3& rotateAxis, const float& angle, float rotateTime);
+	glm::vec3 OrbitAxisRotate(const glm::vec3& rotateAxis, const float& angle, float rotateTime, float dir);
 
 public:
 	glm::vec3 Update(float deltaTime, const glm::vec3& centerObjectDeltaPosition);

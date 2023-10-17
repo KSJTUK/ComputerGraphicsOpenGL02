@@ -23,9 +23,12 @@ private:
 	// 모델들을 저장할 맵 객체 생성
 	std::unordered_map<std::string, std::shared_ptr<class Model>> m_modelList{ };
 
+	int m_currentDrawMode{ };
+
 public:
 	std::shared_ptr<class Model> GetModel(const std::string& key) const;
 
+	int GetCurrentDrawMode() const;
 	void SetDrawModes(int drawMode);
 
 public:

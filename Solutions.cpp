@@ -548,8 +548,22 @@ void Solution19::ReInit()
 {
 }
 
-void Solution19::Input(unsigned char key, bool down)
-{
+void Solution19::Input(unsigned char key, bool down) {
+	if (down) {
+		if (key == 'p') {
+
+		}
+
+		if (key == 'n') {
+			int currentDrawMode = ModelList::GetInst()->GetCurrentDrawMode();
+			if (currentDrawMode == GL_LINES) {
+				ModelList::GetInst()->SetDrawModes(GL_TRIANGLES);
+			}
+			else {
+				ModelList::GetInst()->SetDrawModes(GL_LINES);
+			}
+		}
+	}
 }
 
 void Solution19::SpecialInput(int key, bool down)
