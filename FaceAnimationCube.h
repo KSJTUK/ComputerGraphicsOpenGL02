@@ -16,7 +16,7 @@ private:
 
 	glm::vec3 m_centerPosition{ };
 	glm::vec3 m_deltaPosition{ };
-	glm::vec3 m_scale{ };
+	glm::vec3 m_scale{ 1.f };
 	glm::vec3 m_rotate{ };
 
 	std::unique_ptr<GraphicBuffers> m_graphicBuffers{ };

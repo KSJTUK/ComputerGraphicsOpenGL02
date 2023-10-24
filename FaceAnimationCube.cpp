@@ -18,6 +18,19 @@ void CubeFace::Animation(bool dir) {
 		}
 		break;
 
+	case 2:
+	case 0:
+		m_scale += -m_animationDir * glm::vec3{ 0.001f };
+		if (m_scale.x >= 1.f) {
+			m_scale.x = 1.f;
+			m_animationDir = 1.f;
+		}
+		else if (m_scale.x <= 0.f) {
+			m_scale.x = 0.f;
+			m_animationDir = -1.f;
+		}
+		break;
+
 	case 5:
 		m_rotate.x += m_animationDir * 0.1f;
 		if (m_rotate.x >= 90.f) {
@@ -92,7 +105,24 @@ void CubeFace::Init(unsigned int shaderProgramID, int faceNumber) {
 	}
 
 	m_centerPosition /= static_cast<float>(m_vertex.size());
-	m_centerPosition.y -= 0.5f;
+	switch (m_myFaceNumber) {
+	case 1:
+	case 3:
+	case 5:
+		m_centerPosition.y -= 0.5f;
+		break;
+
+	case 2:
+		m_centerPosition.z -= 0.5f;
+		break;
+
+	case 0:
+		m_centerPosition.y += 0.5f;
+		break;
+
+	default:
+		break;
+	}
 
 	for (auto& vertex : m_vertex) {
 		vertex.position -= m_centerPosition;
@@ -113,7 +143,7 @@ void CubeFace::Render() {
 	glm::mat4 transformMat{ 1.f };
 	glm::mat4 translateMat{ glm::translate(transformMat, m_centerPosition + m_deltaPosition) };
 	glm::mat4 rotationMat{ glm::yawPitchRoll(yprAngle.y, yprAngle.x, yprAngle.z) };
-	glm::mat4 scaleMat{ glm::scale(transformMat, glm::vec3{ 1.f }) };
+	glm::mat4 scaleMat{ glm::scale(transformMat, m_scale) };
 
 	transformMat = translateMat * rotationMat * scaleMat;
 
