@@ -118,7 +118,7 @@ void Solution15::Render() {
 }
 
 void Solution16::Init() {
-	m_objects.push_back(Object{ ModelList::GetInst()->GetModel("cube"), glm::vec3{ 5.f, 0.f, 0.f }, "cube" });
+	m_objects.push_back(Object{ ModelList::GetInst()->GetModel("cone"), glm::vec3{ 5.f, 0.f, 0.f }, "cone" });
 	m_objects.push_back(Object{ ModelList::GetInst()->GetModel("sphere"), glm::vec3{ -5.f, 0.f, 0.f }, "sphere" });
 	for (auto i = 0; i < m_objects.size(); ++i) {
 		m_rotateX.push_back(0);
