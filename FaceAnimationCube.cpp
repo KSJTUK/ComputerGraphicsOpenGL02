@@ -32,8 +32,8 @@ bool CubeFace::Animation(bool dir, bool start) {
 			m_animationDir = 1.f;
 			return false;
 		}
-		else if (m_scale.x <= 0.f) {
-			m_scale.x = 0.f;
+		else if (m_scale.x <= 0.3f) {
+			m_scale.x = 0.3f;
 			m_animationDir = -1.f;
 			return false;
 		}

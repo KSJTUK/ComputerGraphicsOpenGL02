@@ -1,4 +1,5 @@
 ﻿#include "Camera.h"
+#include "Object.h"
 
 glm::mat4 Camera::GetViewMat() const {
 	return m_view;
@@ -91,6 +92,30 @@ void Camera::ViewPointMove(float moveAngle, const glm::vec3& axis) {
 	m_AT = glm::normalize(m_AT);
 }
 
+void Camera::OrbitY() {
+	if (m_orbitY == 0) {
+		m_orbitY = 1;
+	}
+	else if (m_orbitY == 1) {
+		m_orbitY = -1;
+	}
+	else {
+		m_orbitY = 0;
+	}
+}
+
+void Camera::RotateY() {
+	if (m_rotateY == 0) {
+		m_rotateY = 1;
+	}
+	else if (m_rotateY == 1) {
+		m_rotateY = -1;
+	}
+	else {
+		m_rotateY = 0;
+	}
+}
+
 void Camera::Init() {
 
 }
@@ -102,6 +127,9 @@ void Camera::Update(float deltaTime) {
 	m_cameraAxisZ = glm::normalize(-m_AT);
 	m_cameraAxisX = glm::normalize(glm::cross(m_UP, m_cameraAxisZ));
 	m_cameraAxisY = glm::normalize(glm::cross(m_cameraAxisZ, m_cameraAxisX));
+
+	ObjectMove::OrbitMove(m_AT, m_rotateY * 0.01f, m_cameraAxisY);
+	ObjectMove::OrbitMove(m_EYE, m_orbitY * 0.01f, m_UP);
 }
 
 void Camera::Render() {

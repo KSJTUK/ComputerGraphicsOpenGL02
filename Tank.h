@@ -35,6 +35,7 @@ private:
 	float m_missileMinRotate{ 10.f };
 	float m_missileMaxRotate{ 60.f };
 
+	int m_rotateTop{ 0 };
 	float m_rotateTopDir{ 0.f };
 
 private:

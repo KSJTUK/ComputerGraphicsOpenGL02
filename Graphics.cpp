@@ -47,12 +47,25 @@ void Graphics::SetOrthoMat() {
 	}
 
 	m_shader->UseProgram();
-	m_shader->SetPerspectiveMat(glm::ortho(-100.f, 100.f, -100.f, 100.f, -100.f, 100.f));
+	m_shader->SetPerspectiveMat(glm::ortho(-100.f, 100.f, -100.f, 100.f, -50.f, 50.f));
 	m_shader->UnUseProgram();
 }
 
 void Graphics::Input(unsigned char key, bool down) {
 	m_solutions[m_curSolutionIndex]->Input(key, down);
+
+	if (m_curSolutionIndex == 5) {
+		if (down) {
+			if (key == ']') {
+				m_camera->RotateY();
+			}
+
+			if (key == '[') {
+				m_camera->OrbitY();
+			}
+		}
+	}
+
 	m_camera->Input(key, down);
 }
 

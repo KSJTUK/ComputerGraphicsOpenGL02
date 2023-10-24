@@ -194,6 +194,21 @@ void Tank::Input(unsigned char key, bool down) {
 				m_hornAutoMove = true;
 			}
 		}
+
+		if (key == 'b') {
+			if (m_rotateTop == 0) {
+				m_rotateTop = 1;
+				m_rotateTopDir = 1.f;
+			}
+			else if (m_rotateTop == 1) {
+				m_rotateTop = -1;
+				m_rotateTopDir = -1.f;
+			}
+			else if (m_rotateTop == -1) {
+				m_rotateTop = 0;
+				m_rotateTopDir = 0.f;
+			}
+		}
 	}
 }
 
@@ -231,7 +246,9 @@ void Tank::Update(float deltaTime) {
 		AutoMoveHorn();
 	}
 
-	m_tankParts[LOOP_TOP].RotateY(static_cast<int>(m_rotateTopDir));
+	m_tankParts[LOOP_TOP].RotateY(m_rotateTop);
+	m_tankParts[LEFT_HORN].RotateY(m_rotateTop);
+	m_tankParts[RIGHT_HORN].RotateY(m_rotateTop);
 	float loopTopSpeed{ m_tankParts[LOOP_TOP].GetAngleSpeed() };
 	glm::vec3 loopTopPosition{ m_tankParts[LOOP_TOP].GetPosition() };
 	m_tankParts[LEFT_HORN].Orbit(m_rotateTopDir, loopTopSpeed, glm::vec3{0.f, 1.f, 0.f}, loopTopPosition);

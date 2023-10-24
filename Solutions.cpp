@@ -765,6 +765,14 @@ void Solution20::ReInit() {
 }
 
 void Solution20::Input(unsigned char key, bool down) {
+	if (down) {
+		if (key == 'c') {
+			delete m_tank;
+			m_tank = new Tank{ glm::vec3{ 0.f, 0.5f, 0.f } };
+			return;
+		}
+	}
+
 	m_tank->Input(key, down);
 }
 
@@ -800,6 +808,17 @@ void Solution18::ReInit() {
 }
 
 void Solution18::Input(unsigned char key, bool down) {
+	if (down) {
+		if (key == 'c') {
+			if (m_mode == 0) {
+				m_mode = 1;
+			}
+			else {
+				m_mode = 0;
+			}
+		}
+	}
+
 	if (m_mode) {
 		m_faceCube->Input(key, down);
 	}
@@ -809,7 +828,7 @@ void Solution18::Input(unsigned char key, bool down) {
 }
 
 void Solution18::SpecialInput(int key, bool down) {
-
+	
 }
 
 void Solution18::Update(float deltaTime) {

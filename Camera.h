@@ -34,6 +34,9 @@ private:
 	float m_cameraAngleX{ };
 	float m_cameraAngleY{ };
 
+	int m_rotateY{ 0 };
+	int m_orbitY{ 0 };
+
 public:
 	// getter
 	glm::mat4 GetViewMat() const;
@@ -52,6 +55,10 @@ public:
 
 	void Move(const glm::vec3& moveVec);
 	void ViewPointMove(float moveAngle, const glm::vec3& axis);
+
+	void OrbitY();
+
+	void RotateY();
 
 public:
 	void Init();
