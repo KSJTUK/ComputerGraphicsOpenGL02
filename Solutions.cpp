@@ -796,6 +796,7 @@ void Solution18::ReInit() {
 }
 
 void Solution18::Input(unsigned char key, bool down) {
+	m_faceCube->Input(key, down);
 }
 
 void Solution18::SpecialInput(int key, bool down) {

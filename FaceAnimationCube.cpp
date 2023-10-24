@@ -3,7 +3,11 @@
 #include "Model.h"
 #include "Object.h"
 
-void CubeFace::Animation(bool dir) {
+bool CubeFace::Animation(bool dir, bool start) {
+	if (!start) {
+		return false;
+	}
+
 	switch (m_myFaceNumber) {
 	case 1:
 	case 3:
@@ -11,23 +15,27 @@ void CubeFace::Animation(bool dir) {
 		if (m_deltaPosition.y >= 1.f) {
 			m_deltaPosition.y = 1.f;
 			m_animationDir = -1.f;
+			return false;
 		}
 		else if (m_deltaPosition.y <= 0.f){
 			m_deltaPosition.y = 0.f;
 			m_animationDir = 1.f;
+			return false;
 		}
 		break;
 
-	case 2:
 	case 0:
+	case 4:
 		m_scale += -m_animationDir * glm::vec3{ 0.001f };
 		if (m_scale.x >= 1.f) {
 			m_scale.x = 1.f;
 			m_animationDir = 1.f;
+			return false;
 		}
 		else if (m_scale.x <= 0.f) {
 			m_scale.x = 0.f;
 			m_animationDir = -1.f;
+			return false;
 		}
 		break;
 
@@ -36,16 +44,24 @@ void CubeFace::Animation(bool dir) {
 		if (m_rotate.x >= 90.f) {
 			m_rotate.x = 90.f;
 			m_animationDir = -1.f;
+			return false;
 		}
 		else if ( m_rotate.x < 0.f) {
 			m_rotate.x = 0.f;
 			m_animationDir = 1.f;
+			return false;
 		}
+		break;
+
+	case 2:
+		m_rotate.x += 0.1f;
 		break;
 
 	default:
 		break;
 	}
+
+	return true;
 }
 
 void CubeFace::Init(unsigned int shaderProgramID, int faceNumber) {
@@ -112,12 +128,12 @@ void CubeFace::Init(unsigned int shaderProgramID, int faceNumber) {
 		m_centerPosition.y -= 0.5f;
 		break;
 
-	case 2:
+	case 4:
 		m_centerPosition.z -= 0.5f;
 		break;
 
 	case 0:
-		m_centerPosition.y += 0.5f;
+		m_centerPosition.y -= 0.5f;
 		break;
 
 	default:
@@ -158,9 +174,38 @@ void FaceAnimationCube::Init(unsigned int shaderProgramID) {
 	}
 }
 
+void FaceAnimationCube::Input(unsigned char key, bool down) {
+	if (!down) {
+		return;
+	}
+
+	switch (key) {
+	case 't':
+		m_faceAnimationFlag[2] = !m_faceAnimationFlag[2];
+		break;
+
+	case 'f':
+		m_faceAnimationFlag[5] = true;
+		break;
+
+	case 's':
+		m_faceAnimationFlag[1] = true;
+		m_faceAnimationFlag[3] = true;
+		break;
+
+	case 'b':
+		m_faceAnimationFlag[0] = true;
+		m_faceAnimationFlag[4] = true;
+		break;
+		
+	}
+}
+
 void FaceAnimationCube::Update(float deltaTime) {
-	for (auto& face : m_cubeFaces) {
-		face.Animation(1);
+	for (auto i = 0; i < 6; ++i) {
+		if (!m_cubeFaces[i].Animation(1, m_faceAnimationFlag[i])) {
+			m_faceAnimationFlag[i] = false;
+		}
 	}
 }
 

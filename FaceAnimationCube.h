@@ -28,7 +28,7 @@ private:
 	std::vector<Vertex> m_vertex{ };
 
 public:
-	void Animation(bool dir);
+	bool Animation(bool dir, bool start);
 
 public:
 	void Init(unsigned int shaderProgramID, int faceNumber);
@@ -43,9 +43,11 @@ public:
 
 private:
 	std::array<CubeFace, 6> m_cubeFaces{ };
+	std::array<bool, 6> m_faceAnimationFlag{ false };
 
 public:
 	void Init(unsigned int shaderProgramID);
+	void Input(unsigned char key, bool down);
 	void Update(float deltaTime);
 	void Render();
 };
