@@ -64,6 +64,10 @@ bool CubeFace::Animation(bool dir, bool start) {
 	return true;
 }
 
+void CubeFace::Orbit() {
+	m_rotateAllY += 0.1f;
+}
+
 void CubeFace::Init(unsigned int shaderProgramID, int faceNumber) {
 	if (faceNumber >= 6) {
 		return;
@@ -160,8 +164,9 @@ void CubeFace::Render() {
 	glm::mat4 translateMat{ glm::translate(transformMat, m_centerPosition + m_deltaPosition) };
 	glm::mat4 rotationMat{ glm::yawPitchRoll(yprAngle.y, yprAngle.x, yprAngle.z) };
 	glm::mat4 scaleMat{ glm::scale(transformMat, m_scale) };
+	glm::mat4 rotationAll{ glm::yawPitchRoll(glm::radians(m_rotateAllY), 0.f, 0.f) };
 
-	transformMat = translateMat * rotationMat * scaleMat;
+	transformMat = rotationAll * translateMat * rotationMat * scaleMat;
 
 	m_graphicBuffers->SetDrawMode(GL_TRIANGLES);
 	m_graphicBuffers->SetTransformMat(transformMat);
@@ -197,6 +202,10 @@ void FaceAnimationCube::Input(unsigned char key, bool down) {
 		m_faceAnimationFlag[0] = true;
 		m_faceAnimationFlag[4] = true;
 		break;
+
+	case 'y':
+		m_rotateY = !m_rotateY;
+		break;
 		
 	}
 }
@@ -205,6 +214,10 @@ void FaceAnimationCube::Update(float deltaTime) {
 	for (auto i = 0; i < 6; ++i) {
 		if (!m_cubeFaces[i].Animation(1, m_faceAnimationFlag[i])) {
 			m_faceAnimationFlag[i] = false;
+		}
+
+		if (m_rotateY) {
+			m_cubeFaces[i].Orbit();
 		}
 	}
 }

@@ -18,6 +18,7 @@ private:
 	glm::vec3 m_deltaPosition{ };
 	glm::vec3 m_scale{ 1.f };
 	glm::vec3 m_rotate{ };
+	float m_rotateAllY{ };
 
 	std::unique_ptr<GraphicBuffers> m_graphicBuffers{ };
 
@@ -31,6 +32,7 @@ private:
 public:
 	bool Animation(bool dir, bool start);
 	bool AnimationOpenAll(bool start);
+	void Orbit();
 
 public:
 	void Init(unsigned int shaderProgramID, int faceNumber);
@@ -46,6 +48,10 @@ public:
 private:
 	std::array<ConeFace, 6> m_coneFaces{ };
 	std::array<bool, 6> m_faceAnimationFlag{ false };
+
+	int m_keyInputCount{ };
+	bool m_openAll{ false };
+	bool m_rotateY{ false };
 
 public:
 	void Init(unsigned int shaderProgramID);

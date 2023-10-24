@@ -18,10 +18,12 @@ bool ConeFace::Animation(bool dir, bool start) {
 		if (m_rotate.z > angle) {
 			m_rotate.z = angle;
 			m_animationDir = -1.f;
+			return false;
 		}
 		else if (m_rotate.z <= 0.f){
 			m_rotate.z = 0.f;
 			m_animationDir = 1.f;
+			return false;
 		}
 		break;
 
@@ -30,10 +32,12 @@ bool ConeFace::Animation(bool dir, bool start) {
 		if (m_rotate.x >= 0.f) {
 			m_rotate.x = 0.f;
 			m_animationDir = 1.f;
+			return false;
 		}
 		else if (m_rotate.x <= -angle) {
 			m_rotate.x = -angle;
 			m_animationDir = -1.f;
+			return false;
 		}
 		break;
 
@@ -42,10 +46,12 @@ bool ConeFace::Animation(bool dir, bool start) {
 		if (m_rotate.z >= 0.f) {
 			m_rotate.z = 0.f;
 			m_animationDir = 1.f;
+			return false;
 		}
 		else if (m_rotate.z <= -angle) {
 			m_rotate.z = -angle;
 			m_animationDir = -1.f;
+			return false;
 		}
 		break;
 
@@ -54,10 +60,12 @@ bool ConeFace::Animation(bool dir, bool start) {
 		if (m_rotate.x > angle) {
 			m_rotate.x = angle;
 			m_animationDir = -1.f;
+			return false;
 		}
 		else if (m_rotate.x <= 0.f) {
 			m_rotate.x = 0.f;
 			m_animationDir = 1.f;
+			return false;
 		}
 		break;
 
@@ -81,10 +89,12 @@ bool ConeFace::AnimationOpenAll(bool start) {
 		if (m_rotate.z > angle) {
 			m_rotate.z = angle;
 			m_animationDir = -1.f;
+			return false;
 		}
 		else if (m_rotate.z <= 0.f) {
 			m_rotate.z = 0.f;
 			m_animationDir = 1.f;
+			return false;
 		}
 		break;
 
@@ -93,10 +103,12 @@ bool ConeFace::AnimationOpenAll(bool start) {
 		if (m_rotate.x >= 0.f) {
 			m_rotate.x = 0.f;
 			m_animationDir = 1.f;
+			return false;
 		}
 		else if (m_rotate.x <= -angle) {
 			m_rotate.x = -angle;
 			m_animationDir = -1.f;
+			return false;
 		}
 		break;
 
@@ -105,10 +117,12 @@ bool ConeFace::AnimationOpenAll(bool start) {
 		if (m_rotate.z >= 0.f) {
 			m_rotate.z = 0.f;
 			m_animationDir = 1.f;
+			return false;
 		}
 		else if (m_rotate.z <= -angle) {
 			m_rotate.z = -angle;
 			m_animationDir = -1.f;
+			return false;
 		}
 		break;
 
@@ -117,10 +131,12 @@ bool ConeFace::AnimationOpenAll(bool start) {
 		if (m_rotate.x > angle) {
 			m_rotate.x = angle;
 			m_animationDir = -1.f;
+			return false;
 		}
 		else if (m_rotate.x <= 0.f) {
 			m_rotate.x = 0.f;
 			m_animationDir = 1.f;
+			return false;
 		}
 		break;
 
@@ -129,6 +145,10 @@ bool ConeFace::AnimationOpenAll(bool start) {
 	}
 
 	return true;
+}
+
+void ConeFace::Orbit() {
+	m_rotateAllY += 0.01f;
 }
 
 void ConeFace::Init(unsigned int shaderProgramID, int faceNumber) {
@@ -201,6 +221,13 @@ void ConeFace::Init(unsigned int shaderProgramID, int faceNumber) {
 	case 3:
 		m_centerPosition.z = 0.5f;
 		break;
+
+	default:
+		for (auto& vertex : m_vertex) {
+			m_centerPosition += vertex.position;
+		}
+		m_centerPosition /= 3.f;
+		break;
 	}
 
 	for (auto& vertex : m_vertex) {
@@ -222,8 +249,9 @@ void ConeFace::Render() {
 	glm::mat4 translateMat{ glm::translate(transformMat, m_centerPosition + m_deltaPosition) };
 	glm::mat4 rotationMat{ glm::yawPitchRoll(yprAngle.y, yprAngle.x, yprAngle.z) };
 	glm::mat4 scaleMat{ glm::scale(transformMat, m_scale) };
+	glm::mat4 rotationAll{ glm::yawPitchRoll(glm::radians(m_rotateAllY), 0.f, 0.f) };
 
-	transformMat = translateMat * rotationMat * scaleMat;
+	transformMat = rotationAll * translateMat * rotationMat * scaleMat;
 
 	m_graphicBuffers->SetDrawMode(GL_TRIANGLES);
 	m_graphicBuffers->SetTransformMat(transformMat);
@@ -237,7 +265,26 @@ void FaceAnimationCone::Init(unsigned int shaderProgramID) {
 }
 
 void FaceAnimationCone::Input(unsigned char key, bool down) {
+	if (!down) {
+		return;
+	}
 
+	switch (key) {
+	case 'r':
+		if (!m_faceAnimationFlag[m_keyInputCount]) {
+			m_faceAnimationFlag[m_keyInputCount] = true;
+			m_keyInputCount = (m_keyInputCount + 1) % 4;
+		}
+		break;
+
+	case 'o':
+		m_openAll = true;
+		break;
+
+	case 'y':
+		m_rotateY = !m_rotateY;
+		break;
+	}
 }
 
 void FaceAnimationCone::Update(float deltaTime) {
@@ -246,7 +293,13 @@ void FaceAnimationCone::Update(float deltaTime) {
 			m_faceAnimationFlag[i] = false;
 		}
 
-		m_coneFaces[i].AnimationOpenAll(true);
+		if (!m_coneFaces[i].AnimationOpenAll(m_openAll)) {
+			m_openAll = false;
+		}
+
+		if (m_rotateY) {
+			m_coneFaces[i].Orbit();
+		}
 	}
 }
 
