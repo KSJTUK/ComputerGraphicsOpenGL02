@@ -21,6 +21,7 @@ private:
 	std::unique_ptr<GraphicBuffers> m_graphicBuffers{ };
 
 	int m_myFaceNumber{ };
+	float m_animationDir{ 1.f };
 
 private:
 	std::vector<Vertex> m_vertex{ };

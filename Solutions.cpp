@@ -804,6 +804,7 @@ void Solution18::SpecialInput(int key, bool down) {
 
 void Solution18::Update(float deltaTime) {
 	m_deltaTime = deltaTime;
+	m_faceCube->Update(deltaTime);
 }
 
 void Solution18::Render() {

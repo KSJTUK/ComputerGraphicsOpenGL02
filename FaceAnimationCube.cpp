@@ -4,11 +4,17 @@
 #include "Object.h"
 
 void CubeFace::Animation(bool dir) {
-	float moveDir = dir ? 1.f : -1.f;
-
 	switch (m_myFaceNumber) {
-	case 0:
-		m_rotate.x += moveDir * 1.f;
+	case 5:
+		m_rotate.x += m_animationDir * 0.1f;
+		if (m_rotate.x >= 90.f) {
+			m_rotate.x = 90.f;
+			m_animationDir = -1.f;
+		}
+		else if ( m_rotate.x < 0.f) {
+			m_rotate.x = 0.f;
+			m_animationDir = 1.f;
+		}
 		break;
 
 	default:
@@ -73,6 +79,7 @@ void CubeFace::Init(unsigned int shaderProgramID, int faceNumber) {
 	}
 
 	m_centerPosition /= static_cast<float>(m_vertex.size());
+	m_centerPosition.y -= 0.5f;
 
 	for (auto& vertex : m_vertex) {
 		vertex.position -= m_centerPosition;
@@ -84,14 +91,21 @@ void CubeFace::Init(unsigned int shaderProgramID, int faceNumber) {
 
 
 void CubeFace::Update(float deltaTime) {
-	
+
 }
 
 void CubeFace::Render() {
+	glm::vec3 yprAngle{ glm::radians(m_rotate) };
+
 	glm::mat4 transformMat{ 1.f };
-	glm::mat4 translateMat{ glm::translate(glm::mat4{ 1.f }, m_centerPosition) };
+	glm::mat4 translateMat{ glm::translate(transformMat, m_centerPosition) };
+	glm::mat4 rotationMat{ glm::yawPitchRoll(yprAngle.y, yprAngle.x, yprAngle.z) };
+	glm::mat4 scaleMat{ glm::scale(transformMat, glm::vec3{ 1.f }) };
+
+	transformMat = translateMat * rotationMat * scaleMat;
+
 	m_graphicBuffers->SetDrawMode(GL_TRIANGLES);
-	m_graphicBuffers->SetTransformMat(translateMat);
+	m_graphicBuffers->SetTransformMat(transformMat);
 	m_graphicBuffers->Render();
 }
 
@@ -102,6 +116,9 @@ void FaceAnimationCube::Init(unsigned int shaderProgramID) {
 }
 
 void FaceAnimationCube::Update(float deltaTime) {
+	for (auto& face : m_cubeFaces) {
+		face.Animation(1);
+	}
 }
 
 void FaceAnimationCube::Render() {
