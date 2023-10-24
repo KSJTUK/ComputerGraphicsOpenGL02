@@ -10,7 +10,6 @@
 
 void Solution15::Init() {
 	m_object = new Object{ ModelList::GetInst()->GetModel("cylinder"), glm::vec3{ 0.f }, "cylinder" };
-	m_tank = new Tank{ };
 }
 
 void Solution15::ReInit() {
@@ -112,12 +111,10 @@ void Solution15::SpecialInput(int key, bool down) {
 void Solution15::Update(float deltaTime) {
 	m_deltaTime = deltaTime;
 	m_object->Update(m_deltaTime);
-	m_tank->Update(deltaTime);
 }
 
 void Solution15::Render() {
-	//m_object->Render();
-	m_tank->Render();
+	m_object->Render();
 }
 
 void Solution16::Init() {
@@ -601,8 +598,7 @@ void Solution19::Init() {
 	}
 }
 
-void Solution19::ReInit()
-{
+void Solution19::ReInit() {
 }
 
 void Solution19::Input(unsigned char key, bool down) {
@@ -685,8 +681,7 @@ void Solution19::Input(unsigned char key, bool down) {
 	}
 }
 
-void Solution19::SpecialInput(int key, bool down)
-{
+void Solution19::SpecialInput(int key, bool down) {
 }
 
 void Solution19::Update(float deltaTime) {
@@ -785,4 +780,32 @@ void Solution20::Render() {
 	m_groundBuffer->SetTransformMat(glm::mat4{ 1.f });
 	m_groundBuffer->Render();
 	m_tank->Render();
+}
+
+#include "FaceAnimationCube.h"
+void Solution18::SetShaderProgramID(unsigned int shaderProgramID) {
+	m_shaderProgramID = shaderProgramID;
+}
+
+void Solution18::Init() {
+	m_faceCube = new FaceAnimationCube{ };
+	m_faceCube->Init(m_shaderProgramID);
+}
+
+void Solution18::ReInit() {
+}
+
+void Solution18::Input(unsigned char key, bool down) {
+}
+
+void Solution18::SpecialInput(int key, bool down) {
+
+}
+
+void Solution18::Update(float deltaTime) {
+	m_deltaTime = deltaTime;
+}
+
+void Solution18::Render() {
+	m_faceCube->Render();
 }

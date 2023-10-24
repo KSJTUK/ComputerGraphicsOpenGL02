@@ -231,7 +231,7 @@ void Tank::Update(float deltaTime) {
 		AutoMoveHorn();
 	}
 
-	m_tankParts[LOOP_TOP].RotateY(m_rotateTopDir);
+	m_tankParts[LOOP_TOP].RotateY(static_cast<int>(m_rotateTopDir));
 	float loopTopSpeed{ m_tankParts[LOOP_TOP].GetAngleSpeed() };
 	glm::vec3 loopTopPosition{ m_tankParts[LOOP_TOP].GetPosition() };
 	m_tankParts[LEFT_HORN].Orbit(m_rotateTopDir, loopTopSpeed, glm::vec3{0.f, 1.f, 0.f}, loopTopPosition);

@@ -3,15 +3,35 @@
 #include "gl_headers.h"
 #include "GraphicBuffers.h"
 #include <vector>
+#include <array>
 #include <memory>
 
 class CubeFace {
-	std::vector<Vertex> m_vertex{ };
+public:
+	CubeFace() { }
+	~CubeFace() { }
+
+private:
 	std::vector<unsigned int> m_index{ };
 
-	glm::vec3 m_position{ };
+	glm::vec3 m_centerPosition{ };
 	glm::vec3 m_scale{ };
 	glm::vec3 m_rotate{ };
+
+	std::unique_ptr<GraphicBuffers> m_graphicBuffers{ };
+
+	int m_myFaceNumber{ };
+
+private:
+	std::vector<Vertex> m_vertex{ };
+
+public:
+	void Animation(bool dir);
+
+public:
+	void Init(unsigned int shaderProgramID, int faceNumber);
+	void Update(float deltaTime);
+	void Render();
 };
 
 class FaceAnimationCube {
@@ -20,9 +40,10 @@ public:
 	~FaceAnimationCube() { }
 
 private:
-	std::vector<Vertex> m_faces{ };
-	std::vector<unsigned int> m_faceIndex{ };
+	std::array<CubeFace, 6> m_cubeFaces{ };
 
 public:
-	void Update();
+	void Init(unsigned int shaderProgramID);
+	void Update(float deltaTime);
+	void Render();
 };

@@ -39,7 +39,7 @@ private:
 	bool controlDowned{ false };
 
 	std::vector<class Solutions*> m_solutions{ };
-	int m_curSolutionIndex{ };
+	int m_curSolutionIndex{ 3 };
 
 	int m_curProjectionMat{ CUR_PROJECTION_MAT_PERSPECTIVE };
 

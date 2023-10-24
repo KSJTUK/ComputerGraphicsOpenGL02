@@ -138,6 +138,9 @@ void Graphics::Init() {
 	Solution17* s{ new Solution17{ } };
 	s->SetShaderProgramID(m_shader->GetShaderProgramID());
 	m_solutions.push_back(s);
+	Solution18* s18{ new Solution18{ } };
+	s18->SetShaderProgramID(m_shader->GetShaderProgramID());
+	m_solutions.push_back(s18);
 	m_solutions.push_back(new Solution19{ });
 	Solution20* s20 = { new Solution20{ } };
 	s20->SetShaderProgramID(m_shader->GetShaderProgramID());

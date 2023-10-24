@@ -112,12 +112,23 @@ public:
 	~Solution18() { }
 
 private:
-	class Object* m_cube{ };
-	class Object* m_cone{ };
+	class FaceAnimationCube* m_faceCube{ };
+	class FaceAnimationCone* m_faceCone{ };
+
+	float m_deltaTime{ };
+
+	unsigned int m_shaderProgramID{ };
 
 public:
-	void FaceAnimation(const Object& object);
+	void SetShaderProgramID(unsigned int shaderProgramID);
 
+public:
+	void Init();
+	void ReInit();
+	void Input(unsigned char key, bool down);
+	void SpecialInput(int key, bool down);
+	void Update(float deltaTime);
+	void Render();
 };
 
 class Solution19 : public Solutions {
