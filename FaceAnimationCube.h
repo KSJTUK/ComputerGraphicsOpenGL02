@@ -15,6 +15,7 @@ private:
 	std::vector<unsigned int> m_index{ };
 
 	glm::vec3 m_centerPosition{ };
+	glm::vec3 m_deltaPosition{ };
 	glm::vec3 m_scale{ };
 	glm::vec3 m_rotate{ };
 

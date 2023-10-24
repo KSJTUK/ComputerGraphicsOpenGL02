@@ -5,6 +5,19 @@
 
 void CubeFace::Animation(bool dir) {
 	switch (m_myFaceNumber) {
+	case 1:
+	case 3:
+		m_deltaPosition.y += m_animationDir * 0.001f;
+		if (m_deltaPosition.y >= 1.f) {
+			m_deltaPosition.y = 1.f;
+			m_animationDir = -1.f;
+		}
+		else if (m_deltaPosition.y <= 0.f){
+			m_deltaPosition.y = 0.f;
+			m_animationDir = 1.f;
+		}
+		break;
+
 	case 5:
 		m_rotate.x += m_animationDir * 0.1f;
 		if (m_rotate.x >= 90.f) {
@@ -98,7 +111,7 @@ void CubeFace::Render() {
 	glm::vec3 yprAngle{ glm::radians(m_rotate) };
 
 	glm::mat4 transformMat{ 1.f };
-	glm::mat4 translateMat{ glm::translate(transformMat, m_centerPosition) };
+	glm::mat4 translateMat{ glm::translate(transformMat, m_centerPosition + m_deltaPosition) };
 	glm::mat4 rotationMat{ glm::yawPitchRoll(yprAngle.y, yprAngle.x, yprAngle.z) };
 	glm::mat4 scaleMat{ glm::scale(transformMat, glm::vec3{ 1.f }) };
 
