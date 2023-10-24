@@ -72,7 +72,8 @@ int ModelList::GetCurrentDrawMode() const {
 std::shared_ptr<class Model> ModelList::GetModel(const std::string& key) const {
 	auto iter = m_modelList.find(key);
 	if (iter == m_modelList.end()) {
-		return std::shared_ptr<Model>(nullptr);
+		throw "not exists model: " + key;
+		exit(-1);
 	}
 
 	return iter->second;

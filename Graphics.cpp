@@ -125,6 +125,7 @@ void Graphics::Init() {
 	ModelList::GetInst()->LoadModel("sphere.obj");
 	ModelList::GetInst()->LoadModel("cube.obj");
 	ModelList::GetInst()->LoadModel("cone.obj");
+	ModelList::GetInst()->LoadModel("cylinder.obj");
 
 	m_axisSystem = std::make_unique<Axis>();
 	m_axisSystem->Init(m_shader->GetShaderProgramID());
@@ -138,6 +139,10 @@ void Graphics::Init() {
 	s->SetShaderProgramID(m_shader->GetShaderProgramID());
 	m_solutions.push_back(s);
 	m_solutions.push_back(new Solution19{ });
+	Solution20* s20 = { new Solution20{ } };
+	s20->SetShaderProgramID(m_shader->GetShaderProgramID());
+	m_solutions.push_back(s20);
+	
 	
 	for (auto& solution : m_solutions) {
 		solution->Init();

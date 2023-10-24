@@ -5,9 +5,12 @@
 #include "Axis.h"
 #include "Spiral.h"
 #include "OrbitObject.h"
+#include "GraphicBuffers.h"
+#include "Tank.h"
 
 void Solution15::Init() {
-	m_object = new Object{ ModelList::GetInst()->GetModel("cube"), glm::vec3{ 0.f }, "cube" };
+	m_object = new Object{ ModelList::GetInst()->GetModel("cylinder"), glm::vec3{ 0.f }, "cylinder" };
+	m_tank = new Tank{ };
 }
 
 void Solution15::ReInit() {
@@ -109,12 +112,12 @@ void Solution15::SpecialInput(int key, bool down) {
 void Solution15::Update(float deltaTime) {
 	m_deltaTime = deltaTime;
 	m_object->Update(m_deltaTime);
-	m_object->RotateX(rotateX);
-	m_object->RotateY(-rotateY);
+	m_tank->Update(deltaTime);
 }
 
 void Solution15::Render() {
-	m_object->Render();
+	//m_object->Render();
+	m_tank->Render();
 }
 
 void Solution16::Init() {
@@ -457,7 +460,7 @@ void Solution17::Input(unsigned char key, bool down) {
 			}
 		}
 
-		if (key == 'y') {
+		if (key == 'z') {
 			if (!m_objects.empty()) {
 				for (auto& e : m_objects) {
 					e.ScaleAll(glm::vec3{ -0.01f, -0.01f, -0.01f });
@@ -498,6 +501,8 @@ void Solution17::Input(unsigned char key, bool down) {
 				}
 			}
 		}
+
+
 	}
 }
 
@@ -665,6 +670,18 @@ void Solution19::Input(unsigned char key, bool down) {
 		if (key == '-' or key == '_') {
 			m_originPlanet->MoveZ();
 		}
+
+		if (key == 'x') {
+			rotate.x = !rotate.x;
+		}
+
+		if (key == 'q') {
+			rotate.y = !rotate.y;
+		}
+
+		if (key == 'e') {
+			rotate.z = !rotate.z;
+		}
 	}
 }
 
@@ -682,13 +699,46 @@ void Solution19::Update(float deltaTime) {
 	for (int i = 0; i < 3; ++i) {
 		deltaPositions.push_back(m_orbitPlanet[i].Update(deltaTime, originPlanetDeltaPosition));
 		deltaPositions[i] += m_orbitPlanet[i].Orbit(m_rotateDirOrbitY * 0.01f, glm::vec3{ 0.f, 1.f, 0.f }, m_originPlanet->GetPosition());
-		deltaPositions[i] += m_orbitPlanet[i].OrbitAxisRotate(glm::vec3{ 0.f, 0.f, 1.f }, m_rotateDirOrbitZ * 0.01f, 0.01f);
+		deltaPositions[i] += m_orbitPlanet[i].OrbitAxisRotate(glm::vec3{ 0.f, 0.f, 1.f }, m_rotateDirOrbitZ * 0.01f, 0.005f);
 	}
 
 	for (int i = 0; i < 3; ++i) {
 		m_orbitPlanetsMoon[i].Update(deltaTime, deltaPositions[i]);
 		m_orbitPlanetsMoon[i].Orbit(m_rotateDirOrbitY * 0.01f, glm::vec3{ 0.f, 1.f, 0.f }, m_originPlanet->GetPosition());
 		m_orbitPlanetsMoon[i].OrbitAxisRotate(glm::vec3{ 0.f, 0.f, 1.f }, m_rotateDirOrbitZ * 0.01f, 0.001f);
+	}
+
+	if (rotate.x) {
+		m_originPlanet->RotateX();
+		for (int i = 0; i < 3; ++i) {
+			m_orbitPlanet[i].RotateX();
+		}
+
+		for (int i = 0; i < 3; ++i) {
+			m_orbitPlanetsMoon[i].RotateX();
+		}
+	}
+
+	if (rotate.y) {
+		m_originPlanet->RotateY();
+		for (int i = 0; i < 3; ++i) {
+			m_orbitPlanet[i].RotateY();
+		}
+
+		for (int i = 0; i < 3; ++i) {
+			m_orbitPlanetsMoon[i].RotateY();
+		}
+	}
+
+	if (rotate.z) {
+		m_originPlanet->RotateZ();
+		for (int i = 0; i < 3; ++i) {
+			m_orbitPlanet[i].RotateZ();
+		}
+
+		for (int i = 0; i < 3; ++i) {
+			m_orbitPlanetsMoon[i].RotateZ();
+		}
 	}
 }
 
@@ -701,4 +751,38 @@ void Solution19::Render() {
 	for (auto& object : m_orbitPlanetsMoon) {
 		object.Render();
 	}
+}
+
+void Solution20::SetShaderProgramID(unsigned int shaderProgramID) {
+	m_shaderProgramID = shaderProgramID;
+}
+
+void Solution20::Init() {
+	m_groundBuffer = std::make_unique<GraphicBuffers>();
+	m_groundBuffer->Init(m_shaderProgramID);
+	m_groundBuffer->SetVerticies(ground);
+	m_groundBuffer->SetIndexBuffer(groundIndex);
+
+	m_tank = new Tank{ glm::vec3{ 0.f, 0.5f, 0.f } };
+}
+
+void Solution20::ReInit() {
+}
+
+void Solution20::Input(unsigned char key, bool down) {
+	m_tank->Input(key, down);
+}
+
+void Solution20::SpecialInput(int key, bool down) {
+	m_tank->SpecialInput(key, down);
+}
+
+void Solution20::Update(float deltaTime) {
+	m_tank->Update(deltaTime);
+}
+
+void Solution20::Render() {
+	m_groundBuffer->SetTransformMat(glm::mat4{ 1.f });
+	m_groundBuffer->Render();
+	m_tank->Render();
 }

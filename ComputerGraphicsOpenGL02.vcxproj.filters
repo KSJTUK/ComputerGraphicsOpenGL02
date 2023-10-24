@@ -69,16 +69,22 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="OrbitObject.cpp">
+      <Filter>소스 파일\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Spiral.cpp">
+      <Filter>소스 파일\Object</Filter>
+    </ClCompile>
     <ClCompile Include="Solutions.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Spiral.cpp">
+    <ClCompile Include="FaceAnimationCube.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="OrbitObject.cpp">
+    <ClCompile Include="FaceModel.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="EffectSystem.cpp">
+    <ClCompile Include="Tank.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -131,13 +137,19 @@
     <ClInclude Include="Solutions.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Spiral.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="OrbitObject.h">
+      <Filter>헤더 파일\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Spiral.h">
+      <Filter>헤더 파일\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="FaceAnimationCube.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="EffectSystem.h">
+    <ClInclude Include="FaceModel.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Tank.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

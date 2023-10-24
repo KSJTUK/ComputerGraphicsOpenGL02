@@ -88,6 +88,8 @@ void Engine::Init(int* argc, char** argv) {
 
 	SubscribeCallbacks();
 
+	//((bool(__stdcall*)(int))wglGetProcAddress("wglSwapIntervalEXT"))(0); // 수직 동기화
+
 	// 타이머 초기화
 	m_timer = std::make_unique<Timer>();
 	m_timer->Init();

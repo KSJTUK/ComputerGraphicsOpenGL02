@@ -1,5 +1,7 @@
 #pragma once
+#include "vertex_info.h"
 #include <vector>
+#include <memory>
 #include "gl_headers.h"
 
 class Solutions {
@@ -23,6 +25,8 @@ public:
 
 private:
 	class Object* m_object{ };
+	class Tank* m_tank{ };
+
 	int rotateX{ 0 };
 	int rotateY{ 0 };
 
@@ -30,6 +34,7 @@ private:
 
 	bool m_drawSolid{ true };
 	bool m_culling{ true };
+	
 
 public:
 	void Init();
@@ -111,7 +116,7 @@ private:
 	class Object* m_cone{ };
 
 public:
-	
+	void FaceAnimation(const Object& object);
 
 };
 
@@ -134,6 +139,8 @@ private:
 	float m_rotateDirOrbitZ{ 0.f };
 	float m_rotateDirOrbitY{ 0.f };
 
+	glm::bvec3 rotate{ false };
+
 public:
 	void Init();
 	void ReInit();
@@ -141,4 +148,38 @@ public:
 	void SpecialInput(int key, bool down);
 	void Update(float deltaTime);
 	void Render();
+};
+
+class Solution20 : public Solutions {
+public:
+	Solution20() { }
+	~Solution20() { }
+
+private:
+	std::vector<Vertex> ground{
+		{ { -300.f, -0.001f, 300.f }, { 0.f, 0.5f, 0.f }, { } },
+		{ { -300.f, -0.001f, -300.f }, { 0.f, 0.5f, 0.f }, { } },
+		{ { 300.f, -0.001f, -300.f }, { 0.f, 0.5f, 0.f }, { } },
+		{ { 300.f, -0.001f, 300.f }, { 0.f, 0.5f, 0.f }, { } }
+	};
+	std::vector<unsigned int> groundIndex{
+		0, 1, 2, 0, 2, 3
+	};
+
+	std::unique_ptr<class GraphicBuffers> m_groundBuffer{ };
+	unsigned int m_shaderProgramID{ };
+	
+	class Tank* m_tank{ };
+
+public:
+	void SetShaderProgramID(unsigned int shaderProgramID);
+
+public:
+	void Init();
+	void ReInit();
+	void Input(unsigned char key, bool down);
+	void SpecialInput(int key, bool down);
+	void Update(float deltaTime);
+	void Render();
+
 };
