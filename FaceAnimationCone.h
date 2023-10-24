@@ -23,12 +23,14 @@ private:
 
 	int m_myFaceNumber{ };
 	float m_animationDir{ 1.f };
+	float m_openAllAnimationDir{ 1.f };
 
 private:
 	std::vector<Vertex> m_vertex{ };
 
 public:
 	bool Animation(bool dir, bool start);
+	bool AnimationOpenAll(bool start);
 
 public:
 	void Init(unsigned int shaderProgramID, int faceNumber);
@@ -42,8 +44,8 @@ public:
 	~FaceAnimationCone() { }
 
 private:
-	std::array<ConeFace, 5> m_coneFaces{ };
-	std::array<bool, 5> m_faceAnimationFlag{ false };
+	std::array<ConeFace, 6> m_coneFaces{ };
+	std::array<bool, 6> m_faceAnimationFlag{ false };
 
 public:
 	void Init(unsigned int shaderProgramID);

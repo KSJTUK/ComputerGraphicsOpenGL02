@@ -4,7 +4,131 @@
 #include "Object.h"
 
 bool ConeFace::Animation(bool dir, bool start) {
-	return false;
+	if (!start) {
+		return false;
+	}
+
+	// atan 1 / 2 == 26.56f
+	float atanHalf{ 26.56f };
+	float angle{ 90.f + atanHalf };
+
+	switch (m_myFaceNumber) {
+	case 0:
+		m_rotate.z += m_animationDir * 0.01f;
+		if (m_rotate.z > angle) {
+			m_rotate.z = angle;
+			m_animationDir = -1.f;
+		}
+		else if (m_rotate.z <= 0.f){
+			m_rotate.z = 0.f;
+			m_animationDir = 1.f;
+		}
+		break;
+
+	case 1:
+		m_rotate.x += -m_animationDir * 0.01f;
+		if (m_rotate.x >= 0.f) {
+			m_rotate.x = 0.f;
+			m_animationDir = 1.f;
+		}
+		else if (m_rotate.x <= -angle) {
+			m_rotate.x = -angle;
+			m_animationDir = -1.f;
+		}
+		break;
+
+	case 2:
+		m_rotate.z += -m_animationDir * 0.01f;
+		if (m_rotate.z >= 0.f) {
+			m_rotate.z = 0.f;
+			m_animationDir = 1.f;
+		}
+		else if (m_rotate.z <= -angle) {
+			m_rotate.z = -angle;
+			m_animationDir = -1.f;
+		}
+		break;
+
+	case 3:
+		m_rotate.x += m_animationDir * 0.01f;
+		if (m_rotate.x > angle) {
+			m_rotate.x = angle;
+			m_animationDir = -1.f;
+		}
+		else if (m_rotate.x <= 0.f) {
+			m_rotate.x = 0.f;
+			m_animationDir = 1.f;
+		}
+		break;
+
+	default:
+		break;
+	}
+
+	return true;
+}
+
+bool ConeFace::AnimationOpenAll(bool start) {
+	if (!start) {
+		return false;
+	}
+	float atanHalf{ 26.56f };
+	float angle{ 2 * (90.f + atanHalf) };
+
+	switch (m_myFaceNumber) {
+	case 0:
+		m_rotate.z += m_animationDir * 0.01f;
+		if (m_rotate.z > angle) {
+			m_rotate.z = angle;
+			m_animationDir = -1.f;
+		}
+		else if (m_rotate.z <= 0.f) {
+			m_rotate.z = 0.f;
+			m_animationDir = 1.f;
+		}
+		break;
+
+	case 1:
+		m_rotate.x += -m_animationDir * 0.01f;
+		if (m_rotate.x >= 0.f) {
+			m_rotate.x = 0.f;
+			m_animationDir = 1.f;
+		}
+		else if (m_rotate.x <= -angle) {
+			m_rotate.x = -angle;
+			m_animationDir = -1.f;
+		}
+		break;
+
+	case 2:
+		m_rotate.z += -m_animationDir * 0.01f;
+		if (m_rotate.z >= 0.f) {
+			m_rotate.z = 0.f;
+			m_animationDir = 1.f;
+		}
+		else if (m_rotate.z <= -angle) {
+			m_rotate.z = -angle;
+			m_animationDir = -1.f;
+		}
+		break;
+
+	case 3:
+		m_rotate.x += m_animationDir * 0.01f;
+		if (m_rotate.x > angle) {
+			m_rotate.x = angle;
+			m_animationDir = -1.f;
+		}
+		else if (m_rotate.x <= 0.f) {
+			m_rotate.x = 0.f;
+			m_animationDir = 1.f;
+		}
+		break;
+
+	default:
+		break;
+	}
+
+	return true;
 }
 
 void ConeFace::Init(unsigned int shaderProgramID, int faceNumber) {
@@ -19,11 +143,11 @@ void ConeFace::Init(unsigned int shaderProgramID, int faceNumber) {
 
 	auto coneModel = ModelList::GetInst()->GetModel("cone");
 
-	int faceVertexSize = m_myFaceNumber == 4 ? 6 : 3;
+	int faceVertexSize = 3;
 
 	std::vector<int> notSameIndex{ };
 	for (auto i = 0; i < faceVertexSize; ++i) {
-		unsigned int inputIndex = coneModel->m_vertexIndicies[faceNumber * 3 + i];
+		unsigned int inputIndex = coneModel->m_vertexIndicies[faceNumber * faceVertexSize + i];
 		m_index.push_back(inputIndex);
 		if (notSameIndex.empty()) {
 			notSameIndex.push_back(inputIndex);
@@ -61,23 +185,21 @@ void ConeFace::Init(unsigned int shaderProgramID, int faceNumber) {
 		}
 	}
 
-	for (auto& vertex : m_vertex) {
-		m_centerPosition += vertex.position;
-	}
-
-	m_centerPosition /= static_cast<float>(m_vertex.size());
-
 	switch (m_myFaceNumber) {
 	case 0:
+		m_centerPosition.x = -0.5f;
 		break;
 
 	case 1:
+		m_centerPosition.z = -0.5f;
 		break;
 
 	case 2:
+		m_centerPosition.x = 0.5f;
 		break;
 
 	case 3:
+		m_centerPosition.z = 0.5f;
 		break;
 	}
 
@@ -109,7 +231,7 @@ void ConeFace::Render() {
 }
 
 void FaceAnimationCone::Init(unsigned int shaderProgramID) {
-	for (int i = 0; i < 5; ++i) {
+	for (int i = 0; i < 6; ++i) {
 		m_coneFaces[i].Init(shaderProgramID, i);
 	}
 }
@@ -119,10 +241,12 @@ void FaceAnimationCone::Input(unsigned char key, bool down) {
 }
 
 void FaceAnimationCone::Update(float deltaTime) {
-	for (auto i = 0; i < 5; ++i) {
+	for (auto i = 0; i < 6; ++i) {
 		if (!m_coneFaces[i].Animation(1, m_faceAnimationFlag[i])) {
 			m_faceAnimationFlag[i] = false;
 		}
+
+		m_coneFaces[i].AnimationOpenAll(true);
 	}
 }
 
