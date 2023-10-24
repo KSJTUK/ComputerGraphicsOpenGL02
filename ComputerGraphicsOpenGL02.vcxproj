@@ -132,6 +132,7 @@
     <ClCompile Include="call_backs.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="FaceAnimationCone.cpp" />
     <ClCompile Include="FaceAnimationCube.cpp" />
     <ClCompile Include="FaceModel.cpp" />
     <ClCompile Include="Graphics.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="call_backs.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="FaceAnimationCone.h" />
     <ClInclude Include="FaceAnimationCube.h" />
     <ClInclude Include="FaceModel.h" />
     <ClInclude Include="gl_headers.h" />

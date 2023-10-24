@@ -112,6 +112,8 @@ public:
 	~Solution18() { }
 
 private:
+	int m_mode{ };
+
 	class FaceAnimationCube* m_faceCube{ };
 	class FaceAnimationCone* m_faceCone{ };
 

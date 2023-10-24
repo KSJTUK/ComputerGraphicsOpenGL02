@@ -118,7 +118,7 @@ void Solution15::Render() {
 }
 
 void Solution16::Init() {
-	m_objects.push_back(Object{ ModelList::GetInst()->GetModel("cone"), glm::vec3{ 5.f, 0.f, 0.f }, "cone" });
+	m_objects.push_back(Object{ ModelList::GetInst()->GetModel("cube"), glm::vec3{ 5.f, 0.f, 0.f }, "cube" });
 	m_objects.push_back(Object{ ModelList::GetInst()->GetModel("sphere"), glm::vec3{ -5.f, 0.f, 0.f }, "sphere" });
 	for (auto i = 0; i < m_objects.size(); ++i) {
 		m_rotateX.push_back(0);
@@ -783,6 +783,7 @@ void Solution20::Render() {
 }
 
 #include "FaceAnimationCube.h"
+#include "FaceAnimationCone.h"
 void Solution18::SetShaderProgramID(unsigned int shaderProgramID) {
 	m_shaderProgramID = shaderProgramID;
 }
@@ -790,13 +791,21 @@ void Solution18::SetShaderProgramID(unsigned int shaderProgramID) {
 void Solution18::Init() {
 	m_faceCube = new FaceAnimationCube{ };
 	m_faceCube->Init(m_shaderProgramID);
+
+	m_faceCone = new FaceAnimationCone{ };
+	m_faceCone->Init(m_shaderProgramID);
 }
 
 void Solution18::ReInit() {
 }
 
 void Solution18::Input(unsigned char key, bool down) {
-	m_faceCube->Input(key, down);
+	if (m_mode) {
+		m_faceCube->Input(key, down);
+	}
+	else {
+		m_faceCone->Input(key, down);
+	}
 }
 
 void Solution18::SpecialInput(int key, bool down) {
@@ -805,9 +814,19 @@ void Solution18::SpecialInput(int key, bool down) {
 
 void Solution18::Update(float deltaTime) {
 	m_deltaTime = deltaTime;
-	m_faceCube->Update(deltaTime);
+	if (m_mode) {
+		m_faceCube->Update(deltaTime);
+	}
+	else {
+		m_faceCone->Update(deltaTime);
+	}
 }
 
 void Solution18::Render() {
-	m_faceCube->Render();
+	if (m_mode) {
+		m_faceCube->Render();
+	}
+	else {
+		m_faceCone->Render();
+	}
 }

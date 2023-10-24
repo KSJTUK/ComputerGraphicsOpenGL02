@@ -53,4 +53,5 @@ public:
 private:
 	// 실습 18번을 풀기 위한 임시 friend 선언
 	friend class CubeFace;
+	friend class ConeFace;
 };
