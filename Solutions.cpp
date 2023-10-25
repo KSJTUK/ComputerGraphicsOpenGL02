@@ -849,3 +849,45 @@ void Solution18::Render() {
 		m_faceCone->Render();
 	}
 }
+
+void Solution21::SetShaderProgramID(unsigned int shaderProgramID) {
+	m_shaderProgramID = shaderProgramID;
+}
+
+void Solution21::Init() {
+	m_groundBuffer = std::make_unique<GraphicBuffers>();
+	m_groundBuffer->Init(m_shaderProgramID);
+	m_groundBuffer->SetVerticies(ground);
+	m_groundBuffer->SetIndexBuffer(groundIndex);
+
+	m_tank = new Tank{ glm::vec3{ 0.f, 0.5f, 0.f } };
+}
+
+void Solution21::ReInit() {
+}
+
+void Solution21::Input(unsigned char key, bool down) {
+	if (down) {
+		if (key == 'c') {
+			delete m_tank;
+			m_tank = new Tank{ glm::vec3{ 0.f, 0.5f, 0.f } };
+			return;
+		}
+	}
+
+	m_tank->Input(key, down);
+}
+
+void Solution21::SpecialInput(int key, bool down) {
+	m_tank->SpecialInput(key, down);
+}
+
+void Solution21::Update(float deltaTime) {
+	m_tank->Update(deltaTime);
+}
+
+void Solution21::Render() {
+	m_groundBuffer->SetTransformMat(glm::mat4{ 1.f });
+	m_groundBuffer->Render();
+	m_tank->Render();
+}

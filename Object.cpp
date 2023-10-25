@@ -289,7 +289,7 @@ void ObjectMove::OrbitMove(glm::vec3& position, const float& angle, const glm::v
 	position += origin;
 }
 
-void ObjectMove::Move(glm::vec3& position, const glm::vec3& direction, const float speed) {
+void ObjectMove::Move(glm::vec3& position, const glm::vec3& direction, const float& speed) {
 	position += direction * speed;
 }
 

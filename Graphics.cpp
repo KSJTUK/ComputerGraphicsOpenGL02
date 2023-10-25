@@ -130,7 +130,15 @@ void Graphics::Init() {
 	// 카메라 생성
 	m_camera = std::make_unique<Camera>();
 	m_camera->Init();
-	//m_camera->CameraPositionSet(glm::vec3{ 0.f, 0.f, -10.f });
+	
+
+	m_camera2 = std::make_unique<Camera>();
+	m_camera2->Init();
+	m_camera2->CameraViewPointSet(glm::vec3{ 0.f, -1.f, -1.f });
+	m_camera2->CameraPositionSet(glm::vec3{ 0.f, 10.f, 10.f });
+
+	m_camera3 = std::make_unique<Camera>();
+	m_camera3->Init();
 
 	// 모델리스트를 생성하고 모델 불러오기
 	ModelList::GetInst()->Init(m_shader->GetShaderProgramID());
@@ -158,6 +166,10 @@ void Graphics::Init() {
 	Solution20* s20 = { new Solution20{ } };
 	s20->SetShaderProgramID(m_shader->GetShaderProgramID());
 	m_solutions.push_back(s20);
+
+	Solution21* s21 = { new Solution21{ } };
+	s21->SetShaderProgramID(m_shader->GetShaderProgramID());
+	m_solutions.push_back(s21);
 	
 	
 	for (auto& solution : m_solutions) {
@@ -171,16 +183,89 @@ void Graphics::Init() {
 	SetPerspectiveMat();
 	// 쉐이더 프로그램 사용 종료
 	m_shader->UnUseProgram();
+
 	m_isInited = true;
 }
 
 void Graphics::Update(float deltaTime) {
 	m_deltaTime = deltaTime;
 	m_camera->Update(m_deltaTime);
+	m_camera2->Update(m_deltaTime);
+	m_camera3->Update(m_deltaTime);
+
 	m_solutions[m_curSolutionIndex]->Update(deltaTime);
 }
 
 void Graphics::Render() {
+	
+
+	if (m_curSolutionIndex == 6) {
+		glClearColor(0.5f, 0.5f, 0.5f, 1.f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		glViewport(0, m_windowInfo->height / 4 , m_windowInfo->width / 2, m_windowInfo->height / 2);
+
+		SetPerspectiveMat();
+
+		m_shader->UseProgram();
+
+
+		// 변환 행렬들 계산
+		m_camera->Render();
+		m_shader->SetViewMat(m_camera->GetViewMat());
+
+		// rendering code 
+		m_axisSystem->DrawAxis();
+
+		m_solutions[m_curSolutionIndex]->Render();
+
+		m_shader->UnUseProgram();
+
+		SetPerspectiveMat();
+
+		glViewport(m_windowInfo->width / 2, m_windowInfo->height / 2, m_windowInfo->width / 2, m_windowInfo->height / 2);
+
+		m_shader->UseProgram();
+
+
+		//변환 행렬들 계산
+		m_camera2->Render();
+		m_shader->SetViewMat(m_camera2->GetViewMat());
+
+		//rendering code 
+		m_axisSystem->DrawAxis();
+
+		m_solutions[m_curSolutionIndex]->Render();
+
+
+		m_shader->UnUseProgram();
+
+		SetOrthoMat();
+		
+		glViewport(m_windowInfo->width / 2, 0, m_windowInfo->width / 2, m_windowInfo->height / 2);
+
+		m_shader->UseProgram();
+
+
+		//변환 행렬들 계산
+		m_camera3->Render();
+		m_shader->SetViewMat(m_camera3->GetViewMat());
+
+		//rendering code 
+		m_axisSystem->DrawAxis();
+
+		m_solutions[m_curSolutionIndex]->Render();
+
+
+		m_shader->UnUseProgram();
+
+		glutSwapBuffers();
+		return;
+	}
+	
+	glClearColor(0.5f, 0.5f, 0.5f, 1.f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	m_shader->UseProgram();
 
 	// 변환 행렬들 계산
@@ -193,4 +278,8 @@ void Graphics::Render() {
 	m_solutions[m_curSolutionIndex]->Render();
 
 	m_shader->UnUseProgram();
+
+	glViewport(0, 0, m_windowInfo->width, m_windowInfo->height);
+
+	glutSwapBuffers();
 }

@@ -108,8 +108,6 @@ void Engine::ReSizeWindow(int w, int h) {
 	if (m_grapics->IsInited()) {
 		m_grapics->SetWindowInfo(m_windowInfo);
 	}
-
-	glViewport(0, 0, w, h);
 }
 
 void Engine::Update() {

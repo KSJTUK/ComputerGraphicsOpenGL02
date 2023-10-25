@@ -196,3 +196,37 @@ public:
 	void Render();
 
 };
+
+class Solution21 : public Solutions {
+public:
+	Solution21() { }
+	~Solution21() { }
+
+private:
+	std::vector<Vertex> ground{
+		{ { -300.f, -0.001f, 300.f }, { 0.f, 0.5f, 0.f }, { } },
+		{ { -300.f, -0.001f, -300.f }, { 0.f, 0.5f, 0.f }, { } },
+		{ { 300.f, -0.001f, -300.f }, { 0.f, 0.5f, 0.f }, { } },
+		{ { 300.f, -0.001f, 300.f }, { 0.f, 0.5f, 0.f }, { } }
+	};
+	std::vector<unsigned int> groundIndex{
+		0, 1, 2, 0, 2, 3
+	};
+
+	std::unique_ptr<class GraphicBuffers> m_groundBuffer{ };
+	unsigned int m_shaderProgramID{ };
+
+	class Tank* m_tank{ };
+
+public:
+	void SetShaderProgramID(unsigned int shaderProgramID);
+
+public:
+	void Init();
+	void ReInit();
+	void Input(unsigned char key, bool down);
+	void SpecialInput(int key, bool down);
+	void Update(float deltaTime);
+	void Render();
+
+};

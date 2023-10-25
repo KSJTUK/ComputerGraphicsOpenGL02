@@ -1,7 +1,9 @@
 #pragma once
 
 #include "gl_headers.h"
+#include "Bullet.h"
 #include <vector>
+#include <list>
 
 class Tank {
 public:
@@ -50,6 +52,9 @@ private:
 	bool m_missileAutoMoveIndex{ };
 	glm::vec3 m_leftMissileMovePoints[2]{ { }, { } };
 	glm::vec3 m_rightMissileMovePoints[2]{ { }, { } };
+
+	Bullet* m_bullet1{ };
+	Bullet* m_bullet2{ };
 
 	void AutoMoveHorn();
 	void AutoMoveMissile();

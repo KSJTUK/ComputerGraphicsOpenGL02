@@ -127,9 +127,14 @@ void Camera::Update(float deltaTime) {
 	m_cameraAxisZ = glm::normalize(-m_AT);
 	m_cameraAxisX = glm::normalize(glm::cross(m_UP, m_cameraAxisZ));
 	m_cameraAxisY = glm::normalize(glm::cross(m_cameraAxisZ, m_cameraAxisX));
+	m_UP = m_cameraAxisY;
 
-	ObjectMove::OrbitMove(m_AT, m_rotateY * 0.01f, m_cameraAxisY);
-	ObjectMove::OrbitMove(m_EYE, m_orbitY * 0.01f, m_UP);
+	if (m_rotateY != 0) {
+		ObjectMove::OrbitMove(m_AT, m_rotateY * 0.01f, m_cameraAxisY);
+	}
+	if (m_orbitY != 0) {
+		ObjectMove::OrbitMove(m_EYE, m_orbitY * 0.01f, m_UP);
+	}
 }
 
 void Camera::Render() {

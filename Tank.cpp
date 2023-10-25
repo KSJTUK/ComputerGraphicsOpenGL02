@@ -106,6 +106,13 @@ void Tank::AutoRotateMissile() {
 }
 
 void Tank::Fire() {
+	glm::vec3 center{ m_position + m_direction * 2.f };
+	if (m_bullet1) {
+		m_bullet1->SetPosition(glm::vec3{ center.x + 1.f, center.y, center.z });
+		m_bullet2->SetPosition(glm::vec3{ center.x - 1.f, center.y, center.z });
+	}
+	m_bullet1 = new Bullet{ glm::vec3{ center.x + 1.f, center.y, center.z }, m_direction, 200.f };
+	m_bullet2 = new Bullet{ glm::vec3{ center.x - 1.f, center.y, center.z}, m_direction, 200.f };
 }
 
 void Tank::Input(unsigned char key, bool down) {
@@ -209,11 +216,19 @@ void Tank::Input(unsigned char key, bool down) {
 				m_rotateTopDir = 0.f;
 			}
 		}
+		
+		if (key == ' ') {
+			Fire();
+		}
 	}
 }
 
-void Tank::SpecialInput(int key, bool down)
-{
+void Tank::SpecialInput(int key, bool down) {
+	if (down) {
+		if (key == ' ') {
+			Fire();
+		}
+	}
 }
 
 void Tank::Move(const glm::vec3& moveDirection) {
@@ -272,10 +287,20 @@ void Tank::Update(float deltaTime) {
 		m_leftMissileMovePoints[1] = { rightMissilePosition };
 		m_rightMissileMovePoints[1] = { leftMissilePosition };
 	}
+
+	if (m_bullet1) {
+		m_bullet1->Update(m_deltaTime);
+		m_bullet2->Update(m_deltaTime);
+	}
 }
 
 void Tank::Render() {
 	for (auto& part : m_tankParts) {
 		part.Render();
+	}
+
+	if (m_bullet1) {
+		m_bullet1->Render();
+		m_bullet2->Render();
 	}
 }

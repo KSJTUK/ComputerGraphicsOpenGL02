@@ -22,7 +22,7 @@ private:
 public:
 	static void SpiralMove(Object& object, const Spiral& spiral, size_t step);
 	static void OrbitMove(glm::vec3& position, const float& angle, const glm::vec3& axis, const glm::vec3& center = ObjectMove::origin);
-	static void Move(glm::vec3& position, const glm::vec3& direction, const float speed);
+	static void Move(glm::vec3& position, const glm::vec3& direction, const float& speed);
 	static bool MoveToPoints(const glm::vec3& start, const glm::vec3& end, glm::vec3& position, float& countStep);
 	static bool RotateToAngles(std::queue<glm::vec3>& angles, glm::vec3& objectsAngle, float& rotatePercent);
 	static bool RotateToTargetAngles(std::queue<glm::vec3>& angles, glm::vec3& startAngle, glm::vec3& objectsAngle, float& rotatePercent);

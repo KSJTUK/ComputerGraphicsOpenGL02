@@ -21,6 +21,11 @@ private:
 
 	std::unique_ptr<class Axis> m_axisSystem{ };
 
+	std::unique_ptr<class Shader> m_shader2{ };
+	std::unique_ptr<class Shader> m_shader3{ };
+	std::unique_ptr<class Camera> m_camera2{ };
+	std::unique_ptr<class Camera> m_camera3{ };
+
 private:
 	// 카메라 외부파라미터 (투영행렬을 생성할 떄 쓰일 변수들)
 	float m_fovy{ 90.f }; // 수직 시야각
