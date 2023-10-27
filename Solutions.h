@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include "gl_headers.h"
+#include "FaceAnimationCube.h"
 
 class Solutions {
 public: 
@@ -229,4 +230,34 @@ public:
 	void Update(float deltaTime);
 	void Render();
 
+};
+
+class Solution22 : public Solutions {
+public:
+	Solution22() { }
+	~Solution22() { }
+
+private:
+	class Robot* m_robot{ };
+	bool m_robotViewMode{ false };
+	unsigned int m_shaderProgramID{ };
+
+	class Object* m_cube{ };
+	class FaceAnimationCube* m_box{ };
+	class TheaterBox* m_theaterBox{ };
+
+public:
+	void SetShaderProgramID(unsigned int shaderProgramID);
+	void SetRobotViewMode(bool mode);
+
+	const glm::mat4& GetRobotViewMat() const;
+
+
+public:
+	void Init();
+	void ReInit();
+	void Input(unsigned char key, bool down);
+	void SpecialInput(int key, bool down);
+	void Update(float deltaTime);
+	void Render();
 };

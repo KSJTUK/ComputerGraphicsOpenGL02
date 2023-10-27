@@ -1,7 +1,7 @@
 ﻿#include "Camera.h"
 #include "Object.h"
 
-glm::mat4 Camera::GetViewMat() const {
+const glm::mat4& Camera::GetViewMat() const {
 	return m_view;
 }
 
@@ -14,6 +14,10 @@ void Camera::CameraViewPointSet(const glm::vec3& at) {
 	if (m_AT == glm::vec3{ 0.f }) {
 		m_AT = glm::vec3{ 0.f, 0.f, 1.f };
 	}
+}
+
+void Camera::CameraMoveSpeedSet(const float& speed) {
+	m_moveSpeed = speed;
 }
 
 void Camera::ViewPointFix() {
@@ -88,8 +92,8 @@ void Camera::Move(const glm::vec3& moveVec) {
 
 void Camera::ViewPointMove(float moveAngle, const glm::vec3& axis) {
 	glm::vec4 at{ m_AT, 1.f };
-	m_AT = glm::rotate(glm::mat4{ 1.f }, glm::radians(moveAngle), axis) * at;
-	m_AT = glm::normalize(m_AT);
+	//m_AT = glm::rotate(glm::mat4{ 1.f }, glm::radians(moveAngle), axis) * at;
+	m_AT = glm::normalize(glm::rotate(m_AT, glm::radians(moveAngle), axis));
 }
 
 void Camera::OrbitY() {
@@ -127,7 +131,6 @@ void Camera::Update(float deltaTime) {
 	m_cameraAxisZ = glm::normalize(-m_AT);
 	m_cameraAxisX = glm::normalize(glm::cross(m_UP, m_cameraAxisZ));
 	m_cameraAxisY = glm::normalize(glm::cross(m_cameraAxisZ, m_cameraAxisX));
-	m_UP = m_cameraAxisY;
 
 	if (m_rotateY != 0) {
 		ObjectMove::OrbitMove(m_AT, m_rotateY * 0.01f, m_cameraAxisY);

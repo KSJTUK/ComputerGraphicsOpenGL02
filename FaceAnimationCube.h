@@ -17,6 +17,7 @@ private:
 	glm::vec3 m_centerPosition{ };
 	glm::vec3 m_deltaPosition{ };
 	glm::vec3 m_scale{ 1.f };
+	glm::vec3 m_afterScale{ 1.f };
 	glm::vec3 m_rotate{ };
 	float m_rotateAllY{ };
 
@@ -28,11 +29,16 @@ private:
 private:
 	std::vector<Vertex> m_vertex{ };
 
+
+private:
+	friend class TheaterBox;
+
 public:
 	bool Animation(bool dir, bool start);
 	void Orbit();
 
 public:
+	void Init(unsigned int shaderProgramID, int faceNumber, const glm::vec3& color);
 	void Init(unsigned int shaderProgramID, int faceNumber);
 	void Update(float deltaTime);
 	void Render();
@@ -51,6 +57,24 @@ private:
 public:
 	void Init(unsigned int shaderProgramID);
 	void Input(unsigned char key, bool down);
+	void Update(float deltaTime);
+	void Render();
+};
+
+class TheaterBox {
+public:
+	TheaterBox();
+	~TheaterBox();
+
+public:
+	void SetBoxAnimationFlag();
+
+private:
+	std::array<CubeFace, 7> m_cubeFaces{ };
+	bool m_boxAnimation{ false };
+
+public:
+	void Init(unsigned int shaderProgramID);
 	void Update(float deltaTime);
 	void Render();
 };

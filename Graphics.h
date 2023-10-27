@@ -26,6 +26,8 @@ private:
 	std::unique_ptr<class Camera> m_camera2{ };
 	std::unique_ptr<class Camera> m_camera3{ };
 
+	bool m_otherCameraViewMode{ false };
+
 private:
 	// 카메라 외부파라미터 (투영행렬을 생성할 떄 쓰일 변수들)
 	float m_fovy{ 90.f }; // 수직 시야각
@@ -44,7 +46,7 @@ private:
 	bool controlDowned{ false };
 
 	std::vector<class Solutions*> m_solutions{ };
-	int m_curSolutionIndex{ 3 };
+	int m_curSolutionIndex{ 7 };
 
 	int m_curProjectionMat{ CUR_PROJECTION_MAT_PERSPECTIVE };
 

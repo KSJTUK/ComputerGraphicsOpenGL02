@@ -39,11 +39,12 @@ private:
 
 public:
 	// getter
-	glm::mat4 GetViewMat() const;
+	const glm::mat4& GetViewMat() const;
 
 	// setter
 	void CameraPositionSet(const glm::vec3& position);
 	void CameraViewPointSet(const glm::vec3& at);
+	void CameraMoveSpeedSet(const float& speed);
 
 	void ViewPointFix();
 	void ViewPointUnFix();

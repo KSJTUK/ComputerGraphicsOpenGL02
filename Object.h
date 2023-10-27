@@ -49,6 +49,11 @@ protected:
 	glm::vec3 m_position{ 0.f };
 	glm::vec3 m_rotAngle{ 0.f };
 	glm::vec3 m_scaleAll{ 1.f };
+	glm::vec3 m_rotateAll{ 0.f };
+	glm::vec3 m_afterPosition{ 0.f };
+
+	glm::mat4 m_transform{ 1.f };
+	glm::mat4 m_parentMat{ 1.f };
 
 	float m_moveSpeed{ 200.f };
 	float m_angleSpeed{ 200.f };
@@ -87,12 +92,15 @@ public:
 	float GetRotateAngle() const;
 	float GetAngleSpeed() const;
 
+	const glm::mat4& GetTransformMat() const;
+
 	bool IsAutoRotated() const;
 
 	bool IsAutoMoved() const;
 
 	void SetScaleFactor(const glm::vec3& factor);
 
+	void SetParentsModelTransMat(const glm::mat4& parentMat);
 	void SetPosition(const glm::vec3& position);
 	void SetModel(const std::shared_ptr<class Model>& newModel);
 	void SetModel(const std::string& newModelTag);
@@ -109,6 +117,8 @@ public:
 
 	void Scale(const glm::vec3& factors);
 	void ScaleAll(const glm::vec3& factors);
+	void RotateAll(const glm::vec3& rotateAllAngle);
+	void SetAfterPosition(const glm::vec3& afterPosition);
 
 	glm::vec3 Move(glm::vec3& direction);
 	void Move(const glm::vec3& direction, float speed);

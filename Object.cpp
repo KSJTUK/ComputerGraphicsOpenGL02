@@ -83,6 +83,14 @@ void Object::ScaleAll(const glm::vec3& factors) {
 	m_scaleAll += factors;
 }
 
+void Object::RotateAll(const glm::vec3& rotateAllAngle) {
+	m_rotateAll = rotateAllAngle;
+}
+
+void Object::SetAfterPosition(const glm::vec3& afterPosition) {
+	m_afterPosition = afterPosition;
+}
+
 glm::vec3 Object::Move(glm::vec3& direction) {
 	glm::vec3 rtVec{ m_position };
 	ObjectMove::Move(m_position, direction, m_moveSpeed * m_deltaTime);
@@ -197,6 +205,10 @@ float Object::GetAngleSpeed() const {
 	return m_angleSpeed;
 }
 
+const glm::mat4& Object::GetTransformMat() const {
+	return m_transform;
+}
+
 bool Object::IsAutoRotated() const {
 	return m_autoRotated;
 }
@@ -207,6 +219,10 @@ bool Object::IsAutoMoved() const {
 
 void Object::SetScaleFactor(const glm::vec3& factor) {
 	m_sizeScale = factor;
+}
+
+void Object::SetParentsModelTransMat(const glm::mat4& parentMat) {
+	m_parentMat = parentMat;
 }
 
 void Object::SetPosition(const glm::vec3& position) {
@@ -266,16 +282,18 @@ void Object::Update(float deltaTime) {
 }
 
 void Object::Render() {
-	glm::mat4 transform{ 1.f };
 	glm::vec3 angles{ glm::radians(m_rotAngle) };
 	glm::mat4 rot = glm::yawPitchRoll(angles.y, angles.x, angles.z);
 	glm::mat4 trans = glm::translate(unit, m_position);
 	glm::mat4 scale = glm::scale(unit, m_sizeScale);
 	glm::mat4 scaleAll = glm::scale(unit, m_scaleAll);
+	angles = glm::radians(m_rotateAll);
+	glm::mat4 rotateAll = glm::yawPitchRoll(angles.y, angles.x, angles.z);
+	glm::mat4 afterTranslate = glm::translate(unit, m_afterPosition);
 
-	transform = scaleAll * trans * rot * scale;
+	m_transform = m_parentMat * afterTranslate * rotateAll * scaleAll * trans * rot * scale;
 
-	m_model->SetTransformMat(transform);
+	m_model->SetTransformMat(m_transform);
 	m_model->Render();
 }
 

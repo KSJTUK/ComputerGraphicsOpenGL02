@@ -85,6 +85,12 @@ void Graphics::SpecialInput(int key, bool down) {
 			m_camera->SpecialInput(key, down);
 		}
 		else {
+			if (m_curSolutionIndex == 7) {
+				if (key == GLUT_KEY_F6) {
+					m_otherCameraViewMode = !m_otherCameraViewMode;
+				}
+			}
+
 			if (key == GLUT_KEY_F2) {
 				if (m_curSolutionIndex < m_solutions.size() - 1) {
 					++m_curSolutionIndex;
@@ -170,7 +176,11 @@ void Graphics::Init() {
 	Solution21* s21 = { new Solution21{ } };
 	s21->SetShaderProgramID(m_shader->GetShaderProgramID());
 	m_solutions.push_back(s21);
-	
+
+	Solution22* s22 = { new Solution22{ } };
+	s22->SetShaderProgramID(m_shader->GetShaderProgramID());
+	m_solutions.push_back(s22);
+
 	
 	for (auto& solution : m_solutions) {
 		solution->Init();
@@ -262,6 +272,9 @@ void Graphics::Render() {
 		glutSwapBuffers();
 		return;
 	}
+	else if (m_curSolutionIndex == 7) {
+
+	}
 	
 	glClearColor(0.5f, 0.5f, 0.5f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -270,7 +283,12 @@ void Graphics::Render() {
 
 	// 변환 행렬들 계산
 	m_camera->Render();
-	m_shader->SetViewMat(m_camera->GetViewMat());
+	if (m_otherCameraViewMode and m_curSolutionIndex == 7) {
+		m_shader->SetViewMat(dynamic_cast<Solution22*>(m_solutions[m_curSolutionIndex])->GetRobotViewMat());
+	}
+	else {
+		m_shader->SetViewMat(m_camera->GetViewMat());
+	}
 
 	// rendering code 
 	m_axisSystem->DrawAxis();

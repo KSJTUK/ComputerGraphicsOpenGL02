@@ -694,13 +694,13 @@ void Solution19::Update(float deltaTime) {
 	for (int i = 0; i < 3; ++i) {
 		deltaPositions.push_back(m_orbitPlanet[i].Update(deltaTime, originPlanetDeltaPosition));
 		deltaPositions[i] += m_orbitPlanet[i].Orbit(m_rotateDirOrbitY * 0.01f, glm::vec3{ 0.f, 1.f, 0.f }, m_originPlanet->GetPosition());
-		deltaPositions[i] += m_orbitPlanet[i].OrbitAxisRotate(glm::vec3{ 0.f, 0.f, 1.f }, m_rotateDirOrbitZ * 0.01f, 0.005f);
+		deltaPositions[i] += m_orbitPlanet[i].OrbitAxisRotate(glm::vec3{ 0.f, 0.f, 1.f }, m_rotateDirOrbitZ * 1.f, 0.001f);
 	}
 
 	for (int i = 0; i < 3; ++i) {
 		m_orbitPlanetsMoon[i].Update(deltaTime, deltaPositions[i]);
 		m_orbitPlanetsMoon[i].Orbit(m_rotateDirOrbitY * 0.01f, glm::vec3{ 0.f, 1.f, 0.f }, m_originPlanet->GetPosition());
-		m_orbitPlanetsMoon[i].OrbitAxisRotate(glm::vec3{ 0.f, 0.f, 1.f }, m_rotateDirOrbitZ * 0.01f, 0.001f);
+		m_orbitPlanetsMoon[i].OrbitAxisRotate(glm::vec3{ 0.f, 0.f, 1.f }, m_rotateDirOrbitZ * 1.f, 0.001f);
 	}
 
 	if (rotate.x) {
@@ -890,4 +890,55 @@ void Solution21::Render() {
 	m_groundBuffer->SetTransformMat(glm::mat4{ 1.f });
 	m_groundBuffer->Render();
 	m_tank->Render();
+}
+
+#include "Robot.h"
+
+void Solution22::SetShaderProgramID(unsigned int shaderProgramID) {
+	m_shaderProgramID = shaderProgramID;
+}
+
+void Solution22::SetRobotViewMode(bool mode) {
+	m_robot;
+}
+
+const glm::mat4& Solution22::GetRobotViewMat() const {
+	return m_robot->GetRobotViewMat();
+}
+
+void Solution22::Init() {
+	m_robot = new Robot{ };
+	m_robot->Init(m_shaderProgramID);
+
+	m_cube = new Object{ "cube", glm::vec3{ 0.f, 0.f, 3.f } };
+	m_theaterBox =  new TheaterBox{ };
+	m_theaterBox->Init(m_shaderProgramID);
+}
+
+void Solution22::ReInit() {
+}
+
+void Solution22::Input(unsigned char key, bool down) {
+	if (down) {
+		if (key == 'o') {
+			m_theaterBox->SetBoxAnimationFlag();
+		}
+	}
+
+	m_robot->Input(key, down);
+}
+
+void Solution22::SpecialInput(int key, bool down) {
+
+}
+
+void Solution22::Update(float deltaTime) {
+	m_theaterBox->Update(deltaTime);
+	m_robot->Update(deltaTime);
+}
+
+void Solution22::Render() {
+	//m_cube->Render();
+	m_theaterBox->Render();
+	m_robot->Render();
 }
