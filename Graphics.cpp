@@ -124,6 +124,14 @@ void Graphics::SpecialInput(int key, bool down) {
 	}
 }
 
+void Graphics::MouseMotionInput(int x, int y, int prevX, int prevY) {
+	m_camera->MouseMotionInput(x, y, prevX, prevY);
+	m_solutions[m_curSolutionIndex]->MouseMotionInput(x, y, prevX, prevY);
+}
+
+void Graphics::MousePassiveMotionInput(int x, int y, int prevX, int prevY) {
+}
+
 void Graphics::Init() {
 	m_curProjectionMat = CUR_PROJECTION_MAT_PERSPECTIVE;
 	// 쉐이더 프로그램 생성

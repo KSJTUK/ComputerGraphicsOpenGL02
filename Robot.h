@@ -18,6 +18,12 @@ private:
 	glm::vec3 m_cameraPosition{ };
 	glm::vec3 m_direction{ 0.f, 0.f, 1.f };
 
+	glm::vec3 m_moveDirection{ 0.f, 0.f, 1.f };
+	float m_moveDirectionAngle{ };
+	
+	glm::vec3 m_prevBodyPosition{ };
+	glm::vec3 m_deltaPosition{ };
+
 	float m_directionAngle{ };
 	
 	float m_speed{ 5.f };
@@ -38,8 +44,8 @@ private:
 	bool m_onGround{ true };
 
 	float m_gravity{ 10.f };
-	float m_jumpSpeed{ 300.f };
-	float m_jumpPower{ };
+	float m_jumpSpeed{ 5000.f };
+	mutable float m_jumpPower{ };
 
 	bool m_arrowDowned[4]{ false };
 	enum {
@@ -69,6 +75,7 @@ public:
 	bool AllArrowUp();
 	void SetDirection();
 	void Move();
+	void CameraMove();
 	void Jump();
 
 	bool Collision(const Object& otherObj) const;
@@ -78,6 +85,7 @@ public:
 public:
 	void Init(unsigned int shaderProgramID);
 	void Input(unsigned char key, bool down);
+	void MouseMotionInput(int x, int y, int prevX, int prevY);
 	void Update(float deltaTime);
 	void Render();
 };

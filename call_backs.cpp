@@ -60,12 +60,14 @@ void mouseRightDown(int state, int x, int y)
 {
 }
 
-void mouseMotion(int x, int y)
+void mouseMotion(int x, int y) 
 {
+	e.MouseMotionInput(x, y);
 }
 
 void mousePassiveMotion(int x, int y)
 {
+	e.MousePassiveMotionInpit(x, y);
 }
 
 void mouseWheel(int dir, int x, int y)

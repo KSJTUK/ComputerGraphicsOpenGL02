@@ -16,6 +16,7 @@ public:
 	virtual void ReInit() = 0;
 	virtual void Input(unsigned char, bool) = 0;
 	virtual void SpecialInput(int, bool) = 0;
+	virtual void MouseMotionInput(int x, int y, int prevX, int prevY) = 0;
 	virtual void Update(float) = 0;
 	virtual void Render() = 0;
 };
@@ -43,6 +44,7 @@ public:
 	void ReInit();
 	void Input(unsigned char key, bool down);
 	void SpecialInput(int key, bool down);
+	void MouseMotionInput(int x, int y, int prevX, int prevY) { }
 	void Update(float deltaTime);
 	void Render();
 };
@@ -68,6 +70,7 @@ public:
 	void ReInit();
 	void Input(unsigned char key, bool down);
 	void SpecialInput(int key, bool down);
+	void MouseMotionInput(int x, int y, int prevX, int prevY) { }
 	void Update(float deltaTime);
 	void Render();
 };
@@ -104,6 +107,7 @@ public:
 	void ReInit();
 	void Input(unsigned char key, bool down);
 	void SpecialInput(int key, bool down);
+	void MouseMotionInput(int x, int y, int prevX, int prevY) { }
 	void Update(float deltaTime);
 	void Render();
 };
@@ -131,6 +135,7 @@ public:
 	void ReInit();
 	void Input(unsigned char key, bool down);
 	void SpecialInput(int key, bool down);
+	void MouseMotionInput(int x, int y, int prevX, int prevY) { }
 	void Update(float deltaTime);
 	void Render();
 };
@@ -161,6 +166,7 @@ public:
 	void ReInit();
 	void Input(unsigned char key, bool down);
 	void SpecialInput(int key, bool down);
+	void MouseMotionInput(int x, int y, int prevX, int prevY) { }
 	void Update(float deltaTime);
 	void Render();
 };
@@ -193,6 +199,7 @@ public:
 	void Init();
 	void ReInit();
 	void Input(unsigned char key, bool down);
+	void MouseMotionInput(int x, int y, int prevX, int prevY) { }
 	void SpecialInput(int key, bool down);
 	void Update(float deltaTime);
 	void Render();
@@ -227,6 +234,7 @@ public:
 	void Init();
 	void ReInit();
 	void Input(unsigned char key, bool down);
+	void MouseMotionInput(int x, int y, int prevX, int prevY) { }
 	void SpecialInput(int key, bool down);
 	void Update(float deltaTime);
 	void Render();
@@ -243,9 +251,12 @@ private:
 	bool m_robotViewMode{ false };
 	unsigned int m_shaderProgramID{ };
 
-	class Object* m_cube{ };
+	std::vector<Object*> m_cubes{ };
 	class FaceAnimationCube* m_box{ };
 	class TheaterBox* m_theaterBox{ };
+
+public:
+	bool IsRobotViewMode() const { return m_robotViewMode; }
 
 public:
 	void SetShaderProgramID(unsigned int shaderProgramID);
@@ -258,8 +269,11 @@ public:
 	void ReInit();
 	void Input(unsigned char key, bool down);
 	void SpecialInput(int key, bool down);
+	void MouseMotionInput(int x, int y, int prevX, int prevY);
+	void MouseMotionPassiveInput(int x, int y, int prevX, int prevY);
 	void Update(float deltaTime);
 	void Render();
 };
 
+bool collisionAndIntegratedPosition(const Object& staticPositionObj, const Object& targetObj, glm::vec3& intergratedPosition, const glm::vec3& deltaPositions);
 bool collision(const Object&, const Object&);

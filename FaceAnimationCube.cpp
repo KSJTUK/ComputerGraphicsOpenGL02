@@ -359,7 +359,7 @@ void TheaterBox::Init(unsigned int shaderProgramID) {
 	m_cubeFaces[5].m_scale = glm::vec3{ 0.5f, 1.f, 1.f };
 	m_cubeFaces[6].m_scale = glm::vec3{ 0.5f, 1.f, 1.f };
 	for (int i = 0; i < 7; ++i) {
-		m_cubeFaces[i].m_afterScale = glm::vec3{ 10.f, 10.f, 10.f };
+		m_cubeFaces[i].m_afterScale = glm::vec3{ 40.f, 40.f, 40.f };
 		m_cubeFaces[i].m_centerPosition += glm::vec3{ 0.f, 0.5f, 0.f };
 	}
 }

@@ -17,6 +17,8 @@ private:
 
 	std::unique_ptr<class Timer> m_timer{ nullptr };
 	std::unique_ptr<class Graphics> m_grapics{ nullptr };
+	
+	int m_mousePrevPos[2]{ };
 
 	float m_deltaTime{ };
 
@@ -50,6 +52,8 @@ public:
 	// 키 입력을 내부적으로 처리할 함수
 	void Input(unsigned char key, bool down);
 	void SpecialInput(int key, bool down);
+	void MouseMotionInput(int x, int y);
+	void MousePassiveMotionInpit(int x, int y);
 
 	// 게임 루프함수
 	void Loop();

@@ -28,24 +28,12 @@ void Camera::ViewPointUnFix() {
 	m_fixAt = 1.f;
 }
 
+void Camera::CameraPositionRotateX(const float& angle, const glm::vec3& center) {
+	ObjectMove::OrbitMove(m_EYE, angle, ObjectMove::axisY, center);
+}
+
 void Camera::Input(unsigned char key, bool down) {
 	switch (key) {
-	case 'l':
-		Move(-m_cameraAxisZ);
-		break;
-		
-	case '.':
-		Move(m_cameraAxisZ);
-		break;
-
-	case ',':
-		Move(-m_cameraAxisX);
-		break;
-
-	case '/':
-		Move(m_cameraAxisX);
-		break;
-
 	case 'm':
 		Move(m_cameraAxisY);
 		break;
@@ -67,21 +55,47 @@ void Camera::Input(unsigned char key, bool down) {
 void Camera::SpecialInput(int key, bool down) {
 	switch (key) {
 	case GLUT_KEY_RIGHT:
-		ViewPointMove(-m_angleSpeed, m_cameraAxisY);
+		Move(m_cameraAxisX);
 		break;
 
 	case GLUT_KEY_LEFT:
-		ViewPointMove(m_angleSpeed, m_cameraAxisY);
+		Move(-m_cameraAxisX);
 		break;
 
 	case GLUT_KEY_UP:
-		ViewPointMove(m_angleSpeed, m_cameraAxisX);
+		Move(-m_cameraAxisZ);
 		break;
 
 	case GLUT_KEY_DOWN:
-		ViewPointMove(-m_angleSpeed, m_cameraAxisX);
+		Move(m_cameraAxisZ);
 		break;
 	}
+}
+
+void Camera::MouseMotionInput(int x, int y, int prevX, int prevY) {
+	float angleX{ -(x - prevX) / m_angleSpeed };
+	ViewPointMove(angleX, m_cameraAxisY);
+	m_cameraAngleX += angleX;
+
+	if (m_cameraAngleY > -90.f and m_cameraAngleY < 90.f) {
+		float angleY{ -(y - prevY) / m_angleSpeed };
+		ViewPointMove(angleY, m_cameraAxisX);
+		m_cameraAngleY += angleY;
+	}
+	else if (m_cameraAngleY <= -90.f) {
+		m_cameraAngleY = -89.f;
+	}
+	else if (m_cameraAngleY >= 90.f) {
+		m_cameraAngleY = 89.f;
+	}
+}
+
+void Camera::MousePassiveMotionInput(int x, int y, int prevX, int prevY) {
+	//float angleX{ -(x - prevX) / m_angleSpeed };
+	//float angleY{ -(y - prevY) / m_angleSpeed };
+
+	//ViewPointMove(angleY, m_cameraAxisX);
+	//ViewPointMove(angleX, m_cameraAxisY);
 }
 
 void Camera::Move(const glm::vec3& moveVec) {

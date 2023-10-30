@@ -97,6 +97,10 @@ void Object::SetAfterPosition(const glm::vec3& afterPosition) {
 	m_afterPosition = afterPosition;
 }
 
+glm::vec3 Object::GetAfterPosition() const {
+	return m_afterPosition;
+}
+
 glm::vec3 Object::Move(glm::vec3& direction) {
 	glm::vec3 rtVec{ m_position };
 	ObjectMove::Move(m_position, direction, m_moveSpeed * m_deltaTime);

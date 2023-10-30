@@ -916,7 +916,10 @@ void Solution22::Init() {
 	m_robot = new Robot{ };
 	m_robot->Init(m_shaderProgramID);
 
-	m_cube = new Object{ "cube", glm::vec3{ 2.f, 0.5f, 2.f } };
+	m_cubes.push_back(new Object{ "cube", glm::vec3{ 2.f, 0.5f, 2.f } });
+	m_cubes.push_back(new Object{ "cube", glm::vec3{ 3.f, 2.f, 3.f } });
+	m_cubes.push_back(new Object{ "cube", glm::vec3{ 4.f, 3.5f, 4.f } });
+	m_cubes.push_back(new Object{ "cube", glm::vec3{ 4.f, 3.5f, 6.f } });
 	m_theaterBox =  new TheaterBox{ };
 	m_theaterBox->Init(m_shaderProgramID);
 }
@@ -935,25 +938,92 @@ void Solution22::Input(unsigned char key, bool down) {
 }
 
 void Solution22::SpecialInput(int key, bool down) {
+	if (down) {
+		if (key == GLUT_KEY_F6) {
+			if (m_robotViewMode) {
+				m_robot->SettingRobotViewMode(false);
+				m_robotViewMode = false;
+			}
+			else {
+				m_robot->SettingRobotViewMode(true);
+				m_robotViewMode = true;
+			}
+		}
+	}
+}
 
+void Solution22::MouseMotionInput(int x, int y, int prevX, int prevY) {
+	m_robot->MouseMotionInput(x, y, prevX, prevY);
 }
 
 void Solution22::Update(float deltaTime) {
 	m_theaterBox->Update(deltaTime);
 	m_robot->Update(deltaTime);
-	m_cube->Update(deltaTime);
-
-	collision(*m_cube, *m_robot);
+	for (auto& cube : m_cubes) {
+		cube->Update(deltaTime);
+		m_robot->Collision(*cube);
+	}
 }
 
 void Solution22::Render() {
-	m_cube->Render();
+	for(auto& cube : m_cubes) cube->Render();
 	m_theaterBox->Render();
 	m_robot->Render();
 }
 
+bool collisionAndIntegratedPosition(const Object& staticPositionObj, const Object& targetObj, glm::vec3& intergratedPosition, const glm::vec3& deltaPositions) 
+{
+	auto box1 = staticPositionObj.GetBoundingBox();
+	auto box2 = targetObj.GetBoundingBox();
 
-bool collision(const Object& obj1, const Object& obj2) {
+	glm::vec3 centerBox1{ (box1.first + box1.second) / 2.f };
+	glm::vec3 centerBox2{ (box2.first + box2.second) / 2.f };
+
+	glm::vec3 targetPosition{ targetObj.GetPosition() };
+
+	glm::bvec3 deltaPosIsZero = glm::lessThanEqual(glm::abs(deltaPositions), glm::vec3{ 0.00001f });
+
+	if (box1.second.x <= box2.first.x and box2.second.x <= box1.first.x and
+		box1.second.y <= box2.first.y and box2.second.y <= box1.first.y and
+		box1.second.z <= box2.first.z and box2.second.z <= box1.first.z) {
+
+		float atLeastPos{ 0.001f };
+
+		if (!deltaPosIsZero.x) {
+			if (centerBox1.x < centerBox2.x) {
+				intergratedPosition.x += box2.second.x - box1.first.x - atLeastPos;
+			}
+			else {
+				intergratedPosition.x += box2.first.x - box1.second.x + atLeastPos;
+			}
+		}
+
+		if (!deltaPosIsZero.y) {
+			if (centerBox1.y < centerBox2.y) {
+				intergratedPosition.y += box2.second.y - box1.first.y - atLeastPos;
+			}
+			else {
+				intergratedPosition.y += box2.first.y - box1.second.y + atLeastPos;
+			}
+		}
+
+		if (!deltaPosIsZero.z) {
+			if (centerBox1.z < centerBox2.z) {
+				intergratedPosition.z += box2.second.z - box1.first.z - atLeastPos;
+			}
+			else {
+				intergratedPosition.z += box2.first.z - box1.second.z + atLeastPos;
+			}
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
+bool collision(const Object& obj1, const Object& obj2) 
+{
 	auto box1 = obj1.GetBoundingBox();
 	auto box2 = obj2.GetBoundingBox();
 

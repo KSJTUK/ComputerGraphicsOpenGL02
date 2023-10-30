@@ -63,6 +63,8 @@ public:
 	// 외부 키입력을 카메라에게 전해주는 함수
 	void Input(unsigned char key, bool down);
 	void SpecialInput(int key, bool down);
+	void MouseMotionInput(int x, int y, int prevX, int prevY);
+	void MousePassiveMotionInput(int x, int y, int prevX, int prevY);
 
 public:
 	void Init();

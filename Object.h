@@ -125,6 +125,8 @@ public:
 	void RotateAll(const glm::vec3& rotateAllAngle);
 	void SetAfterPosition(const glm::vec3& afterPosition);
 
+	glm::vec3 GetAfterPosition() const;
+
 	glm::vec3 Move(glm::vec3& direction);
 	void Move(const glm::vec3& direction, float speed);
 

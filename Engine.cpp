@@ -130,9 +130,16 @@ void Engine::SpecialInput(int key, bool down) {
 	m_grapics->SpecialInput(key, down);
 }
 
+void Engine::MouseMotionInput(int x, int y) {
+	m_grapics->MouseMotionInput(x, y, m_mousePrevPos[0], m_mousePrevPos[1]);
+	m_mousePrevPos[0] = x;
+	m_mousePrevPos[1] = y;
+}
 
-
-
+void Engine::MousePassiveMotionInpit(int x, int y) {
+	m_mousePrevPos[0] = x;
+	m_mousePrevPos[1] = y;
+}
 
 
 // --------------------------------------------------------------------

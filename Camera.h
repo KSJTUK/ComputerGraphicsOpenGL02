@@ -46,13 +46,20 @@ public:
 	void CameraViewPointSet(const glm::vec3& at);
 	void CameraMoveSpeedSet(const float& speed);
 
+	float GetCameraAngleX() const { return m_cameraAngleX; }
+	float GetCameraAngleY() const { return m_cameraAngleY; }
+
 	void ViewPointFix();
 	void ViewPointUnFix();
+
+	void CameraPositionRotateX(const float& angle, const glm::vec3& center);
 
 public:
 	// 외부 키입력을 카메라가 자체적으로 처리하게 함
 	void Input(unsigned char key, bool down);
 	void SpecialInput(int key, bool down);
+	void MouseMotionInput(int x, int y, int prevX, int prevY);
+	void MousePassiveMotionInput(int x, int y, int prevX, int prevY);
 
 	void Move(const glm::vec3& moveVec);
 	void ViewPointMove(float moveAngle, const glm::vec3& axis);

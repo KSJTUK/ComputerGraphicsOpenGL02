@@ -49,6 +49,7 @@ Robot::Robot() {
 Robot::~Robot() { }
 
 void Robot::SettingRobotViewMode(bool mode) {
+	m_robotViewMode = mode;
 }
 
 const glm::mat4& Robot::GetRobotViewMat() const {
@@ -66,68 +67,58 @@ bool Robot::AllArrowUp() {
 }
 
 void Robot::SetDirection() {
-	//if (m_arrowDowned[UP] and m_arrowDowned[DOWN]) {
-	//	
-	//}
-	//else if (m_arrowDowned[LEFT] and m_arrowDowned[RIGHT]) {
-
-	//} else 
-	if (m_arrowDowned[LEFT] and m_arrowDowned[UP]) {
-		m_directionAngle = static_cast<float>(LEFTUPANGLE);
-	}
-	else if (m_arrowDowned[LEFT] and m_arrowDowned[DOWN]) {
-		m_directionAngle = static_cast<float>(LEFTDOWNANGLE);
-	}
-	else if (m_arrowDowned[RIGHT] and m_arrowDowned[UP]) {
-		m_directionAngle = static_cast<float>(RIGHTUPANGLE);
-	}
-	else if (m_arrowDowned[RIGHT] and m_arrowDowned[DOWN]) {
-		m_directionAngle = static_cast<float>(RIGHTDOWNANGLE);
-	}
-	else {
-		if (m_arrowDowned[UP]) {
-			m_directionAngle = static_cast<float>(UPANGLE);
-		}
-
-		if (m_arrowDowned[DOWN]) {
-			m_directionAngle = static_cast<float>(DOWNANGLE);
-		}
-
-		if (m_arrowDowned[LEFT]) {
-			m_directionAngle = static_cast<float>(LEFTANGLE);
-		}
-
-		if (m_arrowDowned[RIGHT]) {
-			m_directionAngle = static_cast<float>(RIGHTANGLE);
-		}
-	}
 }
 
 void Robot::Move() {
-	//m_robotCamera->Move(m_direction * m_speed * m_deltaTime);
+	float dir = 1.f;
+	float angle = 0.f;
+	if (m_arrowDowned[UP] and m_arrowDowned[DOWN]) {
+		dir = 0.f;
+	}
+	else if (m_arrowDowned[UP]) {
+		dir = 1.f;
+	}
+	else if (m_arrowDowned[DOWN]) {
+		dir = -1.f;
+	}
 
-	m_body->SetAngle(glm::vec3{ 0.f, m_directionAngle, 0.f });
-	glm::vec3 rotatedDirection{ glm::normalize(vectorRotate(m_direction, m_directionAngle)) };
-	m_body->Move(rotatedDirection, m_speed);
+	if (m_arrowDowned[LEFT] and m_arrowDowned[RIGHT]) {
+		angle = 0.f;
+	}
+	else if (m_arrowDowned[LEFT]) {
+		angle = 90.f;
+	}
+	else if (m_arrowDowned[RIGHT]) {
+		angle = -90.f;
+	}
 
-	m_cameraPosition = { m_body->GetPosition() + m_childs[0]->GetPosition() + m_direction * 0.3f };
+
+	glm::vec3 rotatedDirection{ glm::normalize(vectorRotate(m_direction, m_directionAngle + angle)) };
+	m_body->Move(rotatedDirection, m_speed * dir);
+}
+
+void Robot::CameraMove() {
+	m_cameraPosition = { (m_body->GetPosition() + m_childs[0]->GetPosition() * 0.5f) + m_direction * 0.1f };
 	m_robotCamera->CameraPositionSet(m_cameraPosition);
-	m_robotCamera->CameraViewPointSet(rotatedDirection);
+	m_robotCamera->CameraPositionRotateX(m_directionAngle, m_body->GetPosition() + m_childs[0]->GetPosition() * 0.5f);
 }
 
 void Robot::Jump() {
+	m_jumpPower = m_jumpSpeed;
 }
 
-
 bool Robot::Collision(const Object& otherObj) const {
-	if (collision(*m_body, otherObj)) {
-		std::cout << std::boolalpha << true << "\n";
+	glm::vec3 movePos{ };
+	if (collisionAndIntegratedPosition(*m_body, otherObj, movePos, m_deltaPosition)) {
+		m_body->SetPosition(movePos + m_body->GetPosition());
+		m_jumpPower = 0.f;
 		return true;
 	}
 
 	for (auto& elem : m_childs) {
-		if (collision(*elem, otherObj)) {
-			std::cout << std::boolalpha << true << "\n";
+		if (collisionAndIntegratedPosition(*elem, otherObj, movePos, m_deltaPosition)) {
+			m_body->SetPosition(movePos + m_body->GetPosition());
+			m_jumpPower = 0.f;
 			return true;
 		}
 	}
@@ -136,7 +127,19 @@ bool Robot::Collision(const Object& otherObj) const {
 }
 
 void Robot::Gravity() {
+	glm::vec3 bodyPosition{ m_body->GetPosition() };
 
+	m_jumpPower -= m_gravity;
+	bodyPosition.y += m_jumpPower * m_deltaTime * m_deltaTime;
+	m_body->SetPosition(bodyPosition);
+
+	bodyPosition = m_body->GetPosition();
+	if (bodyPosition.y < 0.75f) {
+		bodyPosition.y = 0.75f;
+		m_body->SetPosition(bodyPosition);
+		m_jumpPower = 0.f;
+		return;
+	}
 }
 
 void Robot::Init(unsigned int shaderProgramID) {
@@ -145,6 +148,9 @@ void Robot::Init(unsigned int shaderProgramID) {
 	m_robotCamera->CameraPositionSet(m_cameraPosition);
 	m_robotCamera->CameraViewPointSet(m_direction);
 	m_robotCamera->CameraMoveSpeedSet(m_speed);
+
+	m_prevBodyPosition = m_body->GetPosition();
+	m_deltaPosition = { };
 }
 
 void Robot::Input(unsigned char key, bool down) {
@@ -166,7 +172,7 @@ void Robot::Input(unsigned char key, bool down) {
 		}
 
 		if (key == ' ') {
-			//Jump();
+			Jump();
 		}
 	}
 	else {
@@ -185,6 +191,15 @@ void Robot::Input(unsigned char key, bool down) {
 		if (key == 'd') {
 			m_arrowDowned[RIGHT] = false;
 		}
+	}
+}
+
+void Robot::MouseMotionInput(int x, int y, int prevX, int prevY) {
+	m_robotCamera->MouseMotionInput(x, y, prevX, prevY);
+	if (m_robotViewMode) {
+		m_directionAngle = m_robotCamera->GetCameraAngleX();
+		m_body->SetAngle(glm::vec3{ 0.f, m_directionAngle, 0.f });
+		m_robotCamera->CameraPositionRotateX(m_directionAngle, m_body->GetPosition() + m_childs[0]->GetPosition() * 0.5f);
 	}
 }
 
@@ -216,6 +231,13 @@ void Robot::Update(float deltaTime) {
 		m_childs[3]->RotateAll(glm::vec3{ m_armsAngle, 0.f, 0.f });
 		m_childs[4]->RotateAll(glm::vec3{ -m_armsAngle, 0.f, 0.f });
 	}
+
+	Gravity();
+
+	m_deltaPosition = m_body->GetPosition() - m_prevBodyPosition;
+	m_prevBodyPosition = m_body->GetPosition();
+
+	CameraMove();
 
 	m_robotCamera->Update(m_deltaTime);
 	m_robotCamera->Render();
