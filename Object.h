@@ -83,6 +83,10 @@ protected:
 	bool m_autoRotated{ false };
 	bool m_autoMoved{ false };
 
+	// boundingBox
+	std::pair<glm::vec3, glm::vec3> m_originBoundingBox{ };
+	std::pair<glm::vec3, glm::vec3> m_boundingBox{ };
+
 public:
 	// getter
 	glm::vec3 GetPosition() const;
@@ -91,6 +95,7 @@ public:
 	glm::vec3 GetAngle() const;
 	float GetRotateAngle() const;
 	float GetAngleSpeed() const;
+	const std::pair<glm::vec3, glm::vec3>& GetBoundingBox() const { return m_boundingBox;  }
 
 	const glm::mat4& GetTransformMat() const;
 

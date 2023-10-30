@@ -10,34 +10,40 @@ glm::vec3 ObjectMove::axisZ = glm::vec3{ 0.f, 0.f, 1.f };
 
 Object::Object(const std::shared_ptr<class Model>& model) {
 	m_model = model;
+	m_originBoundingBox = m_model->GetBoundingBox();
 }
 
 Object::Object(const std::shared_ptr<class Model>& model, const glm::vec3& initPosition) {
 	m_model = model;
 	m_position = initPosition;
+	m_originBoundingBox = m_model->GetBoundingBox();
 }
 
 Object::Object(const std::shared_ptr<class Model>& model, const glm::vec3& initPosition, std::string& modelTag) {
 	m_model = model;
 	m_position = initPosition;
 	m_modelTag = modelTag;
+	m_originBoundingBox = m_model->GetBoundingBox();
 }
 
 Object::Object(const std::shared_ptr<class Model>& model, const glm::vec3& initPosition, std::string&& modelTag) {
 	m_model = model;
 	m_position = initPosition;
 	m_modelTag = modelTag;
+	m_originBoundingBox = m_model->GetBoundingBox();
 }
 
 Object::Object(const std::string& modelTag, const glm::vec3& initPosition) {
 	m_model = ModelList::GetInst()->GetModel(modelTag);
 	m_modelTag = modelTag;
 	m_position = initPosition;
+	m_originBoundingBox = m_model->GetBoundingBox();
 }
 
 Object::Object(const std::string& modelTag) {
 	m_model = ModelList::GetInst()->GetModel(modelTag);
 	m_modelTag = modelTag;
+	m_originBoundingBox = m_model->GetBoundingBox();
 }
 
 Object::~Object() { }
@@ -292,6 +298,9 @@ void Object::Render() {
 	glm::mat4 afterTranslate = glm::translate(unit, m_afterPosition);
 
 	m_transform = m_parentMat * afterTranslate * rotateAll * scaleAll * trans * rot * scale;
+
+	m_boundingBox.first = m_transform * glm::vec4{ m_originBoundingBox.first, 1.f };
+	m_boundingBox.second = m_transform * glm::vec4{ m_originBoundingBox.second, 1.f };
 
 	m_model->SetTransformMat(m_transform);
 	m_model->Render();

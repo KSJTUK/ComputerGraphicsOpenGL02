@@ -1,6 +1,8 @@
 #include "Robot.h"
 #include "Object.h"
 #include "Camera.h"
+#include "Solutions.h"
+#include <iostream>
 
 class VertexMove;
 
@@ -114,6 +116,23 @@ void Robot::Move() {
 }
 
 void Robot::Jump() {
+}
+
+
+bool Robot::Collision(const Object& otherObj) const {
+	if (collision(*m_body, otherObj)) {
+		std::cout << std::boolalpha << true << "\n";
+		return true;
+	}
+
+	for (auto& elem : m_childs) {
+		if (collision(*elem, otherObj)) {
+			std::cout << std::boolalpha << true << "\n";
+			return true;
+		}
+	}
+
+	return false;
 }
 
 void Robot::Gravity() {

@@ -1,6 +1,8 @@
 ﻿#pragma once
+#include "gl_headers.h"
 #include "vertex_info.h"
 #include <vector>
+#include <algorithm>
 #include <memory>
 #include <string>
 
@@ -31,6 +33,14 @@ private:
 	// 텍스처 좌표 인덱스를 저장할 vector
 	std::vector<unsigned int> m_textureIndicies{ };
 
+	// 정점좌표들 중 최대 최소인 x, y, z 값을 저장할 변수들
+	glm::vec3 m_maxCoord{ };
+	glm::vec3 m_minCoord{ };
+
+	std::pair<glm::vec3, glm::vec3> m_boundingBox{ };
+
+	void CalcMinMaxVertexElem();
+	void MakeBoundingBox();
 	void ReadObject(const char* filePath);
 
 private:
@@ -44,6 +54,8 @@ public:
 	void SetRandomColor();
 	void SetDrawMode(int drawMode);
 	void SetTransformMat(const glm::mat4& transformMat);
+
+	std::pair<glm::vec3, glm::vec3> GetBoundingBox() const { return m_boundingBox; }
 
 public:
 	void Init(unsigned int shaderProgramID);

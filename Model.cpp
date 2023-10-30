@@ -11,6 +11,33 @@ Model::Model(const std::string& objectFilePath) {
 
 Model::~Model() { }
 
+void Model::CalcMinMaxVertexElem() {
+	auto minAndMaxX = std::minmax_element(m_verticies.begin(), m_verticies.end(),
+		[](const Vertex& v1, const Vertex& v2) {
+			return v1.position.x < v2.position.x;
+		}
+	);
+
+	auto minAndMaxY = std::minmax_element(m_verticies.begin(), m_verticies.end(),
+		[](const Vertex& v1, const Vertex& v2) {
+			return v1.position.y < v2.position.y;
+		}
+	);
+
+	auto minAndMaxZ = std::minmax_element(m_verticies.begin(), m_verticies.end(),
+		[](const Vertex& v1, const Vertex& v2) {
+			return v1.position.z < v2.position.z;
+		}
+	);
+
+	m_maxCoord = glm::vec3{ minAndMaxX.second->position.x, minAndMaxY.second->position.y, minAndMaxZ.second->position.z };
+	m_minCoord = glm::vec3{ minAndMaxX.first->position.x, minAndMaxY.first->position.y, minAndMaxZ.first->position.z };
+}
+
+void Model::MakeBoundingBox() {
+	m_boundingBox = { m_maxCoord, m_minCoord };
+}
+
 void Model::ReadObject(const char* filePath) {
 	std::ifstream objFile{ filePath, std::ios::in };
 
@@ -71,6 +98,9 @@ void Model::ReadObject(const char* filePath) {
 	m_vertexIndicies = indiciesVec[0];
 	m_vertexNormalIndicies = indiciesVec[1];
 	m_textureIndicies = indiciesVec[2];
+
+	CalcMinMaxVertexElem();
+	MakeBoundingBox();
 }
 
 glm::mat4 Model::GetModelTransformMat() const {

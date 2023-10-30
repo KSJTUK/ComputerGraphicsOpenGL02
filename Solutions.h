@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include "gl_headers.h"
+#include "OrbitObject.h"
 #include "FaceAnimationCube.h"
 
 class Solutions {
@@ -252,7 +253,6 @@ public:
 
 	const glm::mat4& GetRobotViewMat() const;
 
-
 public:
 	void Init();
 	void ReInit();
@@ -261,3 +261,5 @@ public:
 	void Update(float deltaTime);
 	void Render();
 };
+
+bool collision(const Object&, const Object&);

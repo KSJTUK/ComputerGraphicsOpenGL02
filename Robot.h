@@ -71,6 +71,10 @@ public:
 	void Move();
 	void Jump();
 
+	bool Collision(const Object& otherObj) const;
+
+	void Gravity();
+
 public:
 	void Init(unsigned int shaderProgramID);
 	void Input(unsigned char key, bool down);

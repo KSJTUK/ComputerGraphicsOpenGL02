@@ -4,7 +4,6 @@
 #include "Object.h"
 #include "Axis.h"
 #include "Spiral.h"
-#include "OrbitObject.h"
 #include "GraphicBuffers.h"
 #include "Tank.h"
 
@@ -894,6 +893,13 @@ void Solution21::Render() {
 
 #include "Robot.h"
 
+bool collision(const Object& obj1, const Robot& robot) {
+	if (robot.Collision(obj1)) {
+		return true;
+	}
+	return false;
+}
+
 void Solution22::SetShaderProgramID(unsigned int shaderProgramID) {
 	m_shaderProgramID = shaderProgramID;
 }
@@ -910,7 +916,7 @@ void Solution22::Init() {
 	m_robot = new Robot{ };
 	m_robot->Init(m_shaderProgramID);
 
-	m_cube = new Object{ "cube", glm::vec3{ 0.f, 0.f, 3.f } };
+	m_cube = new Object{ "cube", glm::vec3{ 2.f, 0.5f, 2.f } };
 	m_theaterBox =  new TheaterBox{ };
 	m_theaterBox->Init(m_shaderProgramID);
 }
@@ -935,10 +941,27 @@ void Solution22::SpecialInput(int key, bool down) {
 void Solution22::Update(float deltaTime) {
 	m_theaterBox->Update(deltaTime);
 	m_robot->Update(deltaTime);
+	m_cube->Update(deltaTime);
+
+	collision(*m_cube, *m_robot);
 }
 
 void Solution22::Render() {
-	//m_cube->Render();
+	m_cube->Render();
 	m_theaterBox->Render();
 	m_robot->Render();
+}
+
+
+bool collision(const Object& obj1, const Object& obj2) {
+	auto box1 = obj1.GetBoundingBox();
+	auto box2 = obj2.GetBoundingBox();
+
+	if (box1.second.x <= box2.first.x and box2.second.x <= box1.first.x and
+		box1.second.y <= box2.first.y and box2.second.y <= box1.first.y and
+		box1.second.z <= box2.first.z and box2.second.z <= box1.first.z) {
+		return true;
+	}
+
+	return false;
 }
