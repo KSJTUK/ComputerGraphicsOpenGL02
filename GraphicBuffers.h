@@ -9,6 +9,8 @@ public:
 	~GraphicBuffers();
 
 private:
+	int m_shaderProgramID{ };
+
 	// Vertex Buffer Object ID
 	unsigned int m_vertexBuffer{ };
 
@@ -27,12 +29,14 @@ private:
 
 	// 모델 변환 행렬 변수의 위치 저장
 	unsigned int m_modelTransformLocation{ };
+	unsigned int m_colorLocation{ };
 
 public:
 	void Init(unsigned int shaderProgramID);
 
-	void SetTransformMat(glm::mat4& trans);
+	void SetColor(const glm::vec3& color);
 
+	void SetTransformMat(glm::mat4& trans);
 	void SetTransformMat(glm::mat4&& trans);
 
 	void SetVerticies(const Vertex* verticies, unsigned int dataSize);

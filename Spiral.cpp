@@ -12,7 +12,7 @@ Vertex Spiral::operator[](size_t index) const {
 	if (index >= m_spiralVertex.size()) {
 		throw "vertex index size over";
 	}
-	Vertex rtVertex{ m_spiralVertex[index].position + m_position, m_spiralVertex[index].color, m_spiralVertex[index].texture };
+	Vertex rtVertex{ m_spiralVertex[index].position + m_position, m_spiralVertex[index].texture };
 	return rtVertex;
 }
 
@@ -45,7 +45,7 @@ void Spiral::MakeSpiral(int numOfPoints, const glm::vec3& center, float stepRadi
 		point.x = center.x + angleDir * std::cosf(radianAngle) * radius;
 		point.z = center.z + angleDir * std::sinf(radianAngle) * radius;
 
-		Vertex v{ point, color, glm::vec2{ } };
+		Vertex v{ point, glm::vec2{ } };
 
 		m_spiralVertex.push_back(v);
 		m_spiralVertexIndex.push_back(i);

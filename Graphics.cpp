@@ -168,26 +168,12 @@ void Graphics::Init() {
 	CircleEffect::Init(m_shader->GetShaderProgramID());
 	CircleEffect::MakeCircle(0.1f);
 
-	m_solutions.push_back(new Solution15{ });
-	m_solutions.push_back(new Solution16{ });
-	Solution17* s{ new Solution17{ } };
-	s->SetShaderProgramID(m_shader->GetShaderProgramID());
-	m_solutions.push_back(s);
-	Solution18* s18{ new Solution18{ } };
-	s18->SetShaderProgramID(m_shader->GetShaderProgramID());
-	m_solutions.push_back(s18);
-	m_solutions.push_back(new Solution19{ });
-	Solution20* s20 = { new Solution20{ } };
-	s20->SetShaderProgramID(m_shader->GetShaderProgramID());
-	m_solutions.push_back(s20);
-
-	Solution21* s21 = { new Solution21{ } };
-	s21->SetShaderProgramID(m_shader->GetShaderProgramID());
-	m_solutions.push_back(s21);
-
 	Solution22* s22 = { new Solution22{ } };
 	s22->SetShaderProgramID(m_shader->GetShaderProgramID());
 	m_solutions.push_back(s22);
+	Solution23* s23 = { new Solution23{ } };
+	s23->SetShaderProgramID(m_shader->GetShaderProgramID());
+	m_solutions.push_back(s23);
 
 	
 	for (auto& solution : m_solutions) {

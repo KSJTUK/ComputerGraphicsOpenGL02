@@ -215,6 +215,14 @@ float Object::GetAngleSpeed() const {
 	return m_angleSpeed;
 }
 
+glm::vec3 Object::GetColor() const {
+	return m_color;
+}
+
+void Object::SetColor(const glm::vec3& color) {
+	m_color = color;
+}
+
 const glm::mat4& Object::GetTransformMat() const {
 	return m_transform;
 }
@@ -306,6 +314,7 @@ void Object::Render() {
 	m_boundingBox.first = m_transform * glm::vec4{ m_originBoundingBox.first, 1.f };
 	m_boundingBox.second = m_transform * glm::vec4{ m_originBoundingBox.second, 1.f };
 
+	m_model->SetColor(m_color);
 	m_model->SetTransformMat(m_transform);
 	m_model->Render();
 }

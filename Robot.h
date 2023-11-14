@@ -14,6 +14,7 @@ private:
 
 	class Object* m_body{ };
 	std::vector<class Object*> m_childs{ };
+	glm::vec3 m_color{ };
 
 	glm::vec3 m_cameraPosition{ };
 	glm::vec3 m_direction{ 0.f, 0.f, 1.f };

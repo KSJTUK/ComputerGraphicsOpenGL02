@@ -9,6 +9,8 @@ GraphicBuffers::~GraphicBuffers() {
 }
 
 void GraphicBuffers::Init(unsigned int shaderProgramID) {
+	m_shaderProgramID = shaderProgramID;
+
 	// VAO 객체 생성 및 바인드
 	// VBO 객체 생성 및 바인드
 	glGenVertexArrays(1, &m_vertexArray);
@@ -28,6 +30,10 @@ void GraphicBuffers::Init(unsigned int shaderProgramID) {
 	}
 }
 
+void GraphicBuffers::SetColor(const glm::vec3& color) {
+	int uniformLocation{ glGetUniformLocation(m_shaderProgramID, "objectColor") };
+	glUniform3fv(uniformLocation, 1, glm::value_ptr(color));
+}
 
 void GraphicBuffers::SetTransformMat(glm::mat4& trans) {
 	glUniformMatrix4fv(m_modelTransformLocation, 1, GL_FALSE, glm::value_ptr(trans));
@@ -45,10 +51,6 @@ void GraphicBuffers::SetVerticies(const Vertex* const verticies, unsigned int da
 	// location 0번에 Vertex객체의 position정보를 넘겨줌
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
 	glEnableVertexAttribArray(0);
-
-	// location 1번에 Vertex객체의 color정보를 넘겨줌
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color));
-	glEnableVertexAttribArray(1);
 }
 
 void GraphicBuffers::SetVerticies(const std::vector<Vertex>& verticies) {
@@ -59,10 +61,6 @@ void GraphicBuffers::SetVerticies(const std::vector<Vertex>& verticies) {
 	// location 0번에 Vertex객체의 position정보를 넘겨줌
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
 	glEnableVertexAttribArray(0);
-
-	// location 1번에 Vertex객체의 color정보를 넘겨줌
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color));
-	glEnableVertexAttribArray(1);
 }
 
 void GraphicBuffers::SetIndexBuffer(unsigned int* indexBuffer, size_t bufferSize) {

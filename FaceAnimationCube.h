@@ -19,6 +19,8 @@ private:
 	glm::vec3 m_scale{ 1.f };
 	glm::vec3 m_afterScale{ 1.f };
 	glm::vec3 m_rotate{ };
+
+	glm::vec3 m_color{ 0.f, 0.f, 1.f };
 	float m_rotateAllY{ };
 
 	std::unique_ptr<GraphicBuffers> m_graphicBuffers{ };
@@ -36,6 +38,9 @@ private:
 public:
 	bool Animation(bool dir, bool start);
 	void Orbit();
+
+	glm::vec3 GetColor() const;
+	void SetColor(const glm::vec3& color);
 
 public:
 	void Init(unsigned int shaderProgramID, int faceNumber, const glm::vec3& color);

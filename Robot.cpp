@@ -14,7 +14,7 @@ glm::vec3 vectorRotate(const glm::vec3& targetVec, const float& angle, const glm
 
 Robot::Robot() { 
 	Object* head = new Object{ "cube", glm::vec3{ 0.f, 0.75f, 0.f } };
-	head->SetScaleFactor(glm::vec3{ 0.5f, 0.5f, 0.5f });
+	head->SetScaleFactor(glm::vec3{ 0.5f, 0.5f, 1.f });
 
 	Object* leftLeg = new Object{ "cube", glm::vec3{ 0.f, -0.5f, 0.f } };
 	leftLeg->SetScaleFactor(glm::vec3{ 0.2f, 1.3f, 0.3f });
@@ -208,6 +208,19 @@ void Robot::Update(float deltaTime) {
 
 	m_body->Update(m_deltaTime);
 
+	static glm::vec3 twoAngle{ };
+	static float twoAngleDir = 1.f;
+	twoAngle.y += twoAngleDir * 0.05f;
+	
+	if (twoAngle.y >= 90.f) {
+		twoAngle.y = 90.f;
+		twoAngleDir = -1.f;
+	}
+	else if (twoAngle.y <= -90.f) {
+		twoAngle.y = -90.f;
+		twoAngleDir = 1.f;
+	}
+
 	if (AllArrowUp()) {
 		for (auto i = 1; i < 5; ++i) {
 			m_childs[i]->SetAngle(glm::vec3{ });
@@ -221,6 +234,7 @@ void Robot::Update(float deltaTime) {
 		m_childs[4]->RotateAll(glm::vec3{ -m_armsAngle, 0.f, 0.f });
 	}
 	else {
+		
 		SetDirection();
 		Move();
 
@@ -245,8 +259,10 @@ void Robot::Update(float deltaTime) {
 
 void Robot::Render() {
 	m_body->Render();
+	m_body->SetColor(glm::vec3{ 1.f, 0.f, 1.f });
 	for (auto& part : m_childs) {
 		part->SetParentsModelTransMat(m_body->GetTransformMat());
+		part->SetColor(glm::vec3{ 1.f, 0.f, 1.f });
 		part->Render();
 	}
 }

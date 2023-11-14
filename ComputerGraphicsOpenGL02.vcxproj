@@ -143,6 +143,7 @@
     <ClCompile Include="ModelList.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="OrbitObject.cpp" />
+    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Robot.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Solutions.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="OrbitObject.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Physics.h" />
     <ClInclude Include="Robot.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Solutions.h" />

@@ -63,7 +63,7 @@ void Model::ReadObject(const char* filePath) {
 			else if (line[1] == ' ') {     // v == 정점 좌표
 				glm::vec3 tempVec{ };      // 정점 좌표 저장
 				sstream >> delTag >> tempVec.x >> tempVec.y >> tempVec.z;
-				m_verticies.push_back(Vertex{ tempVec, glm::vec3{ }, glm::vec2{ } });
+				m_verticies.push_back(Vertex{ tempVec, glm::vec2{ } });
 			}
 		}
 		else if (line[0] == 'f') {         // 맨 앞 문자가 f이면 face(면)에 대한 정보이다
@@ -108,19 +108,9 @@ glm::mat4 Model::GetModelTransformMat() const {
 }
 
 void Model::SetColor(const glm::vec3& color) {
-	for (auto& v : m_verticies) {
-		v.color = color;
-	}
-	m_graphicsBuffer->SetVerticies(m_verticies);
+	m_graphicsBuffer->SetColor(color);
 }
-
-void Model::SetRandomColor() {
-	for (auto& v : m_verticies) {
-		v.color = glm::vec3{ glm::linearRand(0.f, 1.f), glm::linearRand(0.f, 1.f), glm::linearRand(0.f, 1.f) };
-	}
-	m_graphicsBuffer->SetVerticies(m_verticies);
-}
-
+	
 void Model::SetDrawMode(int drawMode) {
 	m_graphicsBuffer->SetDrawMode(drawMode);
 }
@@ -143,5 +133,4 @@ void Model::Update() {
 void Model::Render() {
 	m_graphicsBuffer->SetTransformMat(m_modelTransform);
 	m_graphicsBuffer->Render();
-	//m_graphicsBuffer->SetTransformMat(glm::mat4{ 1.f });
 }

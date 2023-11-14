@@ -53,11 +53,13 @@ protected:
 	glm::vec3 m_afterPosition{ 0.f };
 
 	glm::mat4 m_transform{ 1.f };
+	glm::vec3 m_parentScale{ 1.f };
 	glm::mat4 m_parentMat{ 1.f };
 
 	float m_moveSpeed{ 200.f };
 	float m_angleSpeed{ 200.f };
 	float m_deltaTime{ };
+	glm::vec3 m_color{ 0.f, 0.f, 1.f };
 
 	// test
 	glm::mat4 unit{ 1.f };
@@ -95,6 +97,9 @@ public:
 	glm::vec3 GetAngle() const;
 	float GetRotateAngle() const;
 	float GetAngleSpeed() const;
+	glm::vec3 GetScale() const;
+	glm::vec3 GetColor() const;
+	void SetColor(const glm::vec3& color);
 	const std::pair<glm::vec3, glm::vec3>& GetBoundingBox() const { return m_boundingBox;  }
 
 	const glm::mat4& GetTransformMat() const;
@@ -105,6 +110,7 @@ public:
 
 	void SetScaleFactor(const glm::vec3& factor);
 
+	void SetParentScale(const glm::vec3& parentScale);
 	void SetParentsModelTransMat(const glm::mat4& parentMat);
 	void SetPosition(const glm::vec3& position);
 	void SetModel(const std::shared_ptr<class Model>& newModel);

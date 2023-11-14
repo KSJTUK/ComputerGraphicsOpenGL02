@@ -68,6 +68,14 @@ void CubeFace::Orbit() {
 	m_rotateAllY += 0.1f;
 }
 
+glm::vec3 CubeFace::GetColor() const {
+	return m_color;
+}
+
+void CubeFace::SetColor(const glm::vec3& color) {
+	m_color = color;
+}
+
 void CubeFace::Init(unsigned int shaderProgramID, int faceNumber, const glm::vec3& color) {
 	if (faceNumber >= 6) {
 		return;
@@ -104,7 +112,6 @@ void CubeFace::Init(unsigned int shaderProgramID, int faceNumber, const glm::vec
 
 	for (auto& vIndex : notSameIndex) {
 		m_vertex.push_back(cubeModel->m_verticies[vIndex]);
-		m_vertex.back().color = color;
 	}
 
 	std::vector<unsigned int> copyed_m_index{ m_index };
@@ -268,6 +275,7 @@ void CubeFace::Render() {
 
 	transformMat = rotationAll * afterScale * translateMat * rotationMat * scaleMat;
 
+	m_graphicBuffers->SetColor(m_color);
 	m_graphicBuffers->SetDrawMode(GL_TRIANGLES);
 	m_graphicBuffers->SetTransformMat(transformMat);
 	m_graphicBuffers->Render();
@@ -276,6 +284,7 @@ void CubeFace::Render() {
 void FaceAnimationCube::Init(unsigned int shaderProgramID) {
 	for (int i = 0; i < 6; ++i) {
 		m_cubeFaces[i].Init(shaderProgramID, i);
+		m_cubeFaces[i].SetColor(glm::linearRand(glm::vec3{ 0.f }, glm::vec3{ 1.f }));
 	}
 }
 
@@ -361,6 +370,7 @@ void TheaterBox::Init(unsigned int shaderProgramID) {
 	for (int i = 0; i < 7; ++i) {
 		m_cubeFaces[i].m_afterScale = glm::vec3{ 40.f, 40.f, 40.f };
 		m_cubeFaces[i].m_centerPosition += glm::vec3{ 0.f, 0.5f, 0.f };
+		m_cubeFaces[i].SetColor(glm::linearRand(glm::vec3{ 0.f }, glm::vec3{ 1.f }));
 	}
 }
 

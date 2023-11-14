@@ -129,8 +129,6 @@ void CircleEffect::MakeCircle(float angleStep) {
 		v.position.x = std::cosf(angle);
 		v.position.y = 0.f;
 		v.position.z = std::sinf(angle);
-
-		v.color = { 1.f, 0.f, 0.f };
 		m_circleVertex.push_back(v);
 	}
 

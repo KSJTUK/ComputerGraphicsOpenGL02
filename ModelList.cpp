@@ -50,8 +50,6 @@ void ModelList::LoadModel(const std::string& objectFilePath) {
 	newModel = std::make_shared<class Model>(objectFilePath);
 	newModel->Init(m_shaderProgramID);
 	// color
-	newModel->SetRandomColor();
-	// color
 	m_modelList.insert(std::make_pair(key, newModel));
 }
 
